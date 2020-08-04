@@ -12,8 +12,11 @@ import datetime
 from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
 from flask_cors import CORS
-
-led_count = 16
+parser = argparse.ArgumentParser()
+parser.add_argument("--ip", "-ip", help="ip address")
+parser.add_argument("--ledcount", "-n", help="led count")
+args = parser.parse_args()
+led_count = int(args.ledcount)
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 pixels = neopixel.NeoPixel(board.D18, led_count)
@@ -32,5 +35,5 @@ def light_endpoint():
     return "OK"
 
 if __name__ == "__main__":
-    app.run(host='192.168.1.53')
+    app.run(host=args.ip)
     # app.run(ssl_context=('/etc/letsencrypt/live/blurrydude.com/fullchain.pem','/etc/letsencrypt/live/blurrydude.com/privkey.pem'), host='192.168.1.51')
