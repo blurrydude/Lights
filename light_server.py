@@ -38,6 +38,10 @@ def light_endpoint():
         a = a + 1
     return "OK"
 
+@app.route("/test", methods=['GET'])
+def test_endpoint():
+    return "Well, this works..."
+    
 @app.route("/query/<int:a>", methods=['GET'])
 def light_query_endpoint():
     a = int(request.args['a'])
