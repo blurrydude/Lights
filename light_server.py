@@ -20,6 +20,10 @@ led_count = int(args.ledcount)
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 pixels = neopixel.NeoPixel(board.D18, led_count)
+mem = []
+
+for i in range(led_count):
+    mem.append((0,0,0))
 
 @app.route("/", methods=['GET'])
 def light_endpoint():
@@ -29,13 +33,14 @@ def light_endpoint():
     b = int(request.args['b'])
     z = int(request.args['z'])
     if r == 999:
-        rr = str(pixels[a][0])
-        rg = str(pixels[a][1])
-        rb = str(pixels[a][2])
+        rr = str(mem[a][0])
+        rg = str(mem[a][1])
+        rb = str(mem[a][2])
         return rr+','+rg+','+rb
     if r != 999:
         while a <= z:
             pixels[a] = (r, g, b)
+            mem[a] = (r, g, b)
             a = a + 1
         return "OK"
 
