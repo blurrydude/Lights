@@ -37,7 +37,7 @@ def light_endpoint():
         rg = str(mem[a][1])
         rb = str(mem[a][2])
         return rr+','+rg+','+rb
-    if r != 999:
+    if r < 999:
         while a <= z:
             pixels[a] = (r, g, b)
             mem[a] = (r, g, b)
