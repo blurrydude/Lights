@@ -23,7 +23,6 @@ pixels = neopixel.NeoPixel(board.D18, led_count)
 
 @app.route("/", methods=['GET'])
 def light_endpoint():
-    print(request.data)
     r = int(request.args['r'])
     g = int(request.args['g'])
     b = int(request.args['b'])
@@ -33,6 +32,13 @@ def light_endpoint():
         pixels[a] = (r, g, b)
         a = a + 1
     return "OK"
+
+@app.route("/q", methods=['GET'])
+def light_endpoint():
+    a = int(request.args['a'])
+    var p = pixels[a]
+
+    return p
 
 if __name__ == "__main__":
     app.run(host=args.ip)
