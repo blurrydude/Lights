@@ -25,7 +25,7 @@ mem = []
 for i in range(led_count):
     mem.append((0,0,0))
 
-@app.route("/set", methods=['GET'])
+@app.route("/", methods=['GET'])
 def light_endpoint():
     a = int(request.args['a'])
     r = int(request.args['r'])
