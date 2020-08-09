@@ -18,7 +18,7 @@ parser.add_argument("--ledcount", "-n", help="led count")
 args = parser.parse_args()
 led_count = int(args.ledcount)
 app = FlaskAPI(__name__)
-cors = CORS(app, resources={"*": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 pixels = neopixel.NeoPixel(board.D18, led_count)
 mem = []
 
@@ -26,6 +26,7 @@ for i in range(led_count):
     mem.append((0,0,0))
 
 @app.route("/", methods=['GET'])
+@cross_origin()
 def light_endpoint():
     a = int(request.args['a'])
     r = int(request.args['r'])
@@ -39,10 +40,12 @@ def light_endpoint():
     return "OK"
 
 @app.route("/test", methods=['GET'])
+@cross_origin()
 def test_endpoint():
     return "Well, this works..."
 
 @app.route("/query/<int:a>", methods=['GET'])
+@cross_origin()
 def light_query_endpoint():
     a = int(request.args['a'])
     p = mem[a]
