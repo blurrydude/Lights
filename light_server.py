@@ -32,24 +32,18 @@ def light_endpoint():
     g = int(request.args['g'])
     b = int(request.args['b'])
     z = int(request.args['z'])
-    if r == 999:
-        rr = str(mem[a][0])
-        rg = str(mem[a][1])
-        rb = str(mem[a][2])
-        return rr+','+rg+','+rb
-    if r < 999:
-        while a <= z:
-            pixels[a] = (r, g, b)
-            mem[a] = (r, g, b)
-            a = a + 1
-        return "OK"
+    while a <= z:
+        pixels[a] = (r, g, b)
+        mem[a] = (r, g, b)
+        a = a + 1
+    return "OK"
 
 @app.route("/query/<int:a>", methods=['GET'])
 def light_query_endpoint():
     a = int(request.args['a'])
-    p = pixels[a]
+    p = mem[a]
 
-    return p
+    return str(p[0])+','+str(p[1])+','+str(p[2])
 
 if __name__ == "__main__":
     app.run(host=args.ip)
