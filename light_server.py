@@ -30,10 +30,11 @@ def light_endpoint():
     z = int(request.args['z'])
     if r == 999:
         return pixels[a]
-    while a <= z:
-        pixels[a] = (r, g, b)
-        a = a + 1
-    return "OK"
+    if r != 999:
+        while a <= z:
+            pixels[a] = (r, g, b)
+            a = a + 1
+        return "OK"
 
 @app.route("/query/<int:a>", methods=['GET'])
 def light_query_endpoint():
