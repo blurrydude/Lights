@@ -36,7 +36,7 @@ def light_endpoint():
 @app.route("/q", methods=['GET'])
 def light_endpoint():
     a = int(request.args['a'])
-    var p = pixels[a]
+    p = pixels[a]
 
     return p
 
