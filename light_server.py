@@ -23,10 +23,13 @@ pixels = neopixel.NeoPixel(board.D18, led_count)
 
 @app.route("/", methods=['GET'])
 def light_endpoint():
+    q = request.args['q']
+    a = int(request.args['a'])
+    if q == 'true' :
+        return pixels[a]
     r = int(request.args['r'])
     g = int(request.args['g'])
     b = int(request.args['b'])
-    a = int(request.args['a'])
     z = int(request.args['z'])
     while a <= z:
         pixels[a] = (r, g, b)
