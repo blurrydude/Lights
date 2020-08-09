@@ -45,7 +45,7 @@ def test_endpoint():
 @app.route("/query", methods=['GET'])
 def light_query_endpoint():
     a = int(request.args['a'])
-    p = mem[a]
+    p = pixels[a]
 
     return str(p[0])+','+str(p[1])+','+str(p[2])
 
