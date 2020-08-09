@@ -33,7 +33,7 @@ def light_endpoint():
         a = a + 1
     return "OK"
 
-@app.route("/<int:a>", methods=['GET'])
+@app.route("/query/<int:a>", methods=['GET'])
 def light_query_endpoint():
     a = int(request.args['a'])
     p = pixels[a]
