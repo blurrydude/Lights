@@ -18,7 +18,7 @@ parser.add_argument("--ledcount", "-n", help="led count")
 args = parser.parse_args()
 led_count = int(args.ledcount)
 app = FlaskAPI(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app, resources={"*": {"origins": "*"}})
 pixels = neopixel.NeoPixel(board.D18, led_count)
 mem = []
 
