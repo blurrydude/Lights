@@ -38,9 +38,12 @@ def light_endpoint():
         a = a + 1
     return "OK"
 
-@app.route("/test", methods=['GET'])
-def test_endpoint():
-    return "Well, this works..."
+@app.route("/control", methods=['GET'])
+def control_endpoint():
+    pageFile = open("index.html","r")
+    pageData = pageFile.read()
+    pageFile.close()
+    return pageData
 
 @app.route("/query", methods=['GET'])
 def light_query_endpoint():
