@@ -12,7 +12,7 @@ print(d)
 ip = d[0]
 s.close()
 
-data = '0'
+data = '00000001'
 
 PARAMS = {'name':name, 'ip':ip, 'data':data} 
 
