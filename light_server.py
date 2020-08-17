@@ -40,7 +40,7 @@ def light_endpoint():
 
 @app.route("/control", methods=['GET'])
 def control_endpoint():
-    pageFile = open("index.html","r")
+    pageFile = open("/home/pi/Lights/index.html","r")
     pageData = pageFile.read()
     pageFile.close()
     return pageData
