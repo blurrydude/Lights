@@ -6,6 +6,6 @@ direct_output = subprocess.check_output('git pull', shell=True)
 
 if direct_output != b'Already up to date.\n':
     print('restarting')
-    subprocess.check_output('reboot', shell=True)
+    subprocess.check_output('reboot now', shell=True)
 else:
     print('no restart required')
