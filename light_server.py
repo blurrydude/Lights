@@ -53,5 +53,5 @@ def light_query_endpoint():
     return str(p[0])+','+str(p[1])+','+str(p[2])
 
 if __name__ == "__main__":
-    app.run(host=args.ip, debug=True)
+    app.run(host=args.ip, port=80, debug=True)
     # app.run(ssl_context=('/etc/letsencrypt/live/blurrydude.com/fullchain.pem','/etc/letsencrypt/live/blurrydude.com/privkey.pem'), host='192.168.1.51')
