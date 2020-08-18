@@ -60,6 +60,8 @@ var sections = [
     [17]
 ];
 
+var config = {};
+
 function lineTo(point) {
     context.lineTo(point.x, point.y);
 }
@@ -228,6 +230,37 @@ function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
+function updateConfig() {
+    if(config.autosun === true) {
+        $('#autosunOnInd').removeClass('hide');
+        $('#autosunOffInd').addClass('hide');
+    } else {
+        $('#autosunOnInd').addClass('hide');
+        $('#autosunOffInd').removeClass('hide');
+    }
+    if(config.personality === true) {
+        $('#personalityOnInd').removeClass('hide');
+        $('#personalityOffInd').addClass('hide');
+    } else {
+        $('#personalityOnInd').addClass('hide');
+        $('#personalityOffInd').removeClass('hide');
+    }
+}
+
+function autosun(on) {
+    config.autosun = on;
+    $.get(window.location.origin + '/setautosun?v='+config.autosun, function(response) {
+        updateConfig();
+    });
+}
+
+function personality(on) {
+    config.personality = on;
+    $.get(window.location.origin + '/setpersonality?v='+config.personality, function(response) {
+        updateConfig();
+    });
+}
+
 $.get(window.location.origin + '/version', function(response) {
     document.getElementById("versionEle").innerHTML = JSON.parse(response).version;
 });
@@ -240,4 +273,9 @@ $.get(window.location.origin + '/mem', function(response) {
         segment.c = rgbToHex(m[0],m[1],m[2]);
         drawCoffin();
     }
+});
+
+$.get(window.location.origin + '/config', function(response) {
+    config = response;
+    updateConfig();
 });

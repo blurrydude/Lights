@@ -88,6 +88,24 @@
                         <button class="btn btn-sm btn-outline-light" onclick="offAll()">Off</button>
                     </li>
                     <li class="list-group-item bg-dark p-1 d-flex align-items-center justify-content-between">
+                        <button class="btn btn-sm btn-outline-danger" onclick="autosun(true)">On</button>
+                        <small class="text-light">
+                            Auto Sun
+                            <sup class="badge badge-pill badge-dark" id="autosunOffInd">OFF</sup>
+                            <sup class="badge badge-pill badge-dark" id="autosunOnInd">ON</sup>
+                        </small>
+                        <button class="btn btn-sm btn-outline-light" onclick="autosun(false)">Off</button>
+                    </li>
+                    <li class="list-group-item bg-dark p-1 d-flex align-items-center justify-content-between">
+                        <button class="btn btn-sm btn-outline-danger" onclick="personality(true)">On</button>
+                        <small class="text-light">
+                            Personality
+                            <sup class="badge badge-pill badge-dark" id="personalityOffInd">OFF</sup>
+                            <sup class="badge badge-pill badge-dark" id="personalityOnInd">ON</sup>
+                        </small>
+                        <button class="btn btn-sm btn-outline-light" onclick="personality(false)">Off</button>
+                    </li>
+                    <li class="list-group-item bg-dark p-1 d-flex align-items-center justify-content-between">
                         <input type="color" id="colorPicker" value="#ff0000" style="height: 36px;background-color:#999999;width:100%;">
                     </li>
                 </ul>
