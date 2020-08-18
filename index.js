@@ -120,7 +120,7 @@ function setSection(sec) {
         var segs = section[i];
         for(var s in segs) {
             console.log('set segment '+s);
-            var segment = segs[s];
+            var segment = segments[segs[s]];
             segment.c = colorPicker.value;
             var color = hexToRgb(colorPicker.value);
             var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
