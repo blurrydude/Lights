@@ -16,8 +16,8 @@
 	<header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
-                <small class="float-right" id="versionEle"></small>
                 <a class="navbar-brand" href="#">COFFIN LED CONTROL</a>
+                <small id="versionEle"></small>
             </div>
         </nav>
     </header>
@@ -128,7 +128,7 @@
         }
 
         $.get(window.location.origin + '/version', function(response) {
-            document.getElementById("sectionControlButton").innerHTML = JSON.parse(response).version;
+            document.getElementById("versionEle").innerHTML = JSON.parse(response).version;
         });
         </script>
     </script>
