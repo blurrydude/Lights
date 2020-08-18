@@ -53,7 +53,7 @@ function showSectionControl() {
     lineTo(points.l);
     moveTo(points.m);
     lineTo(points.n);
-    context.strokeStyle = "#992400";
+    context.strokeStyle = "#996400";
     context.stroke();
 }
 function writeMessage(message) {
