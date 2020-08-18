@@ -29,6 +29,7 @@ function moveTo(point) {
 
 function showSectionControl() {
     context.lineWidth = 10;
+    context.fillStyle = "Green";
     context.beginPath()
     moveTo(points.a);
     lineTo(points.h);
