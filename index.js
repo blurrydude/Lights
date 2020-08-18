@@ -34,7 +34,7 @@ var segments = [
     { a: points.a, b: points.b, r1:  51, r2:  56, c: "#00ff00" },
     { a: points.b, b: points.c, r1:  57, r2:  67, c: "#00ff00" },
     { a: points.c, b: points.d, r1:  68, r2:  71, c: "#00ff00" },
-    { a: points.d, b: points.j, r1:  71, r2:  75, c: "#00ff00" },
+    { a: points.d, b: points.j, r1:  72, r2:  75, c: "#00ff00" },
     { a: points.j, b: points.l, r1:  76, r2:  81, c: "#00ff00" },
     { a: points.l, b: points.n, r1:  82, r2:  89, c: "#00ff00" },
 ];
