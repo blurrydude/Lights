@@ -23,10 +23,29 @@ app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 pixels = neopixel.NeoPixel(board.D18, led_count)
 mem = []
+config = {}
 
-def save_memory(mem):
+def load_config():
+    global config
+    hasConfig = path.exists('/home/pi/light_conf.json')
+    if hasConfig == False:
+        config = {
+            autosun: True,
+            personality: True,
+            lastAttention: datetime.now()
+        }
+        save_config()
+
+    with open('/home/pi/light_conf.json', "r") as read_file:
+        config = json.load(read_file)
+
+def save_config():
+    with open('/home/pi/light_conf.json', "w") as write_file:
+        json.dump(config, write_file, indent=4)
+
+def save_memory(memory):
     with open('/home/pi/light_mem.json', "w") as write_file:
-        json.dump(mem, write_file, indent=4)
+        json.dump(memory, write_file, indent=4)
 
 def load_memory():
     global mem
@@ -34,8 +53,7 @@ def load_memory():
     if hasMem == False:
         for i in range(led_count):
             mem.append((0,0,0))
-        with open('/home/pi/light_mem.json', "w") as write_file:
-            json.dump(mem, write_file, indent=4)
+        save_memory()
     try:
         with open('/home/pi/light_mem.json', "r") as read_file:
             mem = json.load(read_file)
@@ -108,7 +126,24 @@ def light_query_endpoint():
 def mem_endpoint():
     return mem
 
+@app.route("/config", methods=['GET'])
+def config_endpoint():
+    return config
+
+@app.route("/setautosun", methods=['GET'])
+def setautosun_endpoint():
+    config['autosun'] = bool(request.args['v'])
+    save_config()
+    return config
+
+@app.route("/setpersonality", methods=['GET'])
+def setpersonality_endpoint():
+    config['personality'] = bool(request.args['v'])
+    save_config()
+    return config
+
 if __name__ == "__main__":
     load_memory()
+    load_config()
     app.run(host=args.ip, port=80, debug=True)
     # app.run(ssl_context=('/etc/letsencrypt/live/blurrydude.com/fullchain.pem','/etc/letsencrypt/live/blurrydude.com/privkey.pem'), host='192.168.1.51')
