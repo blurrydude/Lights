@@ -57,7 +57,7 @@ def control_endpoint():
     return pageData
 
 @app.route("/version", methods=['GET'])
-def control_endpoint():
+def version_endpoint():
     pageFile = open("/home/pi/lightdata.json","r")
     pageData = pageFile.read()
     pageFile.close()
