@@ -1,6 +1,7 @@
 var canvas = document.getElementById("myCanvas");
 var secretIframe = document.getElementById("secretIframe");
 var context = canvas.getContext('2d');
+var mem = [];
 
 var points = {
     a: { x:  60, y:   5 },
@@ -104,6 +105,11 @@ function hexToRgb(hex) {
 
 $.get(window.location.origin + '/version', function(response) {
     document.getElementById("versionEle").innerHTML = JSON.parse(response).version;
+});
+
+$.get(window.location.origin + '/mem', function(response) {
+    mem = JSON.parse(response);
+    console.log(mem);
 });
 
 showSectionControl();
