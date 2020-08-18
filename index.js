@@ -87,6 +87,17 @@ function showSectionControl() {
     context.closePath();
     context.stroke();
 }
+
+function redrawSegment(segment) {
+    context.beginPath();
+    moveTo(segment.a);
+    lineTo(segment.b);
+    context.strokeStyle = segment.c;
+    context.closePath();
+    context.stroke();
+
+}
+
 function writeMessage(message) {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.font = '18pt Calibri';
@@ -134,6 +145,7 @@ function setSegment(s) {
         var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
         $.get(url, function(response) {
             resolve(response);
+            redrawSegment(segment);
         });
     });
 }
