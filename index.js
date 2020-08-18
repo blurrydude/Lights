@@ -84,7 +84,7 @@ function drawCoffin() {
     lineTo(points.l);
     moveTo(points.m);
     lineTo(points.n);
-    context.strokeStyle = "#000000";
+    context.strokeStyle = "#555555";
     context.closePath();
     context.stroke();
 
