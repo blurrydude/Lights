@@ -43,7 +43,7 @@ function showSectionControl() {
     context.strokeStyle = "Green";
     context.closePath();
     context.stroke();
-    context.beginPath()
+    context.beginPath();
     moveTo(points.h);
     lineTo(points.c);
     moveTo(points.g);

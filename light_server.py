@@ -97,6 +97,11 @@ def light_query_endpoint():
 
     return str(p[0])+','+str(p[1])+','+str(p[2])
 
+@app.route("/mem", methods=['GET'])
+def mem_endpoint():
+    mem = load_memory()
+    return mem
+
 if __name__ == "__main__":
     load_memory()
     app.run(host=args.ip, port=80, debug=True)
