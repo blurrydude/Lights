@@ -121,7 +121,7 @@ function setSection(sec) {
         promises.push(setSegment(segs[s]));
     }
     Promise.all(promises).then(function(responses) {
-        console.log(repsonses);
+        console.log(responses);
     });
 }
 
