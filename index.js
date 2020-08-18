@@ -115,19 +115,16 @@ colorPicker.addEventListener('change', function(evt) {
 
 function setSection(sec) {
     console.log('set section '+sec);
-    var section = sections[sec];
-    for(var i in section) {
-        var segs = section[i];
-        for(var s in segs) {
-            console.log('set segment '+s);
-            var segment = segments[segs[s]];
-            segment.c = colorPicker.value;
-            var color = hexToRgb(colorPicker.value);
-            var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
-            $.get(url, function(response) {
-                console.log(response);
-            });
-        }
+    var segs = sections[sec];
+    for(var s in segs) {
+        var segment = segments[segs[s]];
+        console.log('set segment ', segment);
+        segment.c = colorPicker.value;
+        var color = hexToRgb(colorPicker.value);
+        var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
+        $.get(url, function(response) {
+            console.log(response);
+        });
     }
 }
 
