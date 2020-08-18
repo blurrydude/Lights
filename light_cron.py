@@ -28,4 +28,4 @@ if token['version'] != data['version']:
         json.dump(data, write_file, sort_keys=True, indent=4)
     print('Waiting ten seconds then rebooting.')
     time.sleep(10)
-    os.system('reboot')
+    os.system('reboot now')
