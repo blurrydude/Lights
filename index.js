@@ -11,12 +11,12 @@ var points = {
     f: { x:  60, y: 595 },
     g: { x:   5, y: 205 },
     h: { x:   5, y: 155 },
-    i: { x:  60, y:   5 },
-    j: { x:  60, y:   5 },
-    k: { x:  60, y:   5 },
-    l: { x:  60, y:   5 },
-    m: { x:  60, y:   5 },
-    n: { x:  60, y:   5 }
+    i: { x:  17, y: 291 },
+    j: { x: 202, y: 291 },
+    k: { x:  31, y: 395 },
+    l: { x: 188, y: 395 },
+    m: { x:  45, y: 498 },
+    n: { x: 174, y: 498 }
 }
 
 function lineTo(point) {
@@ -44,12 +44,12 @@ function showSectionControl() {
     lineTo(points.c);
     moveTo(points.g);
     lineTo(points.d);
-    context.moveTo(17, 291);
-    context.lineTo(202, 291);
-    context.moveTo(31, 395);
-    context.lineTo(188, 395);
-    context.moveTo(45, 498);
-    context.lineTo(174, 498);
+    moveTo(points.i);
+    lineTo(points.j);
+    moveTo(points.k);
+    lineTo(points.l);
+    moveTo(points.m);
+    lineTo(points.n);
     context.stroke();
 }
 function writeMessage(message) {
