@@ -56,6 +56,13 @@ def control_endpoint():
     pageFile.close()
     return pageData
 
+@app.route("/version", methods=['GET'])
+def control_endpoint():
+    pageFile = open("/home/pi/lightdata.json","r")
+    pageData = pageFile.read()
+    pageFile.close()
+    return pageData
+
 @app.route("/query", methods=['GET'])
 def light_query_endpoint():
     a = int(request.args['a'])
