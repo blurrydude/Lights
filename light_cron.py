@@ -1,10 +1,24 @@
 import subprocess
-#subprocess.check_output('git stash', shell=True)
-direct_output = subprocess.check_output('cd /home/pi/Lights && git pull --all', shell=True)
-#subprocess.check_output('git stash clear', shell=True)
+import json
+import time
+import os
 
-if direct_output != b'Already up to date.\n' or direct_output != b'warning: redirecting to https://github.com/blurrydude/Lights.git/\nAlready up to date.\n':
-    print('restarting')
-    subprocess.check_output('reboot now', shell=True)
-else:
-    print('no restart required')
+os.system('cd /home/pi/Lights && git pull --all', shell=True)
+time.sleep(10)
+datafile = '/home/pi/Lights/lightdata.json'
+tokenfile = '/home/pi/lightdata.json'
+with open(datafile, "r") as read_file:
+    data = json.load(read_file)
+hasToken = path.exists(tokenfile)
+if hasToken == False:
+    with open(tokenfile, "w") as write_file:
+        json.dump(data, write_file, sort_keys=True, indent=4)
+
+with open(tokenfile, "r") as read_file:
+    token = json.load(read_file)
+
+if token.version != data.version:
+    with open(tokenfile, "w") as write_file:
+        json.dump(data, write_file, sort_keys=True, indent=4)
+    time.sleep(10)
+    os.system('reboot')
