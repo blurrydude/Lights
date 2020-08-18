@@ -2,6 +2,8 @@ import subprocess
 import json
 import time
 import os
+import os.path
+from os import path
 
 os.system('cd /home/pi/Lights && git pull --all')
 print('Waiting for ten seconds...')
