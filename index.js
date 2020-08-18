@@ -43,8 +43,8 @@ var segments = [
     { a: points.l, b: points.n, r1:  83, r2:  89, c: "#00ff00" }, // 13
     { a: points.q, b: points.r, r1:  90, r2:  94, c: "#00ff00" }, // 14
     { a: points.q, b: points.o, r1:  95, r2: 104, c: "#00ff00" }, // 15
-    { a: points.o, b: points.p, r1: 105, r2: 114, c: "#00ff00" }, // 16
-    { a: points.p, b: points.r, r1: 115, r2: 119, c: "#00ff00" }, // 17
+    { a: points.o, b: points.p, r1: 105, r2: 109, c: "#00ff00" }, // 16
+    { a: points.p, b: points.r, r1: 110, r2: 119, c: "#00ff00" }, // 17
 ];
 
 var sections = [
