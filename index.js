@@ -4,6 +4,7 @@ var context = canvas.getContext('2d');
 
 function showSectionControl() {
     context.lineWidth = 10;
+    context.beginPath()
     context.moveTo(60, 5); // a
     context.lineTo(5, 155); // h
     context.lineTo(5, 205); // g
@@ -23,6 +24,7 @@ function showSectionControl() {
     context.lineTo(188, 395);
     context.moveTo(45, 498);
     context.lineTo(174, 498);
+    context.closePath();
     context.stroke();
 }
 function writeMessage(message) {
@@ -72,3 +74,5 @@ function hexToRgb(hex) {
 $.get(window.location.origin + '/version', function(response) {
     document.getElementById("versionEle").innerHTML = JSON.parse(response).version;
 });
+
+showSectionControl();
