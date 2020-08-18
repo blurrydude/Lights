@@ -110,7 +110,7 @@ function getMousePos(evt) {
 
 var colorPicker = document.getElementById("colorPicker");
 colorPicker.addEventListener('change', function(evt) {
-    
+    targetColor = colorPicker.value;
 }, false);
 
 function setSection(sec) {
@@ -129,8 +129,8 @@ function setSegment(s) {
     return new Promise(function(resolve, reject) {
         var segment = segments[s];
         console.log('set segment ', segment);
-        segment.c = colorPicker.value;
-        var color = hexToRgb(colorPicker.value);
+        segment.c = targetColor;
+        var color = hexToRgb(targetColor);
         var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
         $.get(url, function(response) {
             resolve(response);
