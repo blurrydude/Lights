@@ -14,15 +14,30 @@
 </head>
 <body>
 	<header>
-        <nav class="navbar navbar-expand-md navbar-dark">
-            <div class="container text-center">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container">
                 <a class="navbar-brand" href="#">CASKET LED CONTROL</a>
             </div>
         </nav>
     </header>
 
     <div class="container">
-        MAIN AREA
+        <div class="row">
+            <div class="col-7">
+                <canvas id="myCanvas" width="220" height="600">
+                </canvas>
+            </div>
+            <div class="col-5">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <button class="btn btn-primary" id="sectionControlButton">SECTION</button>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="color" id="colorPicker" value="#ff0000" style="width:85%;">
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div class="modal" id="errorModal">
@@ -42,19 +57,87 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <iframe src="" style="display:none" id="secretIframe"></iframe>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>//-->
     <script src="https://cdn.jsdelivr.net/npm/simple-crypto-js@2.5.0/dist/SimpleCrypto.min.js"></script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
 	<script>
-	$(function(){
-		var navMain = $(".navbar-collapse");
-		navMain.on("click", "a:not([data-toggle])", null, function () {
-			navMain.collapse('hide');
-		});
-	 });
-	</script>
+        var canvas = document.getElementById("myCanvas");
+        var secretIframe = document.getElementById("secretIframe");
+        var context = canvas.getContext('2d');
+
+        function showSectionControl() {
+            var ctx = canvas.getContext("2d");
+            ctx.lineWidth = 10;
+            ctx.moveTo(60, 5); // a
+            ctx.lineTo(5, 155); // h
+            ctx.lineTo(5, 205); // g
+            ctx.lineTo(60, 595); // f
+            ctx.lineTo(160, 595); // e
+            ctx.lineTo(215, 205); // d
+            ctx.lineTo(215, 155); // c
+            ctx.lineTo(160, 5); // b
+            ctx.lineTo(60, 5); // a
+            ctx.moveTo(5, 155); // h
+            ctx.lineTo(215, 155); // c
+            ctx.moveTo(5, 205); // g
+            ctx.lineTo(215, 205); // d
+            ctx.moveTo(17, 291);
+            ctx.lineTo(202, 291);
+            ctx.moveTo(31, 395);
+            ctx.lineTo(188, 395);
+            ctx.moveTo(45, 498);
+            ctx.lineTo(174, 498);
+            ctx.stroke();
+        }
+        function writeMessage(message) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.font = '18pt Calibri';
+            context.fillStyle = 'black';
+            context.fillText(message, 10, 25);
+        }
+        function getMousePos(evt) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top
+            };
+        }
+
+        canvas.addEventListener('mousemove', function(evt) {
+            var mousePos = getMousePos(canvas, evt);
+            var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+            //writeMessage(canvas, message);
+            console.log(message)
+        }, false);
+
+        var colorPicker = document.getElementById("colorPicker");
+        colorPicker.addEventListener('change', function(evt) {
+            var color = hexToRgb(colorPicker.value);
+            var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a=0&z=119';
+            $.get(url, function(response) {
+                console.log(response);
+            });
+        }, false);
+
+        var sectionControlButton = document.getElementById("sectionControlButton");
+        sectionControlButton.addEventListener('click', function(evt) {
+            showSectionControl();
+        }, false);
+
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        </script>
+    </script>
 </body>
 </html>
