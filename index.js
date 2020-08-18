@@ -109,6 +109,7 @@ $.get(window.location.origin + '/version', function(response) {
 
 $.get(window.location.origin + '/mem', function(response) {
     mem = JSON.parse(response);
+    console.log(response);
     console.log(mem);
 });
 
