@@ -20,6 +20,34 @@ var points = {
     n: { x: 174, y: 498 }
 }
 
+var targetColor = "#00ff00";
+
+var segments = [
+    { a: points.n, b: points.e, r1:   0, r2:   5, c: "#00ff00" },
+    { a: points.e, b: points.f, r1:   6, r2:  11, c: "#00ff00" },
+    { a: points.f, b: points.m, r1:  12, r2:  17, c: "#00ff00" },
+    { a: points.m, b: points.k, r1:  18, r2:  24, c: "#00ff00" },
+    { a: points.k, b: points.i, r1:  25, r2:  30, c: "#00ff00" },
+    { a: points.i, b: points.g, r1:  31, r2:  35, c: "#00ff00" },
+    { a: points.g, b: points.h, r1:  36, r2:  39, c: "#00ff00" },
+    { a: points.h, b: points.a, r1:  40, r2:  50, c: "#00ff00" },
+    { a: points.a, b: points.b, r1:  51, r2:  56, c: "#00ff00" },
+    { a: points.b, b: points.c, r1:  57, r2:  67, c: "#00ff00" },
+    { a: points.c, b: points.d, r1:  68, r2:  71, c: "#00ff00" },
+    { a: points.d, b: points.j, r1:  71, r2:  75, c: "#00ff00" },
+    { a: points.j, b: points.l, r1:  76, r2:  81, c: "#00ff00" },
+    { a: points.l, b: points.n, r1:  82, r2:  89, c: "#00ff00" },
+];
+
+var sections = [
+    [7,8,9],
+    [6, 10],
+    [5, 11],
+    [4, 12],
+    [3, 13],
+    [2,1,0]
+];
+
 function lineTo(point) {
     context.lineTo(point.x, point.y);
 }
@@ -82,17 +110,24 @@ function getMousePos(evt) {
 
 var colorPicker = document.getElementById("colorPicker");
 colorPicker.addEventListener('change', function(evt) {
-    var color = hexToRgb(colorPicker.value);
-    var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a=0&z=119';
-    $.get(url, function(response) {
-        console.log(response);
-    });
+    
 }, false);
 
-var sectionControlButton = document.getElementById("sectionControlButton");
-sectionControlButton.addEventListener('click', function(evt) {
-    showSectionControl();
-}, false);
+function setSection(sec) {
+    var section = sections[sec];
+    for(var i in section) {
+        var segs = section[i];
+        for(var s in segs) {
+            var segment = segs[s];
+            segment.c = colorPicker.value;
+            var color = hexToRgb(colorPicker.value);
+            var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
+            $.get(url, function(response) {
+                console.log(response);
+            });
+        }
+    }
+}
 
 function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -108,9 +143,7 @@ $.get(window.location.origin + '/version', function(response) {
 });
 
 $.get(window.location.origin + '/mem', function(response) {
-    //mem = JSON.parse(response);
-    console.log(response);
-    console.log(mem);
+    mem = response;
 });
 
 showSectionControl();
