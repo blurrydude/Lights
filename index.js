@@ -23,20 +23,20 @@ var points = {
 var targetColor = "#ff0000";
 
 var segments = [
-    { a: points.n, b: points.e, r1:   0, r2:   5, c: "#00ff00" },
-    { a: points.e, b: points.f, r1:   6, r2:  11, c: "#00ff00" },
-    { a: points.f, b: points.m, r1:  12, r2:  17, c: "#00ff00" },
-    { a: points.m, b: points.k, r1:  18, r2:  24, c: "#00ff00" },
-    { a: points.k, b: points.i, r1:  25, r2:  30, c: "#00ff00" },
-    { a: points.i, b: points.g, r1:  31, r2:  35, c: "#00ff00" },
-    { a: points.g, b: points.h, r1:  36, r2:  39, c: "#00ff00" },
-    { a: points.h, b: points.a, r1:  40, r2:  50, c: "#00ff00" },
-    { a: points.a, b: points.b, r1:  51, r2:  56, c: "#00ff00" },
-    { a: points.b, b: points.c, r1:  57, r2:  67, c: "#00ff00" },
-    { a: points.c, b: points.d, r1:  68, r2:  71, c: "#00ff00" },
-    { a: points.d, b: points.j, r1:  72, r2:  75, c: "#00ff00" },
-    { a: points.j, b: points.l, r1:  76, r2:  81, c: "#00ff00" },
-    { a: points.l, b: points.n, r1:  82, r2:  89, c: "#00ff00" },
+    { a: points.n, b: points.e, r1:   0, r2:   5, c: "#00ff00" }, // 0
+    { a: points.e, b: points.f, r1:   6, r2:  11, c: "#00ff00" }, // 1
+    { a: points.f, b: points.m, r1:  12, r2:  17, c: "#00ff00" }, // 2
+    { a: points.m, b: points.k, r1:  18, r2:  24, c: "#00ff00" }, // 3
+    { a: points.k, b: points.i, r1:  25, r2:  30, c: "#00ff00" }, // 4
+    { a: points.i, b: points.g, r1:  31, r2:  35, c: "#00ff00" }, // 5
+    { a: points.g, b: points.h, r1:  36, r2:  39, c: "#00ff00" }, // 6
+    { a: points.h, b: points.a, r1:  40, r2:  50, c: "#00ff00" }, // 7
+    { a: points.a, b: points.b, r1:  51, r2:  56, c: "#00ff00" }, // 8
+    { a: points.b, b: points.c, r1:  57, r2:  67, c: "#00ff00" }, // 9
+    { a: points.c, b: points.d, r1:  68, r2:  71, c: "#00ff00" }, // 10
+    { a: points.d, b: points.j, r1:  72, r2:  76, c: "#00ff00" }, // 11
+    { a: points.j, b: points.l, r1:  77, r2:  82, c: "#00ff00" }, // 12
+    { a: points.l, b: points.n, r1:  83, r2:  89, c: "#00ff00" }, // 13
 ];
 
 var sections = [
