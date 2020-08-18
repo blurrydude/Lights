@@ -183,7 +183,7 @@ $.get(window.location.origin + '/mem', function(response) {
     for(var s in segments) {
         var segment = segments[s];
         var m = mem[segment.r1];
-        segment.c = rgbToHex(m.r,m.g,m.b);
+        segment.c = rgbToHex(m[0],m[1],m[2]);
         drawCoffin();
     }
 });
