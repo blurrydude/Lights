@@ -15,27 +15,32 @@ def log(message):
     logFile.write(message+"\n")
     logFile.close()
 
-os.system('cd /home/pi/Lights && git pull --all')
-log('Waiting for ten seconds...')
-time.sleep(10)
-log('Check token')
-datafile = '/home/pi/Lights/lightdata.json'
-tokenfile = '/home/pi/lightdata.json'
-with open(datafile, "r") as read_file:
-    data = json.load(read_file)
-log(data['version'])
-hasToken = path.exists(tokenfile)
-if hasToken == False:
-    log('Creating new token.')
-    with open(tokenfile, "w") as write_file:
-        json.dump(data, write_file, sort_keys=True, indent=4)
-
-with open(tokenfile, "r") as read_file:
-    token = json.load(read_file)
-log(token['version'])
-if token['version'] != data['version']:
-    with open(tokenfile, "w") as write_file:
-        json.dump(data, write_file, sort_keys=True, indent=4)
-    log('Waiting ten seconds then rebooting.')
+def doCheck():
+    os.system('cd /home/pi/Lights && git pull --all')
+    log('Waiting for ten seconds...')
     time.sleep(10)
-    os.system('reboot now')
+    log('Check token')
+    datafile = '/home/pi/Lights/lightdata.json'
+    tokenfile = '/home/pi/lightdata.json'
+    with open(datafile, "r") as read_file:
+        data = json.load(read_file)
+    log(data['version'])
+    hasToken = path.exists(tokenfile)
+    if hasToken == False:
+        log('Creating new token.')
+        with open(tokenfile, "w") as write_file:
+            json.dump(data, write_file, sort_keys=True, indent=4)
+
+    with open(tokenfile, "r") as read_file:
+        token = json.load(read_file)
+    log(token['version'])
+    if token['version'] != data['version']:
+        with open(tokenfile, "w") as write_file:
+            json.dump(data, write_file, sort_keys=True, indent=4)
+        log('Waiting ten seconds then rebooting.')
+        time.sleep(10)
+        os.system('reboot now')
+        exit()
+
+for i in range(0,5):
+    doCheck()
