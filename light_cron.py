@@ -3,7 +3,7 @@ import json
 import time
 import os
 
-os.system('cd /home/pi/Lights && git pull --all', shell=True)
+os.system('cd /home/pi/Lights && git pull --all')
 time.sleep(10)
 datafile = '/home/pi/Lights/lightdata.json'
 tokenfile = '/home/pi/lightdata.json'
