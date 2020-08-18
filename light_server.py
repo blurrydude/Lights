@@ -36,7 +36,18 @@ def light_endpoint():
         pixels[a] = (r, g, b)
         mem[a] = (r, g, b)
         a = a + 1
-    return "OK"
+    return mem
+
+@app.route("/pixels", methods=['GET'])
+def pixels_endpoint():
+    p = request.args['p'].split(",")
+    r = int(request.args['r'])
+    g = int(request.args['g'])
+    b = int(request.args['b'])
+    for i in p:
+        pixels[int(p[i])] = (r, g, b)
+        mem[int(p[i])] = (r, g, b)
+    return mem
 
 @app.route("/control", methods=['GET'])
 def control_endpoint():
