@@ -32,7 +32,7 @@ def load_config():
         config = {
             autosun: True,
             personality: True,
-            lastAttention: datetime.now()
+            lastattention: datetime.now()
         }
         save_config()
 
@@ -124,6 +124,8 @@ def light_query_endpoint():
 
 @app.route("/mem", methods=['GET'])
 def mem_endpoint():
+    config['lastattention'] = datetime.now()
+    save_config()
     return mem
 
 @app.route("/config", methods=['GET'])
