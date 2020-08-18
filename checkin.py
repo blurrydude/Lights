@@ -12,7 +12,9 @@ print(d)
 ip = d[0]
 s.close()
 
-data = '17000000003120000000'
+pip = requests.get('https://api.ipify.org').text
+
+data = '{ "pip": "'+pip+'", "modules": "CLI,LED" }'
 
 PARAMS = {'name':name, 'ip':ip, 'data':data} 
 
