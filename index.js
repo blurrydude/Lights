@@ -17,7 +17,11 @@ var points = {
     k: { x:  31, y: 395 },
     l: { x: 188, y: 395 },
     m: { x:  45, y: 498 },
-    n: { x: 174, y: 498 }
+    n: { x: 174, y: 498 },
+    o: { x:  83, y: 205 },
+    p: { x: 138, y: 205 },
+    q: { x:  83, y: 395 },
+    r: { x: 138, y: 395 }
 }
 
 var targetColor = "#ff0000";
@@ -37,6 +41,10 @@ var segments = [
     { a: points.d, b: points.j, r1:  72, r2:  76, c: "#00ff00" }, // 11
     { a: points.j, b: points.l, r1:  77, r2:  82, c: "#00ff00" }, // 12
     { a: points.l, b: points.n, r1:  83, r2:  89, c: "#00ff00" }, // 13
+    { a: points.q, b: points.r, r1:  90, r2:  94, c: "#00ff00" }, // 14
+    { a: points.q, b: points.o, r1:  95, r2: 104, c: "#00ff00" }, // 15
+    { a: points.o, b: points.p, r1: 105, r2: 114, c: "#00ff00" }, // 16
+    { a: points.p, b: points.r, r1: 115, r2: 119, c: "#00ff00" }, // 17
 ];
 
 var sections = [
