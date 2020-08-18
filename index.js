@@ -2,23 +2,48 @@ var canvas = document.getElementById("myCanvas");
 var secretIframe = document.getElementById("secretIframe");
 var context = canvas.getContext('2d');
 
+var points = {
+    a: { x:  60, y:   5 },
+    b: { x: 160, y:   5 },
+    c: { x: 215, y: 155 },
+    d: { x: 215, y: 205 },
+    e: { x: 160, y: 595 },
+    f: { x:  60, y: 595 },
+    g: { x:   5, y: 205 },
+    h: { x:   5, y: 155 },
+    i: { x:  60, y:   5 },
+    j: { x:  60, y:   5 },
+    k: { x:  60, y:   5 },
+    l: { x:  60, y:   5 },
+    m: { x:  60, y:   5 },
+    n: { x:  60, y:   5 }
+}
+
+function lineTo(point) {
+    context.lineTo(point.x, point.y);
+}
+
+function moveTo(point) {
+    context.moveTo(point.x, point.y);
+}
+
 function showSectionControl() {
     context.lineWidth = 10;
     context.beginPath()
-    context.moveTo(60, 5); // a
-    context.lineTo(5, 155); // h
-    context.lineTo(5, 205); // g
-    context.lineTo(60, 595); // f
-    context.lineTo(160, 595); // e
-    context.lineTo(215, 205); // d
-    context.lineTo(215, 155); // c
-    context.lineTo(160, 5); // b
-    context.lineTo(60, 5); // a
-    context.moveTo(5, 155); // h
-    context.lineTo(215, 155); // c
-    context.moveTo(5, 205); // g
-    context.lineTo(215, 205); // d
+    moveTo(points.a);
+    lineTo(points.h);
+    lineTo(points.g);
+    lineTo(points.f);
+    lineTo(points.e);
+    lineTo(points.d);
+    lineTo(points.c);
+    lineTo(points.b);
+    lineTo(points.a);
     context.closePath();
+    moveTo(points.h);
+    lineTo(points.c);
+    moveTo(points.g);
+    lineTo(points.d);
     context.moveTo(17, 291);
     context.lineTo(202, 291);
     context.moveTo(31, 395);
