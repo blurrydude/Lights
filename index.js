@@ -143,11 +143,10 @@ colorPicker.addEventListener('change', function(evt) {
 }, false);
 
 function setSection(sec) {
-    console.log('set section '+sec);
     var segs = sections[sec];
     var promises = [];
     for(var s in segs) {
-        promises.push(setSegment(segs[s]));
+        promises.push(setSegment(segs[s], targetColor));
     }
     Promise.all(promises).then(function(responses) {
         console.log(responses);
@@ -155,12 +154,24 @@ function setSection(sec) {
     });
 }
 
-function setSegment(s) {
+function offSection(sec) {
+    var segs = sections[sec];
+    var promises = [];
+    for(var s in segs) {
+        promises.push(setSegment(segs[s], "#000000"));
+    }
+    Promise.all(promises).then(function(responses) {
+        console.log(responses);
+        drawCoffin();
+    });
+}
+
+function setSegment(s, c) {
     return new Promise(function(resolve, reject) {
         var segment = segments[s];
         console.log('set segment ', segment);
-        segment.c = targetColor;
-        var color = hexToRgb(targetColor);
+        segment.c = c;
+        var color = hexToRgb(c);
         var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
         $.get(url, function(response) {
             resolve(response);
