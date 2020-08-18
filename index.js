@@ -20,7 +20,7 @@ var points = {
     n: { x: 174, y: 498 }
 }
 
-var targetColor = "#00ff00";
+var targetColor = "#ff0000";
 
 var segments = [
     { a: points.n, b: points.e, r1:   0, r2:   5, c: "#00ff00" },
