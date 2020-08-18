@@ -166,7 +166,7 @@ function offSection(sec) {
     });
 }
 
-function setSegment(s, c) {
+function setSegment(s, c, draw) {
     return new Promise(function(resolve, reject) {
         var segment = segments[s];
         console.log('set segment ', segment);
@@ -175,6 +175,37 @@ function setSegment(s, c) {
         var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
         $.get(url, function(response) {
             resolve(response);
+            if(draw) drawCoffin();
+        });
+    });
+}
+
+function setAll() {
+    var c = targetColor;
+    return new Promise(function(resolve, reject) {
+        for(var s in segments) {
+            var segment = segments[s];
+            segment.c = c;
+        }
+        var color = hexToRgb(c);
+        var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a=0&z=119';
+        $.get(url, function(response) {
+            resolve(response);
+            drawCoffin();
+        });
+    });
+}
+
+function offAll() {
+    return new Promise(function(resolve, reject) {
+        for(var s in segments) {
+            var segment = segments[s];
+            segment.c = "#000000";
+        }
+        var url = window.location.origin + '/?r=0&g=0&b=0&a=0&z=119';
+        $.get(url, function(response) {
+            resolve(response);
+            drawCoffin();
         });
     });
 }
