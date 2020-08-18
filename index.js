@@ -57,9 +57,10 @@ function moveTo(point) {
 }
 
 function showSectionControl() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
     context.lineWidth = 10;
     //context.fillStyle = "Green";
-    
+
     context.beginPath();
     moveTo(points.h);
     lineTo(points.c);
@@ -75,7 +76,7 @@ function showSectionControl() {
     context.closePath();
     context.stroke();
 
-    context.beginPath()
+    /*context.beginPath()
     moveTo(points.a);
     lineTo(points.h);
     lineTo(points.g);
@@ -87,10 +88,13 @@ function showSectionControl() {
     lineTo(points.a);
     context.strokeStyle = "Green";
     context.closePath();
-    context.stroke();
+    context.stroke();*/
+    for(var s in segments) {
+        drawSegment(segments[s]);
+    }
 }
 
-function redrawSegment(segment) {
+function drawSegment(segment) {
     context.beginPath();
     moveTo(segment.a);
     lineTo(segment.b);
@@ -147,7 +151,6 @@ function setSegment(s) {
         var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
         $.get(url, function(response) {
             resolve(response);
-            redrawSegment(segment);
         });
     });
 }
