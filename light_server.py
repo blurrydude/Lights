@@ -74,6 +74,14 @@ def control_endpoint():
     pageFile.close()
     return pageData
 
+@app.route("/template", methods=['GET'])
+def template_endpoint():
+    page = request.args['p']
+    pageFile = open("/home/pi/Lights/"+page,"r")
+    pageData = pageFile.read()
+    pageFile.close()
+    return pageData
+
 @app.route("/version", methods=['GET'])
 def version_endpoint():
     pageFile = open("/home/pi/lightdata.json","r")
