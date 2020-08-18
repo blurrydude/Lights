@@ -18,13 +18,13 @@ function showSectionControl() {
     context.lineTo(215, 155); // c
     context.moveTo(5, 205); // g
     context.lineTo(215, 205); // d
+    context.closePath();
     context.moveTo(17, 291);
     context.lineTo(202, 291);
     context.moveTo(31, 395);
     context.lineTo(188, 395);
     context.moveTo(45, 498);
     context.lineTo(174, 498);
-    context.closePath();
     context.stroke();
 }
 function writeMessage(message) {
