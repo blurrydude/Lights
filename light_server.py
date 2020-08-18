@@ -30,9 +30,9 @@ def load_config():
     hasConfig = path.exists('/home/pi/light_conf.json')
     if hasConfig == False:
         config = {
-            autosun: True,
-            personality: True,
-            lastattention: datetime.now()
+            "autosun": True,
+            "personality": True,
+            "lastattention": datetime.now()
         }
         save_config()
 
