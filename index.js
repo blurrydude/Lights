@@ -114,10 +114,12 @@ colorPicker.addEventListener('change', function(evt) {
 }, false);
 
 function setSection(sec) {
+    console.log('set section '+sec);
     var section = sections[sec];
     for(var i in section) {
         var segs = section[i];
         for(var s in segs) {
+            console.log('set segment '+s);
             var segment = segs[s];
             segment.c = colorPicker.value;
             var color = hexToRgb(colorPicker.value);
