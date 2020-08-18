@@ -59,19 +59,7 @@ function moveTo(point) {
 function showSectionControl() {
     context.lineWidth = 10;
     //context.fillStyle = "Green";
-    context.beginPath()
-    moveTo(points.a);
-    lineTo(points.h);
-    lineTo(points.g);
-    lineTo(points.f);
-    lineTo(points.e);
-    lineTo(points.d);
-    lineTo(points.c);
-    lineTo(points.b);
-    lineTo(points.a);
-    context.strokeStyle = "Green";
-    context.closePath();
-    context.stroke();
+    
     context.beginPath();
     moveTo(points.h);
     lineTo(points.c);
@@ -84,6 +72,20 @@ function showSectionControl() {
     moveTo(points.m);
     lineTo(points.n);
     context.strokeStyle = "#996400";
+    context.closePath();
+    context.stroke();
+
+    context.beginPath()
+    moveTo(points.a);
+    lineTo(points.h);
+    lineTo(points.g);
+    lineTo(points.f);
+    lineTo(points.e);
+    lineTo(points.d);
+    lineTo(points.c);
+    lineTo(points.b);
+    lineTo(points.a);
+    context.strokeStyle = "Green";
     context.closePath();
     context.stroke();
 }
