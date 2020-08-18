@@ -56,7 +56,7 @@ function moveTo(point) {
     context.moveTo(point.x, point.y);
 }
 
-function showSectionControl() {
+function drawCoffin() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.lineWidth = 5;
     //context.fillStyle = "Green";
@@ -139,7 +139,7 @@ function setSection(sec) {
     }
     Promise.all(promises).then(function(responses) {
         console.log(responses);
-        showSectionControl();
+        drawCoffin();
     });
 }
 
@@ -165,12 +165,25 @@ function hexToRgb(hex) {
     } : null;
 }
 
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
 $.get(window.location.origin + '/version', function(response) {
     document.getElementById("versionEle").innerHTML = JSON.parse(response).version;
 });
 
 $.get(window.location.origin + '/mem', function(response) {
     mem = response;
+    for(var s in segments) {
+        var segment = segments[s];
+        var m = mem[segment.r1];
+        segment.c = rgbToHex(m.r,m.g,m.b);
+        drawCoffin();
+    }
 });
-
-showSectionControl();
