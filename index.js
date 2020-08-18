@@ -232,18 +232,18 @@ function rgbToHex(r, g, b) {
 
 function updateConfig() {
     if(config.autosun === true) {
-        $('#autosunOnInd').removeClass('hide');
-        $('#autosunOffInd').addClass('hide');
+        $('#autosunOnInd').show();
+        $('#autosunOffInd').hide();
     } else {
-        $('#autosunOnInd').addClass('hide');
-        $('#autosunOffInd').removeClass('hide');
+        $('#autosunOnInd').hide();
+        $('#autosunOffInd').show();
     }
     if(config.personality === true) {
-        $('#personalityOnInd').removeClass('hide');
-        $('#personalityOffInd').addClass('hide');
+        $('#personalityOnInd').show();
+        $('#personalityOffInd').hide();
     } else {
-        $('#personalityOnInd').addClass('hide');
-        $('#personalityOffInd').removeClass('hide');
+        $('#personalityOnInd').hide();
+        $('#personalityOffInd').show();
     }
 }
 
