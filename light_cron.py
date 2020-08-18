@@ -4,28 +4,38 @@ import time
 import os
 import os.path
 from os import path
+from datetime import datetime
+
+def log(message):
+    logfile = "/home/pi/light_log_"+datetime.now().strftime("%Y-%m-%d")+".txt"
+    date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    message = date_time + ": " + message
+    print(message)
+    logFile = open(logfile,"a+")
+    logFile.write(message+"\n")
+    logFile.close()
 
 os.system('cd /home/pi/Lights && git pull --all')
-print('Waiting for ten seconds...')
+log('Waiting for ten seconds...')
 time.sleep(10)
-print('Check token')
+log('Check token')
 datafile = '/home/pi/Lights/lightdata.json'
 tokenfile = '/home/pi/lightdata.json'
 with open(datafile, "r") as read_file:
     data = json.load(read_file)
-print(data)
+log(data['version'])
 hasToken = path.exists(tokenfile)
 if hasToken == False:
-    print('Creating new token.')
+    log('Creating new token.')
     with open(tokenfile, "w") as write_file:
         json.dump(data, write_file, sort_keys=True, indent=4)
 
 with open(tokenfile, "r") as read_file:
     token = json.load(read_file)
-print(token)
+log(token['version'])
 if token['version'] != data['version']:
     with open(tokenfile, "w") as write_file:
         json.dump(data, write_file, sort_keys=True, indent=4)
-    print('Waiting ten seconds then rebooting.')
+    log('Waiting ten seconds then rebooting.')
     time.sleep(10)
     os.system('reboot now')
