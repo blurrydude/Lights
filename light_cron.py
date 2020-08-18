@@ -23,7 +23,7 @@ if hasToken == False:
 with open(tokenfile, "r") as read_file:
     token = json.load(read_file)
 print(token)
-if token.version != data.version:
+if token['version'] != data['version']:
     with open(tokenfile, "w") as write_file:
         json.dump(data, write_file, sort_keys=True, indent=4)
     print('Waiting ten seconds then rebooting.')
