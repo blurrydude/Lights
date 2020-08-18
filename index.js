@@ -116,16 +116,26 @@ colorPicker.addEventListener('change', function(evt) {
 function setSection(sec) {
     console.log('set section '+sec);
     var segs = sections[sec];
+    var promises = [];
     for(var s in segs) {
-        var segment = segments[segs[s]];
+        promises.push(setSegment(segs[s]));
+    }
+    Promise.all(promises).then(function(responses) {
+        console.log(repsonses);
+    });
+}
+
+function setSegment(s) {
+    return new Promise(function(resolve, reject) {
+        var segment = segments[s];
         console.log('set segment ', segment);
         segment.c = colorPicker.value;
         var color = hexToRgb(colorPicker.value);
         var url = window.location.origin + '/?r='+color.r+'&g='+color.g+'&b='+color.b+'&a='+segment.r1+'&z='+segment.r2;
         $.get(url, function(response) {
-            console.log(response);
+            resolve(response);
         });
-    }
+    });
 }
 
 function hexToRgb(hex) {
