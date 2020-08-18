@@ -58,7 +58,7 @@ function moveTo(point) {
 
 function showSectionControl() {
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.lineWidth = 10;
+    context.lineWidth = 5;
     //context.fillStyle = "Green";
 
     context.beginPath();
@@ -72,7 +72,7 @@ function showSectionControl() {
     lineTo(points.l);
     moveTo(points.m);
     lineTo(points.n);
-    context.strokeStyle = "#996400";
+    context.strokeStyle = "#000000";
     context.closePath();
     context.stroke();
 
@@ -139,6 +139,7 @@ function setSection(sec) {
     }
     Promise.all(promises).then(function(responses) {
         console.log(responses);
+        showSectionControl();
     });
 }
 

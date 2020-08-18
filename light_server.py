@@ -22,26 +22,34 @@ led_count = int(args.ledcount)
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 pixels = neopixel.NeoPixel(board.D18, led_count)
+mem = []
 
 def save_memory(mem):
     with open('/home/pi/light_mem.json', "w") as write_file:
         json.dump(mem, write_file, indent=4)
 
 def load_memory():
-    mem = []
+    global mem
     hasMem = path.exists('/home/pi/light_mem.json')
     if hasMem == False:
         for i in range(led_count):
             mem.append((0,0,0))
         with open('/home/pi/light_mem.json', "w") as write_file:
             json.dump(mem, write_file, indent=4)
-    with open('/home/pi/light_mem.json', "r") as read_file:
-        mem = json.load(read_file)
-    return mem
+    try:
+        with open('/home/pi/light_mem.json', "r") as read_file:
+            mem = json.load(read_file)
+        return mem
+    except:
+        for i in range(led_count):
+            mem.append((0,0,0))
+        os.remove('/home/pi/light_mem.json')
+        with open('/home/pi/light_mem.json', "w") as write_file:
+            json.dump(mem, write_file, indent=4)
 
 @app.route("/", methods=['GET'])
 def light_endpoint():
-    mem = load_memory()
+    global mem
     a = int(request.args['a'])
     r = int(request.args['r'])
     g = int(request.args['g'])
@@ -56,7 +64,7 @@ def light_endpoint():
 
 @app.route("/pixels", methods=['GET'])
 def pixels_endpoint():
-    mem = load_memory()
+    global mem
     p = request.args['p'].split(",")
     r = int(request.args['r'])
     g = int(request.args['g'])
@@ -91,7 +99,6 @@ def version_endpoint():
 
 @app.route("/query", methods=['GET'])
 def light_query_endpoint():
-    mem = load_memory()
     a = int(request.args['a'])
     p = mem[a]
 
@@ -99,7 +106,6 @@ def light_query_endpoint():
 
 @app.route("/mem", methods=['GET'])
 def mem_endpoint():
-    mem = load_memory()
     return mem
 
 if __name__ == "__main__":
