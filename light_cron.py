@@ -16,6 +16,7 @@ with open(datafile, "r") as read_file:
 print(data)
 hasToken = path.exists(tokenfile)
 if hasToken == False:
+    print('Creating new token.')
     with open(tokenfile, "w") as write_file:
         json.dump(data, write_file, sort_keys=True, indent=4)
 
