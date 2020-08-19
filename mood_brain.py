@@ -4,6 +4,11 @@ import random
 import socket
 from os import path
 import json
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--reset", "-reset", help="reset personality")
+args = parser.parse_args()
 
 name = socket.gethostname()
 
@@ -31,6 +36,11 @@ personality = {
 }
 weather = ["thunderstorms","drizzle","rain","snow","clear weather","cloudy weather","mist","haze","fog"]
 colors = ['red','green','blu']
+
+def reset_personality():
+    makePersonality()
+    with open('/home/pi/personality.json', "w") as write_file:
+        json.dump(personality, write_file, indent=4)
 
 def save_personality():
     with open('/home/pi/personality.json', "w") as write_file:
@@ -125,6 +135,8 @@ def getSummary():
     summary = summary + '.\n'+name+' likes '+colors[personality["likes"]["color"]]+'ish colors, loves '+colors[personality["superlikes"]["color"]]+'ish colors and dislikes '+colors[personality["dislikes"]["color"]]+'ish colors.\n'
     summary = summary + 'Your furniture does its best thinking around '+str(personality["superlikes"]["time"])+':00 or even '+str(personality["likes"]["time"])+':00, but gets lethargic around '+str(personality["dislikes"]["time"])+':00'
     return summary
-
+if args.reset:
+    reset_personality()
+    time.sleep(1)
 load_personality()
 print(getSummary())
