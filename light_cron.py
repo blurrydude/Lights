@@ -31,7 +31,7 @@ def getWeatherData():
     key = 'd7859f3f349211398b8415df8f05633f'
     r = requests.get(url = "https://api.openweathermap.org/data/2.5/weather", params = {'lat':config['lat'], 'lon':config['lon'], 'appid':key, 'units':'imperial'}).text
     with open("/home/pi/weather.json", "w") as write_file:
-        json.dump(r, write_file, sort_keys=True, indent=4)
+        json.dump(r.json(), write_file, sort_keys=True, indent=4)
 
 def log(message):
     logfile = "/home/pi/light_log_"+datetime.now().strftime("%Y-%m-%d")+".txt"
