@@ -19,7 +19,7 @@ def log(message):
 def doCheck():
     log('Check for neighbors...')
 
-    pis = requests.get('https://blurrydude.com:5000/checkall').text
+    pis = json.loads(requests.get('https://blurrydude.com:5000/checkall').text)
     pip = requests.get('https://api.ipify.org').text
 
     for i in pis:
