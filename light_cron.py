@@ -10,12 +10,6 @@ import socket
 
 name = socket.gethostname()
 
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.connect(("8.8.8.8", 80))
-d = s.getsockname()
-print(d)
-ip = d[0]
-s.close()
 pip = requests.get('https://api.ipify.org').text
 
 def log(message):
@@ -34,7 +28,7 @@ def doCheck():
 
     for i in pis:
         s = i.split('|')
-        if s[3] == pip and s[2] != ip:
+        if s[3] == pip and s[0] != name:
             if path.exists('/home/pi/'+s[0]+'.neighbor') == False:
                 log('Found a new neighbor at '+s[2])
             with open('/home/pi/'+s[0]+'.neighbor', "w") as write_file:
