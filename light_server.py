@@ -144,6 +144,18 @@ def setpersonality_endpoint():
     save_config()
     return config
 
+
+@app.route("/checkneighbors", methods=['GET'])
+def checkneighbors_endpoint():
+    directory = r'/home/pi/'
+    results = []
+    for filename in os.listdir(directory,"neighbor"):
+        f = open(filename, 'r')
+        t = f.read()
+        f.close()
+        results.append(t)
+    return results
+
 if __name__ == "__main__":
     load_memory()
     load_config()
