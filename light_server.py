@@ -34,7 +34,9 @@ def load_config():
         config = {
             "autosun": True,
             "personality": True,
-            "lastattention": time.time()
+            "lastattention": time.time(),
+            "lat": 39.8888672,
+            "lon": -84.217542
         }
         save_config()
 

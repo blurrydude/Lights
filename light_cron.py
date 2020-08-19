@@ -8,8 +8,30 @@ from os import path
 from datetime import datetime
 import socket
 
-
+config = {}
 pip = requests.get('https://api.ipify.org').text
+
+def load_config():
+    global config
+    hasConfig = path.exists('/home/pi/light_conf.json')
+    if hasConfig == False:
+        config = {
+            "autosun": True,
+            "personality": True,
+            "lastattention": time.time(),
+            "lat": 39.8888672,
+            "lon": -84.217542
+        }
+        save_config()
+
+    with open('/home/pi/light_conf.json', "r") as read_file:
+        config = json.load(read_file)
+
+def getWeatherData():
+    key = 'd7859f3f349211398b8415df8f05633f'
+    r = requests.get(url = "https://api.openweathermap.org/data/2.5/weather", params = {'lat':config['lat'], 'lon':config['lon'], 'appid':key, 'units':'imperial'})
+    with open("/home/pi/weather.json", "w") as write_file:
+        json.dump(r.json(), write_file, sort_keys=True, indent=4)
 
 def log(message):
     logfile = "/home/pi/light_log_"+datetime.now().strftime("%Y-%m-%d")+".txt"
@@ -59,6 +81,7 @@ def doCheck():
         time.sleep(10)
         os.system('reboot now')
         exit()
-
+load_config()
+getWeatherData()
 for i in range(0,5):
     doCheck()

@@ -290,6 +290,6 @@ $.get(window.location.origin + '/checkneighbors', function(response) {
     document.getElementById("housecount").innerHTML = housecount;
 });
 
-$.get('https://pocketwatchit.blurrydude.com/weather.json', function(response) {
+$.get('http://pocketwatchit.blurrydude.com/weather.json', function(response) {
     console.log(response)
 });
