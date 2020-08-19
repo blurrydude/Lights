@@ -56,15 +56,17 @@ def load_neighbors():
                 f.close()
                 neighbors.append(t)
         except:
-            log_error("Unexpected error reading neighbors:", sys.exc_info()[0])
+            log("Unexpected error reading neighbors:", sys.exc_info()[0])
             try:
                 os.remove(filename)
                 pass
             except:
-                log_error("Unexpected error removing neighbors:", sys.exc_info()[0])
+                log("Unexpected error removing neighbors:", sys.exc_info()[0])
                 pass
-def log_error(message):
-    with open('/home/pi/light_server_errors_'+datetime.now().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
+def log(message):
+    date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    message = date_time + ": " + message
+    with open('/home/pi/light_server_log_'+datetime.now().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
         write_file.write(message+"\n")
 
 def save_config():
@@ -186,23 +188,32 @@ def weather_endpoint():
     return pageData
 
 if __name__ == "__main__":
+    log('Starting program in 90 seconds...')
     time.sleep(90)
+    log('Starting.')
     try:
+        log('Loading memory...')
         load_memory()
+        log('Done.')
     except:
-        log_error("Unexpected error loading memory:", sys.exc_info()[0])
+        log("Unexpected error loading memory:", sys.exc_info()[0])
     try:
+        log('Loading config...')
         load_config()
+        log('Done.')
     except:
-        log_error("Unexpected error loading config:", sys.exc_info()[0])
+        log("Unexpected error loading config:", sys.exc_info()[0])
     try:
+        log('Loading neighbors...')
         load_neighbors()
+        log('Done.')
     except:
-        log_error("Unexpected error loading neighbors:", sys.exc_info()[0])
+        log("Unexpected error loading neighbors:", sys.exc_info()[0])
         pass
     try:
+        log('Running app...')
         app.run(host=args.ip, port=80, debug=True)
     except:
-        log_error("Unexpected error running api:", sys.exc_info()[0])
+        log("Unexpected error running api:", sys.exc_info()[0])
 
     # app.run(ssl_context=('/etc/letsencrypt/live/blurrydude.com/fullchain.pem','/etc/letsencrypt/live/blurrydude.com/privkey.pem'), host='192.168.1.51')
