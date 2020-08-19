@@ -287,4 +287,5 @@ $.get(window.location.origin + '/config', function(response) {
 $.get(window.location.origin + '/checkneighbors', function(response) {
     household = response;
     housecount = household.length;
+    document.getElementById("housecount").innerHTML = housecount;
 });
