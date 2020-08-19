@@ -23,7 +23,7 @@ def doCheck():
     pip = requests.get('https://api.ipify.org').text
 
     for i in pis:
-        s = pis[i].split('|')
+        s = i.split('|')
         if s[3] == pip:
             if path.exists('/home/pi/'+s[0]+'.neighbor') == False:
                 log('Found a new neighbor at '+s[2])
