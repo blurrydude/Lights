@@ -2,6 +2,7 @@ import subprocess
 import json
 import time
 import os
+import requests
 import os.path
 from os import path
 from datetime import datetime
@@ -44,3 +45,13 @@ def doCheck():
 
 for i in range(0,5):
     doCheck()
+
+pis = requests.get('https://blurrydude.com:5000/checkall')
+pip = requests.get('https://api.ipify.org').text
+
+for i in pis:
+    s = pis[i].split('|')
+    if s[3] == pip:
+        with open('/home/pi/'+s[0]+'.neighbor', "w") as write_file:
+            json.dump(s, write_file, sort_keys=True, indent=4)
+    
