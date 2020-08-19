@@ -17,6 +17,19 @@ def log(message):
     logFile.close()
 
 def doCheck():
+    log('Check for neighbors...')
+
+    pis = requests.get('https://blurrydude.com:5000/checkall').text
+    pip = requests.get('https://api.ipify.org').text
+
+    for i in pis:
+        s = pis[i].split('|')
+        if s[3] == pip:
+            if path.exists('/home/pi/'+s[0]+'.neighbor') == False:
+                log('Found a new neighbor at '+s[2])
+            with open('/home/pi/'+s[0]+'.neighbor', "w") as write_file:
+                json.dump(s, write_file, sort_keys=True, indent=4)
+
     os.system('cd /home/pi/Lights && git pull --all')
     log('Waiting for ten seconds...')
     time.sleep(10)
@@ -45,13 +58,3 @@ def doCheck():
 
 for i in range(0,5):
     doCheck()
-
-pis = requests.get('https://blurrydude.com:5000/checkall').text
-pip = requests.get('https://api.ipify.org').text
-
-for i in pis:
-    s = pis[i].split('|')
-    if s[3] == pip:
-        with open('/home/pi/'+s[0]+'.neighbor', "w") as write_file:
-            json.dump(s, write_file, sort_keys=True, indent=4)
-    
