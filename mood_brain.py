@@ -44,6 +44,7 @@ def load_personality():
         save_personality()
     with open('/home/pi/personality.json', "r") as read_file:
         personality = json.load(read_file)
+        print(personality)
 
 def load_neighbors():
     global neighbors
