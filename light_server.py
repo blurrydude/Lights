@@ -57,7 +57,7 @@ def load_memory():
     if hasMem == False:
         for i in range(led_count):
             mem.append((0,0,0))
-        save_memory()
+        save_memory(mem)
     try:
         with open('/home/pi/light_mem.json', "r") as read_file:
             mem = json.load(read_file)
