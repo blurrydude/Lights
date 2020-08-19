@@ -279,3 +279,7 @@ $.get(window.location.origin + '/config', function(response) {
     config = response;
     updateConfig();
 });
+
+$.get(window.location.origin + '/checkneighbors', function(response) {
+    console.log(response);
+});
