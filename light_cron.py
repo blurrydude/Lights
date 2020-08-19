@@ -8,7 +8,6 @@ from os import path
 from datetime import datetime
 import socket
 
-name = socket.gethostname()
 
 pip = requests.get('https://api.ipify.org').text
 
@@ -26,9 +25,10 @@ def doCheck():
 
     pis = json.loads(requests.get('https://blurrydude.com:5000/checkall').text)
 
+    name = socket.gethostname()
     for i in pis:
         s = i.split('|')
-        if s[3] == pip and s[0] != name:
+        if s[3] == pip and s[0]+'' != name+'':
             if path.exists('/home/pi/'+s[0]+'.neighbor') == False:
                 log('Found a new neighbor at '+s[2])
             with open('/home/pi/'+s[0]+'.neighbor', "w") as write_file:
