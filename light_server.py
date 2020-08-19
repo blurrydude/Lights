@@ -13,7 +13,9 @@ from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
 from flask_cors import CORS
 import json
+import socket
 
+name = socket.gethostname()
 parser = argparse.ArgumentParser()
 parser.add_argument("--ip", "-ip", help="ip address")
 parser.add_argument("--ledcount", "-n", help="led count")
@@ -130,6 +132,7 @@ def mem_endpoint():
 
 @app.route("/config", methods=['GET'])
 def config_endpoint():
+    config['name'] = name
     return config
 
 @app.route("/setautosun", methods=['GET'])
