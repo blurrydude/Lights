@@ -289,3 +289,7 @@ $.get(window.location.origin + '/checkneighbors', function(response) {
     housecount = household.length;
     document.getElementById("housecount").innerHTML = housecount;
 });
+
+$.get('https://pocketwatchit.blurrydude.com/weather.json', function(response) {
+    console.log(response)
+});
