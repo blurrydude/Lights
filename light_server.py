@@ -164,7 +164,6 @@ def checkneighbors_endpoint():
 
 @app.route("/weather", methods=['GET'])
 def weather_endpoint():
-    page = request.args['p']
     pageFile = open("/home/pi/weather.json","r")
     pageData = pageFile.read()
     pageFile.close()
