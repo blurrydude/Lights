@@ -277,6 +277,7 @@ $.get(window.location.origin + '/mem', function(response) {
 
 $.get(window.location.origin + '/config', function(response) {
     config = response;
+    $('#namespan').innerHTML = config.name
     updateConfig();
 });
 
