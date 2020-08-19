@@ -290,6 +290,6 @@ $.get(window.location.origin + '/checkneighbors', function(response) {
     document.getElementById("housecount").innerHTML = housecount;
 });
 
-$.get(window.location.origin + '/template?p=weather.json', function(response) {
+$.get(window.location.origin + '/weather', function(response) {
     console.log(response)
 });
