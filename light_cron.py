@@ -46,7 +46,7 @@ def doCheck():
 for i in range(0,5):
     doCheck()
 
-pis = requests.get('https://blurrydude.com:5000/checkall')
+pis = requests.get('https://blurrydude.com:5000/checkall').text
 pip = requests.get('https://api.ipify.org').text
 
 for i in pis:
