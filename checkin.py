@@ -14,7 +14,7 @@ s.close()
 
 pip = requests.get('https://api.ipify.org').text
 
-data = '{ "pip": "'+pip+'", "modules": "CLI,LED" }'
+data = pip
 
 PARAMS = {'name':name, 'ip':ip, 'data':data} 
 
