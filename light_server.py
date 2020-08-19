@@ -59,8 +59,10 @@ def load_neighbors():
             log_error("Unexpected error reading neighbors:", sys.exc_info()[0])
             try:
                 os.remove(filename)
+                pass
             except:
                 log_error("Unexpected error removing neighbors:", sys.exc_info()[0])
+                pass
 def log_error(message):
     with open('/home/pi/light_server_errors_'+datetime.now().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
         write_file.write(message+"\n")
@@ -185,8 +187,22 @@ def weather_endpoint():
 
 if __name__ == "__main__":
     time.sleep(90)
-    load_memory()
-    load_config()
-    load_neighbors()
-    app.run(host=args.ip, port=80, debug=True)
+    try:
+        load_memory()
+    except:
+        log_error("Unexpected error loading memory:", sys.exc_info()[0])
+    try:
+        load_config()
+    except:
+        log_error("Unexpected error loading config:", sys.exc_info()[0])
+    try:
+        load_neighbors()
+    except:
+        log_error("Unexpected error loading neighbors:", sys.exc_info()[0])
+        pass
+    try:
+        app.run(host=args.ip, port=80, debug=True)
+    except:
+        log_error("Unexpected error running api:", sys.exc_info()[0])
+
     # app.run(ssl_context=('/etc/letsencrypt/live/blurrydude.com/fullchain.pem','/etc/letsencrypt/live/blurrydude.com/privkey.pem'), host='192.168.1.51')
