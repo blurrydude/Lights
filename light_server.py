@@ -184,6 +184,7 @@ def weather_endpoint():
     return pageData
 
 if __name__ == "__main__":
+    time.sleep(90)
     load_memory()
     load_config()
     load_neighbors()
