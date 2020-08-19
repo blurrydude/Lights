@@ -149,11 +149,12 @@ def setpersonality_endpoint():
 def checkneighbors_endpoint():
     directory = r'/home/pi/'
     results = []
-    for filename in os.listdir(directory,"neighbor"):
-        f = open(filename, 'r')
-        t = f.read()
-        f.close()
-        results.append(t)
+    for filename in os.listdir(directory):
+        if filename.endswith(".neighbor"):
+            f = open(filename, 'r')
+            t = f.read()
+            f.close()
+            results.append(t)
     return results
 
 if __name__ == "__main__":
