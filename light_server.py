@@ -155,11 +155,14 @@ def checkneighbors_endpoint():
     directory = r'/home/pi/'
     results = []
     for filename in os.listdir(directory):
-        if filename.endswith(".neighbor"):
-            f = open(filename, 'r')
-            t = f.read()
-            f.close()
-            results.append(t)
+        try:
+            if filename.endswith(".neighbor"):
+                f = open(filename, 'r')
+                t = f.read()
+                f.close()
+                results.append(t)
+        except:
+            os.remove(filename)
     return results
 
 @app.route("/weather", methods=['GET'])
