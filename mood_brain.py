@@ -44,7 +44,6 @@ def load_personality():
         save_personality()
     with open('/home/pi/personality.json', "r") as read_file:
         personality = json.load(read_file)
-        print(personality)
 
 def load_neighbors():
     global neighbors
@@ -125,6 +124,7 @@ def getSummary():
     summary = summary + '.\n'+name+' prefers to avoid '+personality["dislikes"]["weather"]
     summary = summary + '.\n'+name+' likes '+colors[personality["likes"]["color"]]+'ish colors, loves '+colors[personality["superlikes"]["color"]]+'ish colors and dislikes '+colors[personality["dislikes"]["color"]]+'ish colors.\n'
     summary = summary + 'Your furniture does its best thinking around '+str(personality["superlikes"]["time"])+':00 or even '+str(personality["likes"]["time"])+':00, but gets lethargic around '+str(personality["dislikes"]["time"])+':00'
+    return summary
 
 load_personality()
 print(getSummary())
