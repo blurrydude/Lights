@@ -26,6 +26,7 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 pixels = neopixel.NeoPixel(board.D18, led_count)
 mem = []
 config = {}
+neighbors = []
 
 def load_config():
     global config
@@ -42,6 +43,20 @@ def load_config():
 
     with open('/home/pi/light_conf.json', "r") as read_file:
         config = json.load(read_file)
+
+def load_neighbors():
+    global neighbors
+    directory = r'/home/pi/'
+    neighbors = []
+    for filename in os.listdir(directory):
+        try:
+            if filename.endswith(".neighbor"):
+                f = open(filename, 'r')
+                t = f.read()
+                f.close()
+                neighbors.append(t)
+        except:
+            os.remove(filename)
 
 def save_config():
     with open('/home/pi/light_conf.json', "w") as write_file:
@@ -152,18 +167,7 @@ def setpersonality_endpoint():
 
 @app.route("/checkneighbors", methods=['GET'])
 def checkneighbors_endpoint():
-    directory = r'/home/pi/'
-    results = []
-    for filename in os.listdir(directory):
-        try:
-            if filename.endswith(".neighbor"):
-                f = open(filename, 'r')
-                t = f.read()
-                f.close()
-                results.append(t)
-        except:
-            os.remove(filename)
-    return results
+    return neighbors
 
 @app.route("/weather", methods=['GET'])
 def weather_endpoint():
@@ -175,5 +179,6 @@ def weather_endpoint():
 if __name__ == "__main__":
     load_memory()
     load_config()
+    load_neighbors()
     app.run(host=args.ip, port=80, debug=True)
     # app.run(ssl_context=('/etc/letsencrypt/live/blurrydude.com/fullchain.pem','/etc/letsencrypt/live/blurrydude.com/privkey.pem'), host='192.168.1.51')
