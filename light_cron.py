@@ -6,6 +6,17 @@ import requests
 import os.path
 from os import path
 from datetime import datetime
+import socket
+
+name = socket.gethostname()
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.connect(("8.8.8.8", 80))
+d = s.getsockname()
+print(d)
+ip = d[0]
+s.close()
+pip = requests.get('https://api.ipify.org').text
 
 def log(message):
     logfile = "/home/pi/light_log_"+datetime.now().strftime("%Y-%m-%d")+".txt"
@@ -20,11 +31,10 @@ def doCheck():
     log('Check for neighbors...')
 
     pis = json.loads(requests.get('https://blurrydude.com:5000/checkall').text)
-    pip = requests.get('https://api.ipify.org').text
 
     for i in pis:
         s = i.split('|')
-        if s[3] == pip:
+        if s[3] == pip and s[2] != ip:
             if path.exists('/home/pi/'+s[0]+'.neighbor') == False:
                 log('Found a new neighbor at '+s[2])
             with open('/home/pi/'+s[0]+'.neighbor', "w") as write_file:
