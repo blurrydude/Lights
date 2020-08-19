@@ -61,6 +61,8 @@ var sections = [
 ];
 
 var config = {};
+var housecount = 0;
+var household = [];
 
 function lineTo(point) {
     context.lineTo(point.x, point.y);
@@ -283,5 +285,6 @@ $.get(window.location.origin + '/config', function(response) {
 });
 
 $.get(window.location.origin + '/checkneighbors', function(response) {
-    console.log(response);
+    household = response;
+    housecount = household.length;
 });
