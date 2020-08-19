@@ -56,7 +56,14 @@ def load_neighbors():
                 f.close()
                 neighbors.append(t)
         except:
-            os.remove(filename)
+            log_error("Unexpected error reading neighbors:", sys.exc_info()[0])
+            try:
+                os.remove(filename)
+            except:
+                log_error("Unexpected error removing neighbors:", sys.exc_info()[0])
+def log_error(message):
+    with open('/home/pi/light_server_errors_'+datetime.now().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
+        write_file.write(message+"\n")
 
 def save_config():
     with open('/home/pi/light_conf.json', "w") as write_file:
