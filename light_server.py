@@ -203,13 +203,13 @@ if __name__ == "__main__":
         log('Done.')
     except:
         log("Unexpected error loading config:", sys.exc_info()[0])
-    try:
-        log('Loading neighbors...')
-        load_neighbors()
-        log('Done.')
-    except:
-        log("Unexpected error loading neighbors:", sys.exc_info()[0])
-        pass
+    # try:
+    #     log('Loading neighbors...')
+    #     load_neighbors()
+    #     log('Done.')
+    # except:
+    #     log("Unexpected error loading neighbors:", sys.exc_info()[0])
+    #     pass
     try:
         log('Running app...')
         app.run(host=args.ip, port=80, debug=True)
