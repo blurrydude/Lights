@@ -59,10 +59,10 @@ def load_neighbors():
             log("Unexpected error reading neighbors:", sys.exc_info()[0])
             try:
                 os.remove(filename)
-                pass
+                continue
             except:
                 log("Unexpected error removing neighbors:", sys.exc_info()[0])
-                pass
+                continue
 def log(message):
     date_time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
