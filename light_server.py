@@ -162,6 +162,14 @@ def checkneighbors_endpoint():
             results.append(t)
     return results
 
+@app.route("/weather", methods=['GET'])
+def weather_endpoint():
+    page = request.args['p']
+    pageFile = open("/home/pi/weather.json","r")
+    pageData = pageFile.read()
+    pageFile.close()
+    return pageData
+
 if __name__ == "__main__":
     load_memory()
     load_config()
