@@ -328,9 +328,15 @@ def think():
         if percentChance(personality["activity_level"]*2):
             brain["boredom"] - 1
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
-    if bored and percentChance(personality["changeability"]*10):
-        #do something
-    else:
+    if bored:
+        if percentChance(personality["positivity"]*10):
+            #start convo with neighbor
+            return
+        elif percentChance(personality["changeability"]*10):
+            #change display and plume colors 
+            return
+
+    if percentChance((10 - personality["activity_level"])*5):
         brain["boredom"] = max(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
         brain["energy"] = min(brain["energy"] - 1, 0)
