@@ -164,12 +164,32 @@ def getSummary():
     summary = summary + 'Your furniture does its best thinking around '+str(personality["superlikes"]["time"])+':00 or even '+str(personality["likes"]["time"])+':00, but gets lethargic around '+str(personality["dislikes"]["time"])+':00'
     return summary
 
+def converse():
+    global brain
+    hasdialogwaiting = path.exists('/home/pi/dialog_waiting.txt')
+    save_brain()
+
+def rest():
+    global brain
+    save_brain()
+
 def think():
     global brain
+    if brain["conversation"] == True:
+        converse()
+        return True
+    if brain["resting"] == True:
+        rest()
+        return True
+    feelLikeResting = brain["energy"] < 3
+    maybeDoSomething = random.randrange(brain["boredom"]) > 3 + (10 - personality["changeability"])
+    save_brain()
 
 if args.reset:
     reset_personality()
     time.sleep(1)
 
 load_personality()
+load_brain()
 print(getSummary())
+think()
