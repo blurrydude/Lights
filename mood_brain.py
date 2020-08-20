@@ -34,6 +34,22 @@ personality = {
         "time": 0,
     }
 }
+
+brain = {
+    "mood": 5,
+    "energy": 5,
+    "boredom": 0,
+    "current_thoughts": [],
+    "social_circle": [],
+    "last_activity": datetime.now(),
+    "last_thought": datetime.now(),
+    "last_interaction": datetime.now(),
+    "resting": False,
+    "conversation": False,
+    "conversation_target": "",
+    "conversation_rounds": 0
+}
+
 weather = ["thunderstorms","drizzle","rain","snow","clear weather","cloudy weather","mist","haze","fog"]
 colors = ['red','green','blu']
 
@@ -41,6 +57,18 @@ def reset_personality():
     makePersonality()
     with open('/home/pi/personality.json', "w") as write_file:
         json.dump(personality, write_file, indent=4)
+
+def save_brain():
+    with open('/home/pi/brain.json', "w") as write_file:
+        json.dump(brain, write_file, indent=4)
+
+def load_brain():
+    global brain
+    hasbrain = path.exists('/home/pi/brain.json')
+    if hasbrain == False:
+        save_brain()
+    with open('/home/pi/brain.json', "r") as read_file:
+        brain = json.load(read_file)
 
 def save_personality():
     with open('/home/pi/personality.json', "w") as write_file:
@@ -135,8 +163,13 @@ def getSummary():
     summary = summary + '.\n'+name+' likes '+colors[personality["likes"]["color"]]+'ish colors, loves '+colors[personality["superlikes"]["color"]]+'ish colors and dislikes '+colors[personality["dislikes"]["color"]]+'ish colors.\n'
     summary = summary + 'Your furniture does its best thinking around '+str(personality["superlikes"]["time"])+':00 or even '+str(personality["likes"]["time"])+':00, but gets lethargic around '+str(personality["dislikes"]["time"])+':00'
     return summary
+
+def think():
+    global brain
+
 if args.reset:
     reset_personality()
     time.sleep(1)
+
 load_personality()
 print(getSummary())
