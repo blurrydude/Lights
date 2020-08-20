@@ -68,9 +68,9 @@ def load_neighbors():
                 log("Unexpected error removing neighbors")
                 continue
 def log(message):
-    date_time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    date_time = time.time().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
-    with open('/home/pi/light_server_log_'+datetime.datetime.now().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
+    with open('/home/pi/light_server_log_'+time.time().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
         write_file.write(message+"\n")
 
 def save_config():
@@ -220,7 +220,7 @@ def converse_endpoint():
             return "reaction:ignoring"
         brain["conversation"] = True
         brain["conversation_target"] = request.args["name"]
-        brain["social_circles"][request.args["name"]]["last_interaction"] = datetime.datetime.now()
+        brain["social_circles"][request.args["name"]]["last_interaction"] = time.time()
         brain["social_circles"][request.args["name"]]["ip"] = request.args["ip"]
         with open('/home/pi/waiting_dialog.json', "w") as write_file:
             json.dump(request.args, write_file, indent=4)
@@ -230,8 +230,8 @@ def converse_endpoint():
         brain["social_circles"][request.args["name"]] = {
             "positive_interaction": 0,
             "negative_interaction": 0,
-            "met": datetime.datetime.now(),
-            "last_interaction": datetime.datetime.now(),
+            "met": time.time(),
+            "last_interaction": time.time(),
             "ip": request.args["ip"]
         }
         brain["conversation"] = True
