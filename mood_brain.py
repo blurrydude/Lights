@@ -313,9 +313,7 @@ def rest():
 def think():
     global brain
     print("\n\n\n")
-    print(brain)
-    print("\n\n\n")
-    print(personality)
+    print(brain["boredom"])
     print("\n\n\n")
     if brain["conversation"] == True:
         return converse()
