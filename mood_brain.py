@@ -270,7 +270,8 @@ def processDialog(them, dialog):
 def converse():
     global brain
     hasdialogwaiting = path.exists('/home/pi/dialog_waiting.json')
-    if neighbors.count > 0:
+    if neighbors.count == 0:
+        return
     if hasdialogwaiting == False:
         return
     replies = []
@@ -300,7 +301,7 @@ def converse():
     send = sep.join(replies)
 
     response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
-    processDialog(response.text)
+    processDialog(them, response.text)
 
     brain["energy"] = min(brain["energy"] - 1, 0)
     save_brain()
@@ -314,7 +315,7 @@ def rest():
     save_brain()
 
 def percentChance(percent):
-    return random.range(100) < percent
+    return random.randrange(100) < percent
 
 def think():
     global brain
