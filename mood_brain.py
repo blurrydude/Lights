@@ -2,6 +2,7 @@ from datetime import datetime
 import time
 import random
 import socket
+import os
 from os import path
 import json
 import argparse
@@ -12,6 +13,7 @@ args = parser.parse_args()
 
 name = socket.gethostname()
 
+config = {}
 neighbors = []
 
 personality = {
@@ -53,6 +55,26 @@ brain = {
 weather = ["thunderstorms","drizzle","rain","snow","clear weather","cloudy weather","mist","haze","fog"]
 colors = ['red','green','blu']
 
+def save_config():
+    with open('/home/pi/light_conf.json', "w") as write_file:
+        json.dump(config, write_file, indent=4)
+
+def load_config():
+    global config
+    hasConfig = path.exists('/home/pi/light_conf.json')
+    if hasConfig == False:
+        config = {
+            "autosun": True,
+            "personality": True,
+            "lastattention": time.time(),
+            "lat": 39.8888672,
+            "lon": -84.217542
+        }
+        save_config()
+
+    with open('/home/pi/light_conf.json', "r") as read_file:
+        config = json.load(read_file)
+
 def reset_personality():
     makePersonality()
     with open('/home/pi/personality.json', "w") as write_file:
@@ -87,20 +109,11 @@ def load_neighbors():
     global neighbors
     directory = r'/home/pi/'
     for filename in os.listdir(directory):
-        try:
-            if filename.endswith(".neighbor"):
-                f = open(filename, 'r')
-                t = f.read()
-                f.close()
-                neighbors.append(t)
-        except:
-            log("Unexpected error reading neighbors:", sys.exc_info()[0])
-            try:
-                os.remove(filename)
-                continue
-            except:
-                log("Unexpected error removing neighbors:", sys.exc_info()[0])
-                continue
+        if filename.endswith(".neighbor"):
+            f = open(filename, 'r')
+            t = f.read()
+            f.close()
+            neighbors.append(t)
 
 def makePersonality():
     global personality
@@ -164,12 +177,63 @@ def getSummary():
     summary = summary + 'Your furniture does its best thinking around '+str(personality["superlikes"]["time"])+':00 or even '+str(personality["likes"]["time"])+':00, but gets lethargic around '+str(personality["dislikes"]["time"])+':00'
     return summary
 
+def processDialog(them, dialog):
+    global brain
+    context = dialog.split(':')
+    dialogType = context[0]
+    if dialogType == "topic":
+        like = 0
+        dislike = 0
+        feeling = context[1]
+        subject = context[2]
+        thought = context[3]
+        if personality[feeling][subject] == thought:
+            if feeling == "likes":
+                like = like + 1
+            if feeling == "superlikes":
+                like = like + 2
+            if feeling == "dislikes":
+                like = like + 2
+        if feeling == "likes" and personality["superlikes"][subject] == thought:
+            like = like + 2
+        if feeling == "superlikes" and personality["likes"][subject] == thought:
+            like = like + 1
+        if feeling == "dislikes" and personality["superlikes"][subject] == thought:
+            dislike = dislike + 2
+        if feeling == "dislikes" and personality["likes"][subject] == thought:
+            dislike = dislike + 1
+        
+
+    if dialogType == "reaction":
+        reaction = context[1]
+        if reaction == "thinking":
+            return True
+        if reaction == "busy":
+            brain["converation"] = False
+            brain["conversation_target"] = ""
+            save_brain()
+            return True
+        if reaction == "bye":
+            them["positive_interactions"] = them["positive_interactions"] + 1
+            brain["converation"] = False
+            brain["conversation_target"] = ""
+            save_brain()
+            return True
+
+
+
+
 def converse():
     global brain
-    hasdialogwaiting = path.exists('/home/pi/dialog_waiting.txt')
+    feelLikeResting = brain["energy"] < 3
+    hasdialogwaiting = path.exists('/home/pi/dialog_waiting.json')
     if hasdialogwaiting:
-        with open('/home/pi/dialog_waiting.txt', "r") as read_file:
+        with open('/home/pi/dialog_waiting.json', "r") as read_file:
             data = json.load(read_file)
+        them = brain["social_circle"][data["name"]]
+        dialogs = data["dialog"].split(',')
+        for dialog in dialogs:
+            processDialog(them, dialog)
     
     save_brain()
 
@@ -193,7 +257,15 @@ if args.reset:
     reset_personality()
     time.sleep(1)
 
-load_personality()
-load_brain()
-print(getSummary())
-think()
+load_config()
+if config["personality"] == True:
+    load_personality()
+    load_brain()
+    load_neighbors()
+    print(config)
+    print(personality)
+    print(brain)
+    print(neighbors)
+    think()
+else:
+    print("personality disabled")
