@@ -38,12 +38,15 @@ def load_config():
             "personality": True,
             "lastattention": time.time(),
             "lat": 39.8888672,
-            "lon": -84.217542
+            "lon": -84.217542,
+            "ip": args.ip
         }
         save_config()
 
     with open('/home/pi/light_conf.json', "r") as read_file:
         config = json.load(read_file)
+    if "ip" not in config.keys():
+        config["ip"] = args.ip
 
 def load_neighbors():
     global neighbors
@@ -71,6 +74,7 @@ def log(message):
         write_file.write(message+"\n")
 
 def save_config():
+    config["ip"] = args.ip
     with open('/home/pi/light_conf.json', "w") as write_file:
         json.dump(config, write_file, indent=4)
 

@@ -6,6 +6,7 @@ import os
 from os import path
 import json
 import argparse
+import requests
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--reset", "-reset", help="reset personality")
@@ -54,6 +55,7 @@ brain = {
 
 weather = ["thunderstorms","drizzle","rain","snow","clear weather","cloudy weather","mist","haze","fog"]
 colors = ['red','green','blu']
+subjects = ["weather","color","time"]
 
 def save_config():
     with open('/home/pi/light_conf.json', "w") as write_file:
@@ -187,70 +189,136 @@ def processDialog(them, dialog):
         feeling = context[1]
         subject = context[2]
         thought = context[3]
+        reply = "reaction:neutral"
         if personality[feeling][subject] == thought:
             if feeling == "likes":
                 like = like + 1
+                reply = "reaction:happy"
             if feeling == "superlikes":
-                like = like + 2
+                like = like + 1
+                if personality["positivity"] >= 7:
+                    like = like + 1
+                reply = "reaction:veryhappy"
+                brain["boredom"] = min(brain["boredom"] - 1, 0)
             if feeling == "dislikes":
-                like = like + 2
+                reply = "reaction:veryhappy"
+                brain["boredom"] = min(brain["boredom"] - 1, 0)
+                like = like + 1
+                if personality["positivity"] < 7:
+                    like = like + 1
         if feeling == "likes" and personality["superlikes"][subject] == thought:
-            like = like + 2
+            like = like + 1
+            reply = "reaction:happy"
         if feeling == "superlikes" and personality["likes"][subject] == thought:
             like = like + 1
+            if personality["positivity"] >= 7:
+                like = like + 1
+            reply = "reaction:happy"
         if feeling == "dislikes" and personality["superlikes"][subject] == thought:
-            dislike = dislike + 2
+            dislike = dislike + 1
+            if personality["positivity"] < 7:
+                dislike = dislike + 1
+            reply = "reaction:verymad"
+            brain["boredom"] = max(brain["boredom"] + 1, 10)
         if feeling == "dislikes" and personality["likes"][subject] == thought:
             dislike = dislike + 1
-        
+            if personality["positivity"] < 4:
+                dislike = dislike + 1
+            reply = "reaction:mad"
+            brain["boredom"] = max(brain["boredom"] + 1, 10)
+        them["positive_interactions"] = them["positive_interactions"] + like
+        them["negative_interactions"] = them["negative_interactions"] + dislike
+        save_brain()
+        return reply
 
     if dialogType == "reaction":
         reaction = context[1]
-        if reaction == "thinking":
-            return True
+        if reaction == "thinking" or reaction == "neutral":
+            return ""
+        if reaction == "happy":
+            them["positive_interactions"] = them["positive_interactions"] + 1
+            return ""
+        if reaction == "veryhappy":
+            them["positive_interactions"] = them["positive_interactions"] + 1
+            them["negative_interactions"] = them["negative_interactions"] - 1
+            return ""
+        if reaction == "mad":
+            them["negative_interactions"] = them["negative_interactions"] + 1
+            return ""
+        if reaction == "verymad":
+            them["negative_interactions"] = them["negative_interactions"] + 1
+            them["positive_interactions"] = them["positive_interactions"] - 1
+            return ""
         if reaction == "busy":
             brain["converation"] = False
             brain["conversation_target"] = ""
             save_brain()
-            return True
+            return ""
         if reaction == "bye":
             them["positive_interactions"] = them["positive_interactions"] + 1
             brain["converation"] = False
             brain["conversation_target"] = ""
             save_brain()
-            return True
-
-
-
+            return ""
+        if reaction == "ignoring":
+            them["negative_interactions"] = them["negative_interactions"] + 1
+            brain["converation"] = False
+            brain["conversation_target"] = ""
+            save_brain()
+            return ""
 
 def converse():
     global brain
-    feelLikeResting = brain["energy"] < 3
     hasdialogwaiting = path.exists('/home/pi/dialog_waiting.json')
     if hasdialogwaiting:
+        replies = []
         with open('/home/pi/dialog_waiting.json', "r") as read_file:
             data = json.load(read_file)
         them = brain["social_circle"][data["name"]]
         dialogs = data["dialog"].split(',')
         for dialog in dialogs:
-            processDialog(them, dialog)
+            replies.append(reprocessDialog(them, dialog))
+    feelLikeResting = brain["energy"] < 3
+    bored = random.randrange(brain["boredom"]) > 3 + (10 - personality["activity_level"])
+    if feelLikeResting == True or bored == True:
+        replies.append("reaction:bye")
+    else:
+        feelingChoices = ["superlikes","likes","dislikes"]
+        if personality["positivity"] < 4:
+            feelingChoices = ["likes","dislikes"]
+        if personality["positivity"] >= 7:
+            feelingChoices = ["superlikes","likes"]
+        feeling = random.choice()
+        subject = random.choice(subjects)
+        thought = brain[feeling][subject]
+        replies.append("topic:"+feeling+":"+subject+":"+thought)
     
+    sep = ','
+    send = sep.join(replies)
+
+    response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
+    processDialog(reponse.text)
+
+    brain["energy"] = min(brain["energy"] - 1, 0)
     save_brain()
 
 def rest():
     global brain
+    brain["energy"] = max(brain["energy"] + 1, 10)
+    if brain["energy"] == 10:
+        brain["resting"] = False
+    brain["boredom"] = max(brain["boredom"] + 1, 10)
     save_brain()
 
 def think():
     global brain
     if brain["conversation"] == True:
-        converse()
-        return True
+        return converse()
     if brain["resting"] == True:
-        rest()
-        return True
+        return rest()
     feelLikeResting = brain["energy"] < 3
-    maybeDoSomething = random.randrange(brain["boredom"]) > 3 + (10 - personality["changeability"])
+    bored = random.randrange(brain["boredom"]) > 3 + (10 - personality["activity_level"])
+    print(neighbors)
     save_brain()
 
 if args.reset:
