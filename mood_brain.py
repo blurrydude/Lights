@@ -315,6 +315,8 @@ def think():
     print("\n\n\n")
     print(brain)
     print("\n\n\n")
+    print(personality)
+    print("\n\n\n")
     if brain["conversation"] == True:
         return converse()
     if brain["resting"] == True:
