@@ -270,17 +270,21 @@ def processDialog(them, dialog):
 def converse():
     global brain
     hasdialogwaiting = path.exists('/home/pi/dialog_waiting.json')
-    if hasdialogwaiting:
-        replies = []
-        with open('/home/pi/dialog_waiting.json', "r") as read_file:
-            data = json.load(read_file)
-        them = brain["social_circle"][data["name"]]
-        dialogs = data["dialog"].split(',')
-        for dialog in dialogs:
-            replies.append(reprocessDialog(them, dialog))
+    if neighbors.count > 0:
+    if hasdialogwaiting == False:
+        return
+    replies = []
+    with open('/home/pi/dialog_waiting.json', "r") as read_file:
+        data = json.load(read_file)
+    them = brain["social_circle"][data["name"]]
+    dialogs = data["dialog"].split(',')
+    for dialog in dialogs:
+        replies.append(processDialog(them, dialog))
     feelLikeResting = brain["energy"] < 3
     bored = random.randrange(brain["boredom"]) > 3 + (10 - personality["activity_level"])
     if feelLikeResting == True or bored == True:
+        brain["conversation"] = False
+        brain["conversation_target"] = ""
         replies.append("reaction:bye")
     else:
         feelingChoices = ["superlikes","likes","dislikes"]
@@ -288,16 +292,15 @@ def converse():
             feelingChoices = ["likes","dislikes"]
         if personality["positivity"] >= 7:
             feelingChoices = ["superlikes","likes"]
-        feeling = random.choice()
+        feeling = random.choice(feelingChoices)
         subject = random.choice(subjects)
         thought = brain[feeling][subject]
         replies.append("topic:"+feeling+":"+subject+":"+thought)
-    
     sep = ','
     send = sep.join(replies)
 
     response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
-    processDialog(reponse.text)
+    processDialog(response.text)
 
     brain["energy"] = min(brain["energy"] - 1, 0)
     save_brain()
@@ -310,6 +313,9 @@ def rest():
     brain["boredom"] = max(brain["boredom"] + 1, 10)
     save_brain()
 
+def percentChance(percent):
+    return random.range(100) < percent
+
 def think():
     global brain
     if brain["conversation"] == True:
@@ -318,7 +324,16 @@ def think():
         return rest()
     feelLikeResting = brain["energy"] < 3
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
-    print(neighbors)
+    if feelLikeResting == True:
+        if percentChance(personality["activity_level"]*2):
+            brain["boredom"] - 1
+    bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
+    if bored and percentChance(personality["changeability"]*10):
+        #do something
+    else:
+        brain["boredom"] = max(brain["boredom"] + 1, 10)
+    if percentChance((10 - personality["activity_level"])*10):
+        brain["energy"] = min(brain["energy"] - 1, 0)
     save_brain()
 
 if args.reset:
