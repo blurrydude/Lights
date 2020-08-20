@@ -221,6 +221,7 @@ def converse_endpoint():
         brain["conversation"] = True
         brain["conversation_target"] = request.args["name"]
         brain["social_circles"][request.args["name"]]["last_interaction"] = datetime.datetime.now()
+        brain["social_circles"][request.args["name"]]["ip"] = request.args["ip"]
         with open('/home/pi/waiting_dialog.json', "w") as write_file:
             json.dump(request.args, write_file, indent=4)
         save_brain()
@@ -230,7 +231,8 @@ def converse_endpoint():
             "positive_interaction": 0,
             "negative_interaction": 0,
             "met": datetime.datetime.now(),
-            "last_interaction": datetime.datetime.now()
+            "last_interaction": datetime.datetime.now(),
+            "ip": request.args["ip"]
         }
         brain["conversation"] = True
         brain["conversation_target"] = request.args["name"]

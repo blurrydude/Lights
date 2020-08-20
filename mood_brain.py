@@ -270,7 +270,7 @@ def processDialog(them, dialog):
 def converse():
     global brain
     hasdialogwaiting = path.exists('/home/pi/dialog_waiting.json')
-    if neighbors.count == 0:
+    if len(neighbors) == 0:
         return
     if hasdialogwaiting == False:
         return
@@ -331,8 +331,12 @@ def think():
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     if bored:
         if percentChance(personality["positivity"]*10):
-            #start convo with neighbor
-            return
+            if len(brain["social_circle"]) > 0:
+                #talk to a known acquaintance, if we like them
+                return
+            if len(neighbors) > 0:
+                #pick a neighbor to try to befriend
+                return
         elif percentChance(personality["changeability"]*10):
             #change display and plume colors 
             return
