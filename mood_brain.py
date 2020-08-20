@@ -342,6 +342,7 @@ def think():
     if percentChance((10 - personality["activity_level"])*10):
         brain["energy"] = min(brain["energy"] - 1, 0)
     save_brain()
+    print(brain)
 
 if args.reset:
     reset_personality()
