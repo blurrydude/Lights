@@ -312,15 +312,12 @@ def rest():
 
 def think():
     global brain
-    print("\n\n\n")
-    print(brain["boredom"])
-    print("\n\n\n")
     if brain["conversation"] == True:
         return converse()
     if brain["resting"] == True:
         return rest()
     feelLikeResting = brain["energy"] < 3
-    bored = random.randrange(brain["boredom"]) > 3 + (10 - personality["activity_level"])
+    bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     print(neighbors)
     save_brain()
 
