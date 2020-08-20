@@ -40,7 +40,7 @@ brain = {
     "energy": 5,
     "boredom": 0,
     "current_thoughts": [],
-    "social_circle": [],
+    "social_circle": {},
     "last_activity": datetime.now(),
     "last_thought": datetime.now(),
     "last_interaction": datetime.now(),

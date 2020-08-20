@@ -27,6 +27,7 @@ pixels = neopixel.NeoPixel(board.D18, led_count)
 mem = []
 config = {}
 neighbors = []
+brain = {}
 
 def load_config():
     global config
@@ -56,12 +57,12 @@ def load_neighbors():
                 f.close()
                 neighbors.append(t)
         except:
-            log("Unexpected error reading neighbors:", sys.exc_info()[0])
+            log("Unexpected error reading neighbors")
             try:
                 os.remove(filename)
                 continue
             except:
-                log("Unexpected error removing neighbors:", sys.exc_info()[0])
+                log("Unexpected error removing neighbors")
                 continue
 def log(message):
     date_time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -94,6 +95,18 @@ def load_memory():
         os.remove('/home/pi/light_mem.json')
         with open('/home/pi/light_mem.json', "w") as write_file:
             json.dump(mem, write_file, indent=4)
+
+def save_brain():
+    with open('/home/pi/brain.json', "w") as write_file:
+        json.dump(brain, write_file, indent=4)
+
+def load_brain():
+    global brain
+    hasbrain = path.exists('/home/pi/brain.json')
+    if hasbrain == False:
+        save_brain()
+    with open('/home/pi/brain.json', "r") as read_file:
+        brain = json.load(read_file)
 
 @app.route("/", methods=['GET'])
 def light_endpoint():
@@ -187,6 +200,19 @@ def weather_endpoint():
     pageFile.close()
     return pageData
 
+@app.route("/converse", methods=['GET'])
+def converse_endpoint():
+    load_brain()
+    if brain["conversation"] == True and brain["conversation_target"] != request.args["name"]:
+        return "busy"
+    if brain["conversation"] == True and brain["conversation_target"] == request.args["name"]:
+        with open('/home/pi/waiting_dialog.txt', "w") as write_file:
+            json.dump(request.args["dialog"], write_file, indent=4)
+        return "thinking"
+    if request.args["name"] in brain["social_circle"].keys():
+        them = brain["social_circles"][request.args["name"]]
+
+
 if __name__ == "__main__":
     log('Starting program in 90 seconds...')
     time.sleep(90)
@@ -196,24 +222,24 @@ if __name__ == "__main__":
         load_memory()
         log('Done.')
     except:
-        log("Unexpected error loading memory:", sys.exc_info()[0])
+        log("Unexpected error loading memory")
     try:
         log('Loading config...')
         load_config()
         log('Done.')
     except:
-        log("Unexpected error loading config:", sys.exc_info()[0])
+        log("Unexpected error loading config")
     # try:
     #     log('Loading neighbors...')
     #     load_neighbors()
     #     log('Done.')
     # except:
-    #     log("Unexpected error loading neighbors:", sys.exc_info()[0])
+    #     log("Unexpected error loading neighbors")
     #     pass
     try:
         log('Running app...')
         app.run(host=args.ip, port=80, debug=True)
     except:
-        log("Unexpected error running api:", sys.exc_info()[0])
+        log("Unexpected error running api")
 
     # app.run(ssl_context=('/etc/letsencrypt/live/blurrydude.com/fullchain.pem','/etc/letsencrypt/live/blurrydude.com/privkey.pem'), host='192.168.1.51')
