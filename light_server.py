@@ -55,14 +55,14 @@ def load_neighbors():
     for filename in os.listdir(directory):
         try:
             if filename.endswith(".neighbor"):
-                f = open(filename, 'r')
+                f = open("/home/pi/"+filename, 'r')
                 t = f.read()
                 f.close()
                 neighbors.append(t)
         except:
             log("Unexpected error reading neighbors")
             try:
-                os.remove(filename)
+                os.remove("/home/pi/"+filename)
                 continue
             except:
                 log("Unexpected error removing neighbors")

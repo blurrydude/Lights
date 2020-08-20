@@ -112,7 +112,7 @@ def load_neighbors():
     directory = r'/home/pi/'
     for filename in os.listdir(directory):
         if filename.endswith(".neighbor"):
-            f = open(filename, 'r')
+            f = open("/home/pi/"+filename, 'r')
             t = f.read()
             f.close()
             neighbors.append(t)
