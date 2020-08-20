@@ -206,11 +206,34 @@ def converse_endpoint():
     if brain["conversation"] == True and brain["conversation_target"] != request.args["name"]:
         return "busy"
     if brain["conversation"] == True and brain["conversation_target"] == request.args["name"]:
-        with open('/home/pi/waiting_dialog.txt', "w") as write_file:
+        with open('/home/pi/waiting_dialog.json', "w") as write_file:
             json.dump(request.args["dialog"], write_file, indent=4)
         return "thinking"
     if request.args["name"] in brain["social_circle"].keys():
         them = brain["social_circles"][request.args["name"]]
+        feeling = them["positive_interaction"] - them["negative_interaction"]
+        if feeling < -10:
+            return "ignoring"
+        brain["conversation"] = True
+        brain["conversation_target"] = request.args["name"]
+        brain["social_circles"][request.args["name"]]["last_interaction"] = datetime.datetime.now()
+        with open('/home/pi/waiting_dialog.json', "w") as write_file:
+            json.dump(request.args, write_file, indent=4)
+        save_brain()
+        return "thinking"
+    else:
+        brain["social_circles"][request.args["name"]] = {
+            "positive_interaction": 0,
+            "negative_interaction": 0,
+            "met": datetime.datetime.now(),
+            "last_interaction": datetime.datetime.now()
+        }
+        brain["conversation"] = True
+        brain["conversation_target"] = request.args["name"]
+        with open('/home/pi/waiting_dialog.json', "w") as write_file:
+            json.dump(request.args["dialog"], write_file, indent=4)
+        save_brain()
+        return "thinking"
 
 
 if __name__ == "__main__":

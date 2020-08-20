@@ -167,6 +167,10 @@ def getSummary():
 def converse():
     global brain
     hasdialogwaiting = path.exists('/home/pi/dialog_waiting.txt')
+    if hasdialogwaiting:
+        with open('/home/pi/dialog_waiting.txt', "r") as read_file:
+            data = json.load(read_file)
+    
     save_brain()
 
 def rest():
