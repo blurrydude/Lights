@@ -342,7 +342,6 @@ def think():
     if percentChance((10 - personality["activity_level"])*10):
         brain["energy"] = min(brain["energy"] - 1, 0)
     save_brain()
-    print(brain)
 
 if args.reset:
     reset_personality()
@@ -353,10 +352,14 @@ if config["personality"] == True:
     load_personality()
     load_brain()
     load_neighbors()
-    print(config)
-    print(personality)
-    print(brain)
-    print(neighbors)
+    print("\n\n--------------------------------config--------------------------------\n\n")
+    print(json.dumps(obj=config,indent=4))
+    print("\n\n--------------------------------personality--------------------------------\n\n")
+    print(json.dumps(obj=personality,indent=4))
+    print("\n\n--------------------------------brain--------------------------------\n\n")
+    print(json.dumps(obj=brain,indent=4))
+    print("\n\n--------------------------------neighbors--------------------------------\n\n")
+    print(json.dumps(obj=neighbors,indent=4))
     think()
 else:
     print("personality disabled")
