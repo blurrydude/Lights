@@ -359,6 +359,7 @@ def think():
             if len(neighbors) > 0:
                 print('Maybe a neighbor...')
                 talkto = random.choice(neighbors)
+                print(talkto)
                 rep = requests.get("http://"+talkto[2]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
                 brain["conversation_target"] = talkto[0]
