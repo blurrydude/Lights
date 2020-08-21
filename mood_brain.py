@@ -274,6 +274,7 @@ def processDialog(them, dialog):
 
 def converse():
     global brain
+    print('conversing')
     hasdialogwaiting = path.exists('/home/pi/dialog_waiting.json')
     if len(neighbors) == 0:
         return
@@ -313,6 +314,7 @@ def converse():
 
 def rest():
     global brain
+    print('resting')
     brain["energy"] = max(brain["energy"] + 1, 10)
     if brain["energy"] == 10:
         brain["resting"] = False
