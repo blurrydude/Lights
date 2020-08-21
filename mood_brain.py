@@ -372,7 +372,7 @@ def think():
         elif percentChance(personality["changeability"]*10):
             print('A new look, that\'s what\'s needed here.')
             return
-
+    print('My mood is '+str(brain["mood"]))
     if percentChance((10 - personality["activity_level"])*5):
         brain["boredom"] = max(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
