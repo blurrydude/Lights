@@ -350,28 +350,30 @@ def think():
             if len(brain["social_circle"]) > 0:
                 print('Maybe a friend...')
                 talkto = random.choice(brain["social_circle"])
-                rep = requests.get("http://"+talkto[2]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
+                rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
-                brain["conversation_target"] = talkto[0]
+                brain["conversation_target"] = talkto["name"]
                 print('I\'ll chat up '+brain["conversation_target"])
                 processDialog(talkto, rep.text)
                 return
             if len(neighbors) > 0:
                 print('Maybe a neighbor...')
                 talkto = random.choice(neighbors)
-                print(talkto)
-                rep = requests.get("http://"+talkto[2]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
+                if "ip" not in talkto.keys():
+                    print('this is unexpected...')
+                    print(talkto)
+                rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
-                brain["conversation_target"] = talkto[0]
+                brain["conversation_target"] = talkto["name"]
                 print('I\'ll chat up '+brain["conversation_target"])
-                brain["social_circles"][talkto[0]] = {
+                brain["social_circles"][talkto["name"]] = {
                     "positive_interaction": 0,
                     "negative_interaction": 0,
                     "met": time.time(),
                     "last_interaction": time.time(),
-                    "ip": talkto[2]
+                    "ip": talkto["ip"]
                 }
-                processDialog(brain["social_circles"][talkto[0]], rep.text)
+                processDialog(brain["social_circles"][talkto["name"]], rep.text)
                 return
         elif percentChance(personality["changeability"]*10):
             print('A new look, that\'s what\'s needed here.')
