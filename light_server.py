@@ -68,9 +68,9 @@ def load_neighbors():
                 log("Unexpected error removing neighbors")
                 continue
 def log(message):
-    date_time = time.time().strftime("%m/%d/%Y, %H:%M:%S")
+    date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
-    with open('/home/pi/light_server_log_'+time.time().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
+    with open('/home/pi/light_server_log_'+datetime.now().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
         write_file.write(message+"\n")
 
 def save_config():
