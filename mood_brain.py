@@ -83,6 +83,9 @@ def reset_personality():
         json.dump(personality, write_file, indent=4)
 
 def save_brain():
+    brain["boredom"] = min(10,max(0,brain["boredom"]))
+    brain["mood"] = min(10,max(0,brain["mood"]))
+    brain["energy"] = min(10,max(0,brain["energy"]))
     with open('/home/pi/brain.json', "w") as write_file:
         json.dump(brain, write_file, indent=4)
 
@@ -204,10 +207,10 @@ def processDialog(them, dialog):
                 if personality["positivity"] >= 7:
                     like = like + 1
                 reply = "reaction:veryhappy"
-                brain["boredom"] = min(brain["boredom"] - 1, 0)
+                brain["boredom"] = max(brain["boredom"] - 1, 0)
             if feeling == "dislikes":
                 reply = "reaction:veryhappy"
-                brain["boredom"] = min(brain["boredom"] - 1, 0)
+                brain["boredom"] = max(brain["boredom"] - 1, 0)
                 like = like + 1
                 if personality["positivity"] < 7:
                     like = like + 1
@@ -224,13 +227,13 @@ def processDialog(them, dialog):
             if personality["positivity"] < 7:
                 dislike = dislike + 1
             reply = "reaction:verymad"
-            brain["boredom"] = max(brain["boredom"] + 1, 10)
+            brain["boredom"] = min(brain["boredom"] + 1, 10)
         if feeling == "dislikes" and personality["likes"][subject] == thought:
             dislike = dislike + 1
             if personality["positivity"] < 4:
                 dislike = dislike + 1
             reply = "reaction:mad"
-            brain["boredom"] = max(brain["boredom"] + 1, 10)
+            brain["boredom"] = min(brain["boredom"] + 1, 10)
         them["positive_interactions"] = them["positive_interactions"] + like
         them["negative_interactions"] = them["negative_interactions"] + dislike
         save_brain()
@@ -309,16 +312,16 @@ def converse():
     response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
     processDialog(them, response.text)
 
-    brain["energy"] = min(brain["energy"] - 1, 0)
+    brain["energy"] = max(brain["energy"] - 1, 0)
     save_brain()
 
 def rest():
     global brain
     print('resting')
-    brain["energy"] = max(brain["energy"] + 1, 10)
+    brain["energy"] = min(brain["energy"] + 1, 10)
     if brain["energy"] == 10:
         brain["resting"] = False
-    brain["boredom"] = max(brain["boredom"] + 1, 10)
+    brain["boredom"] = min(brain["boredom"] + 1, 10)
     save_brain()
 
 def percentChance(percent):
@@ -374,9 +377,9 @@ def think():
             return
     print('My mood is '+str(brain["mood"]))
     if percentChance((10 - personality["activity_level"])*5):
-        brain["boredom"] = max(brain["boredom"] + 1, 10)
+        brain["boredom"] = min(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
-        brain["energy"] = min(brain["energy"] - 1, 0)
+        brain["energy"] = max(brain["energy"] - 1, 0)
     save_brain()
 
 if args.reset:
