@@ -8,7 +8,7 @@ import os
 import os.path
 from os import path
 import random
-import datetime
+from datetime import datetime
 from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
 from flask_cors import CORS
