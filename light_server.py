@@ -217,20 +217,20 @@ def converse_endpoint():
             json.dump(request.args["dialog"], write_file, indent=4)
         return "reaction:thinking"
     if request.args["name"] in brain["social_circle"].keys():
-        them = brain["social_circles"][request.args["name"]]
+        them = brain["social_circle"][request.args["name"]]
         feeling = them["positive_interaction"] - them["negative_interaction"]
         if feeling < -10:
             return "reaction:ignoring"
         brain["conversation"] = True
         brain["conversation_target"] = request.args["name"]
-        brain["social_circles"][request.args["name"]]["last_interaction"] = time.time()
-        brain["social_circles"][request.args["name"]]["ip"] = request.args["ip"]
+        brain["social_circle"][request.args["name"]]["last_interaction"] = time.time()
+        brain["social_circle"][request.args["name"]]["ip"] = request.args["ip"]
         with open('/home/pi/waiting_dialog.json', "w") as write_file:
             json.dump(request.args, write_file, indent=4)
         save_brain()
         return "reaction:thinking"
     else:
-        brain["social_circles"][request.args["name"]] = {
+        brain["social_circle"][request.args["name"]] = {
             "positive_interaction": 0,
             "negative_interaction": 0,
             "met": time.time(),
