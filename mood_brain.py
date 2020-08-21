@@ -337,7 +337,7 @@ def think():
     if bored:
         if percentChance(personality["positivity"]*10):
             if len(brain["social_circle"]) > 0:
-                #talk to a known acquaintance, if we like them
+                print('talk to a known acquaintance, if we like them')
                 talkto = random.choice(brain["social_circle"])
                 rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
@@ -345,7 +345,7 @@ def think():
                 processDialog(talkto, rep.text)
                 return
             if len(neighbors) > 0:
-                #pick a neighbor to try to befriend
+                print('pick a neighbor to try to befriend')
                 talkto = random.choice(neighbors)
                 rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
@@ -360,7 +360,7 @@ def think():
                 processDialog(brain["social_circles"][talkto["name"]], rep.text)
                 return
         elif percentChance(personality["changeability"]*10):
-            #change display and plume colors 
+            print('change display and plume colors')
             return
 
     if percentChance((10 - personality["activity_level"])*5):
@@ -378,13 +378,13 @@ if config["personality"] == True:
     load_personality()
     load_brain()
     load_neighbors()
-    print("\n\n--------------------------------config--------------------------------\n\n")
+    print("\n--------------------------------config--------------------------------\n")
     print(json.dumps(obj=config,indent=4))
-    print("\n\n--------------------------------personality--------------------------------\n\n")
+    print("\n--------------------------------personality--------------------------------\n")
     print(json.dumps(obj=personality,indent=4))
-    print("\n\n--------------------------------brain--------------------------------\n\n")
+    print("\n--------------------------------brain--------------------------------\n")
     print(json.dumps(obj=brain,indent=4))
-    print("\n\n--------------------------------neighbors--------------------------------\n\n")
+    print("\n--------------------------------neighbors--------------------------------\n")
     print(json.dumps(obj=neighbors,indent=4))
     think()
 else:
