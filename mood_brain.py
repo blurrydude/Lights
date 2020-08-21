@@ -335,6 +335,8 @@ def think():
     if feelLikeResting == True:
         if percentChance(personality["activity_level"]*2):
             brain["boredom"] - 1
+        brain["resting"] = True
+        return
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     if bored:
         if percentChance(personality["positivity"]*10):
