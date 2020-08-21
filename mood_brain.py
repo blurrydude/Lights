@@ -326,6 +326,7 @@ def percentChance(percent):
 
 def think():
     global brain
+    print('thinking...')
     if brain["conversation"] == True:
         return converse()
     if brain["resting"] == True:
