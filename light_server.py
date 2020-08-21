@@ -214,7 +214,7 @@ def converse_endpoint():
         return "reaction:busy"
     if brain["conversation"] == True and brain["conversation_target"] == request.args["name"]:
         with open('/home/pi/waiting_dialog.json', "w") as write_file:
-            json.dump(request.args["dialog"], write_file, indent=4)
+            json.dump(request.args, write_file, indent=4)
         return "reaction:thinking"
     if request.args["name"] in brain["social_circle"].keys():
         them = brain["social_circle"][request.args["name"]]
@@ -240,7 +240,7 @@ def converse_endpoint():
         brain["conversation"] = True
         brain["conversation_target"] = request.args["name"]
         with open('/home/pi/waiting_dialog.json', "w") as write_file:
-            json.dump(request.args["dialog"], write_file, indent=4)
+            json.dump(request.args, write_file, indent=4)
         save_brain()
         return "reaction:thinking"
 
