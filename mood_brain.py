@@ -366,14 +366,14 @@ def think():
                 brain["conversation"] = True
                 brain["conversation_target"] = talkto["name"]
                 print('I\'ll chat up '+brain["conversation_target"])
-                brain["social_circles"][talkto["name"]] = {
+                brain["social_circle"][talkto["name"]] = {
                     "positive_interaction": 0,
                     "negative_interaction": 0,
                     "met": time.time(),
                     "last_interaction": time.time(),
                     "ip": talkto["ip"]
                 }
-                processDialog(brain["social_circles"][talkto["name"]], rep.text)
+                processDialog(brain["social_circle"][talkto["name"]], rep.text)
                 return
         elif percentChance(personality["changeability"]*10):
             print('A new look, that\'s what\'s needed here.')
