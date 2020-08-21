@@ -206,6 +206,9 @@ def weather_endpoint():
 
 @app.route("/converse", methods=['GET'])
 def converse_endpoint():
+    sep=", "
+    thing = sep.join(request.args)
+    log('converse: '+thing)
     load_brain()
     if brain["conversation"] == True and brain["conversation_target"] != request.args["name"]:
         return "reaction:busy"
