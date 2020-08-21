@@ -326,35 +326,40 @@ def percentChance(percent):
 
 def think():
     global brain
-    print('thinking...')
     if brain["conversation"] == True:
         return converse()
     if brain["resting"] == True:
         return rest()
+    print('thinking...')
     feelLikeResting = brain["energy"] < 3
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     if feelLikeResting == True:
+        print('I do feel a bit tired')
         if percentChance(personality["activity_level"]*2):
             brain["boredom"] - 1
         brain["resting"] = True
         return rest()
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     if bored:
+        print('I am quite bored')
         if percentChance(personality["positivity"]*10):
+            print('Think I might reach out to someone, but who?')
             if len(brain["social_circle"]) > 0:
-                print('talk to a known acquaintance, if we like them')
+                print('Maybe a friend...')
                 talkto = random.choice(brain["social_circle"])
                 rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
                 brain["conversation_target"] = talkto["name"]
+                print('I\'ll chat up '+brain["conversation_target"])
                 processDialog(talkto, rep.text)
                 return
             if len(neighbors) > 0:
-                print('pick a neighbor to try to befriend')
+                print('Maybe a neighbor...')
                 talkto = random.choice(neighbors)
                 rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
                 brain["conversation_target"] = talkto["name"]
+                print('I\'ll chat up '+brain["conversation_target"])
                 brain["social_circles"][talkto["name"]] = {
                     "positive_interaction": 0,
                     "negative_interaction": 0,
@@ -365,7 +370,7 @@ def think():
                 processDialog(brain["social_circles"][talkto["name"]], rep.text)
                 return
         elif percentChance(personality["changeability"]*10):
-            print('change display and plume colors')
+            print('A new look, that\'s what\'s needed here.')
             return
 
     if percentChance((10 - personality["activity_level"])*5):
