@@ -105,6 +105,7 @@ def save_brain():
         json.dump(brain, write_file, indent=4)
 
 def load_brain():
+    log('load brain')
     global brain
     hasbrain = path.exists('/home/pi/brain.json')
     if hasbrain == False:
@@ -206,9 +207,8 @@ def weather_endpoint():
 
 @app.route("/converse", methods=['GET'])
 def converse_endpoint():
-    sep=", "
-    thing = sep.join(request.args)
-    log('converse: '+thing)
+    for k in request.args:
+        log(k+": "+request.args[k])
     load_brain()
     if brain["conversation"] == True and brain["conversation_target"] != request.args["name"]:
         return "reaction:busy"
