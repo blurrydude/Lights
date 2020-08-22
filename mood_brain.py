@@ -306,7 +306,7 @@ def converse():
             feelingChoices = ["superlikes","likes"]
         feeling = random.choice(feelingChoices)
         subject = random.choice(subjects)
-        thought = brain[feeling][subject]
+        thought = personality[feeling][subject]
         replies.append("topic:"+feeling+":"+subject+":"+thought)
     sep = ','
     send = sep.join(replies)
