@@ -293,3 +293,11 @@ $.get(window.location.origin + '/checkneighbors', function(response) {
 $.get(window.location.origin + '/weather', function(response) {
     console.log(response)
 });
+
+$.get(window.location.origin + '/brain', function(response) {
+    console.log(response)
+});
+
+$.get(window.location.origin + '/personality', function(response) {
+    console.log(response)
+});
