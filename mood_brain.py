@@ -16,6 +16,42 @@ name = socket.gethostname()
 
 config = {}
 neighbors = []
+mem = []
+
+segments = [
+    {"start": 0, "end": 5},
+    {"start": 6, "end": 11},
+    {"start": 12, "end": 17},
+    {"start": 18, "end": 24},
+    {"start": 25, "end": 30},
+    {"start": 31, "end": 35},
+    {"start": 36, "end": 39},
+    {"start": 40, "end": 50},
+    {"start": 51, "end": 56},
+    {"start": 57, "end": 67},
+    {"start": 68, "end": 71},
+    {"start": 72, "end": 75},
+    {"start": 77, "end": 82},
+    {"start": 83, "end": 89},
+    
+    {"start": 90, "end": 94},
+    {"start": 95, "end": 104},
+    {"start": 105, "end": 109},
+    {"start": 110, "end": 119}
+]
+
+sections = [
+    [7,8,9],
+    [6, 10],
+    [5, 11],
+    [4, 12],
+    [3, 13],
+    [2,1,0],
+    [14],
+    [15],
+    [16],
+    [17]
+]
 
 personality = {
     "activity_level": 0,
@@ -56,6 +92,28 @@ brain = {
 weather = ["thunderstorms","drizzle","rain","snow","clear weather","cloudy weather","mist","haze","fog"]
 colors = ['red','green','blu']
 subjects = ["weather","color","time"]
+
+def save_memory(memory):
+    with open('/home/pi/light_mem.json', "w") as write_file:
+        json.dump(memory, write_file, indent=4)
+
+def load_memory():
+    global mem
+    hasMem = path.exists('/home/pi/light_mem.json')
+    if hasMem == False:
+        for i in range(led_count):
+            mem.append((0,0,0))
+        save_memory(mem)
+    try:
+        with open('/home/pi/light_mem.json', "r") as read_file:
+            mem = json.load(read_file)
+        return mem
+    except:
+        for i in range(led_count):
+            mem.append((0,0,0))
+        os.remove('/home/pi/light_mem.json')
+        with open('/home/pi/light_mem.json', "w") as write_file:
+            json.dump(mem, write_file, indent=4)
 
 def save_config():
     with open('/home/pi/light_conf.json', "w") as write_file:
@@ -382,6 +440,28 @@ def think():
                 return
         elif percentChance(personality["changeability"]*10):
             print('A new look, that\'s what\'s needed here.')
+            rs = 100
+            gs = 100
+            bs = 100
+            if personality["superlikes"]["color"] == 0:
+                rs = 255
+            if personality["superlikes"]["color"] == 1:
+                gs = 255
+            if personality["superlikes"]["color"] == 2:
+                bs = 255
+            if personality["likes"]["color"] == 0:
+                rs = 200
+            if personality["likes"]["color"] == 1:
+                gs = 200
+            if personality["likes"]["color"] == 2:
+                bs = 200
+            r = random.randrange(rs)
+            g = random.randrange(gs)
+            b = random.randrange(bs)
+            sec = random.randrange(len(sections))
+            for s in sections[dec]:
+                segment = segments[s]
+                requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
             return
     print('My mood is '+str(brain["mood"]))
     if percentChance((10 - personality["activity_level"])*5):
