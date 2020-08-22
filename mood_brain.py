@@ -487,7 +487,7 @@ if config["personality"] == True:
     print(json.dumps(obj=brain,indent=4))
     print("\n--------------------------------neighbors--------------------------------\n")
     print(json.dumps(obj=neighbors,indent=4))
-    for i in range(3)
+    for i in range(3):
         think()
         time.sleep(15)
 else:
