@@ -307,7 +307,7 @@ def converse_endpoint():
 
 if __name__ == "__main__":
     log('Starting program in 90 seconds...')
-    #time.sleep(90)
+    time.sleep(90)
     log('Starting.')
     try:
         log('Loading memory...')
