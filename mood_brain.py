@@ -451,21 +451,25 @@ def think():
                 return
         elif percentChance(personality["changeability"]*10):
             print('A new look, that\'s what\'s needed here.')
-            r = random.randrange(10,50)
-            g = random.randrange(10,50)
-            b = random.randrange(10,50)
+            rx = 128
+            gx = 128
+            bx = 128
+
             if personality["superlikes"]["color"] == 0:
-                r = random.randrange(100,250)
+                rx = 256
             if personality["superlikes"]["color"] == 1:
-                g = random.randrange(100,250)
+                gx = 256
             if personality["superlikes"]["color"] == 2:
-                b = random.randrange(100,250)
+                bx = 256
             if personality["likes"]["color"] == 0:
-                r = random.randrange(75,150)
+                rx = 196
             if personality["likes"]["color"] == 1:
-                g = random.randrange(75,150)
+                gx = 196
             if personality["likes"]["color"] == 2:
-                b = random.randrange(75,150)
+                bx = 196
+            r = random.randrange(10,rx)
+            g = random.randrange(10,gx)
+            b = random.randrange(10,bx)
             sec = random.randrange(len(sections))
             for s in sections[sec]:
                 segment = segments[s]
