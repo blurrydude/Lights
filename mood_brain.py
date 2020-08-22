@@ -472,6 +472,7 @@ def think():
             for s in sections[sec]:
                 segment = segments[s]
                 requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+            brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
             return
     print('My mood is '+str(brain["mood"]))
     if percentChance((10 - personality["activity_level"])*5):
