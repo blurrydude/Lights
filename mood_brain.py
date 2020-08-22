@@ -316,19 +316,19 @@ def processDialog(them, dialog):
             them["positive_interaction"] = them["positive_interaction"] - 1
             return ""
         if reaction == "busy":
-            brain["converation"] = False
+            brain["conversation"] = False
             brain["conversation_target"] = ""
             save_brain()
             return ""
         if reaction == "bye":
             them["positive_interaction"] = them["positive_interaction"] + 1
-            brain["converation"] = False
+            brain["conversation"] = False
             brain["conversation_target"] = ""
             save_brain()
             return ""
         if reaction == "ignoring":
             them["negative_interaction"] = them["negative_interaction"] + 1
-            brain["converation"] = False
+            brain["conversation"] = False
             brain["conversation_target"] = ""
             save_brain()
             return ""
