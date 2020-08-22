@@ -394,7 +394,8 @@ def rest():
     brain["energy"] = min(brain["energy"] + 1, 10)
     if brain["energy"] == 10:
         brain["resting"] = False
-    brain["boredom"] = min(brain["boredom"] + 1, 10)
+    if percentChance(50) == True:
+        brain["boredom"] = min(brain["boredom"] + 1, 10)
     save_brain()
 
 def percentChance(percent):
