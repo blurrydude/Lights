@@ -473,7 +473,7 @@ def think():
             brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
             return
     print('My mood is '+str(brain["mood"]))
-    if percentChance((10 - personality["activity_level"])*5):
+    if percentChance(personality["activity_level"]*8):
         brain["boredom"] = min(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
         brain["energy"] = max(brain["energy"] - 1, 0)
