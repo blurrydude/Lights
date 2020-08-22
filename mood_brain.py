@@ -234,8 +234,8 @@ def processDialog(them, dialog):
                 dislike = dislike + 1
             reply = "reaction:mad"
             brain["boredom"] = min(brain["boredom"] + 1, 10)
-        them["positive_interactions"] = them["positive_interactions"] + like
-        them["negative_interactions"] = them["negative_interactions"] + dislike
+        them["positive_interaction"] = them["positive_interaction"] + like
+        them["negative_interaction"] = them["negative_interaction"] + dislike
         save_brain()
         return reply
 
@@ -244,18 +244,18 @@ def processDialog(them, dialog):
         if reaction == "thinking" or reaction == "neutral":
             return ""
         if reaction == "happy":
-            them["positive_interactions"] = them["positive_interactions"] + 1
+            them["positive_interaction"] = them["positive_interaction"] + 1
             return ""
         if reaction == "veryhappy":
-            them["positive_interactions"] = them["positive_interactions"] + 1
-            them["negative_interactions"] = them["negative_interactions"] - 1
+            them["positive_interaction"] = them["positive_interaction"] + 1
+            them["negative_interaction"] = them["negative_interaction"] - 1
             return ""
         if reaction == "mad":
-            them["negative_interactions"] = them["negative_interactions"] + 1
+            them["negative_interaction"] = them["negative_interaction"] + 1
             return ""
         if reaction == "verymad":
-            them["negative_interactions"] = them["negative_interactions"] + 1
-            them["positive_interactions"] = them["positive_interactions"] - 1
+            them["negative_interaction"] = them["negative_interaction"] + 1
+            them["positive_interaction"] = them["positive_interaction"] - 1
             return ""
         if reaction == "busy":
             brain["converation"] = False
@@ -263,13 +263,13 @@ def processDialog(them, dialog):
             save_brain()
             return ""
         if reaction == "bye":
-            them["positive_interactions"] = them["positive_interactions"] + 1
+            them["positive_interaction"] = them["positive_interaction"] + 1
             brain["converation"] = False
             brain["conversation_target"] = ""
             save_brain()
             return ""
         if reaction == "ignoring":
-            them["negative_interactions"] = them["negative_interactions"] + 1
+            them["negative_interaction"] = them["negative_interaction"] + 1
             brain["converation"] = False
             brain["conversation_target"] = ""
             save_brain()
