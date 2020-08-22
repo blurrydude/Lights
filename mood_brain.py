@@ -377,6 +377,16 @@ def converse():
 
     brain["energy"] = max(brain["energy"] - 1, 0)
     save_brain()
+    tsegments = sections[0]
+    c = mem[tsegments[0]["start"]]
+    flip = False
+    for i in range(4):
+        for segment in tsegments:
+            if flip == True:
+                requests.get('http://'+config["ip"]+'/?r='+str(c[0])+'&g='+str(c[1])+'&b='+str(c[2])+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+            if flip == False:
+                requests.get('http://'+config["ip"]+'/?r=0&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
+        flip = flip != True
 
 def rest():
     global brain
@@ -487,8 +497,8 @@ if config["personality"] == True:
     print(json.dumps(obj=brain,indent=4))
     print("\n--------------------------------neighbors--------------------------------\n")
     print(json.dumps(obj=neighbors,indent=4))
-    for i in range(11):
+    for i in range(3):
         think()
-        time.sleep(5)
+        time.sleep(15)
 else:
     print("personality disabled")
