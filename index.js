@@ -300,5 +300,9 @@ $.get(window.location.origin + '/brain', function(response) {
 
 $.get(window.location.origin + '/personality', function(response) {
     console.log(response)
+});
+
+$.get(window.location.origin + '/personalitysummary', function(response) {
+    console.log(response)
     document.getElementById("personality-summary").innerHTML = response;
 });
