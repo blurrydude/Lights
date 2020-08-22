@@ -278,13 +278,15 @@ def processDialog(them, dialog):
 def converse():
     global brain
     print('conversing')
-    hasdialogwaiting = path.exists('/home/pi/dialog_waiting.json')
+    hasdialogwaiting = path.exists('/home/pi/waiting_dialog.json')
     if len(neighbors) == 0:
+        print('no neighbors')
         return
     if hasdialogwaiting == False:
+        print('no dialog waiting')
         return
     replies = []
-    with open('/home/pi/dialog_waiting.json', "r") as read_file:
+    with open('/home/pi/waiting_dialog.json', "r") as read_file:
         data = json.load(read_file)
     them = brain["social_circle"][data["name"]]
     dialogs = data["dialog"].split(',')
