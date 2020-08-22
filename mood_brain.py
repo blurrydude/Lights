@@ -308,10 +308,12 @@ def converse():
         subject = random.choice(subjects)
         thought = personality[feeling][subject]
         replies.append("topic:"+feeling+":"+subject+":"+thought)
+
     sep = ','
     send = sep.join(replies)
 
     response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
+    os.remove('/home/pi/waiting_dialog.json')
     processDialog(them, response.text)
 
     brain["energy"] = max(brain["energy"] - 1, 0)
