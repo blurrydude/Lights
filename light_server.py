@@ -234,6 +234,11 @@ def brain_endpoint():
 @app.route("/personality", methods=['GET'])
 def personality_endpoint():
     load_personality()
+    return personality
+
+@app.route("/personalitysummary", methods=['GET'])
+def personalitysummary_endpoint():
+    load_personality()
     return getSummary()
 
 @app.route("/setautosun", methods=['GET'])
