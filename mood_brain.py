@@ -309,6 +309,7 @@ def converse():
         thought = personality[feeling][subject]
         replies.append("topic:"+feeling+":"+subject+":"+thought)
 
+    print(replies)
     sep = ','
     send = sep.join(replies)
 
