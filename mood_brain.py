@@ -30,7 +30,7 @@ segments = [
     {"start": 51, "end": 56},
     {"start": 57, "end": 67},
     {"start": 68, "end": 71},
-    {"start": 72, "end": 75},
+    {"start": 72, "end": 76},
     {"start": 77, "end": 82},
     {"start": 83, "end": 89},
     
@@ -101,7 +101,7 @@ def load_memory():
     global mem
     hasMem = path.exists('/home/pi/light_mem.json')
     if hasMem == False:
-        for i in range(led_count):
+        for i in range(120):
             mem.append((0,0,0))
         save_memory(mem)
     try:
@@ -109,7 +109,7 @@ def load_memory():
             mem = json.load(read_file)
         return mem
     except:
-        for i in range(led_count):
+        for i in range(120):
             mem.append((0,0,0))
         os.remove('/home/pi/light_mem.json')
         with open('/home/pi/light_mem.json', "w") as write_file:
@@ -431,7 +431,8 @@ def think():
             print('Think I might reach out to someone, but who?')
             if len(brain["social_circle"]) > 0:
                 print('Maybe a friend...')
-                talkto = random.choice(brain["social_circle"])
+                t = random.randrange(len(brain["social_circle"]))
+                talkto = brain["social_circle"][t]
                 rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
                 brain["conversation_target"] = talkto["name"]
