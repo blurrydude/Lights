@@ -333,6 +333,8 @@ function check_brain() {
         setTimeout(check_brain(),15000);
     });
 }
+check_brain();
+
 $.get(window.location.origin + '/personality', function(response) {
     console.log(response)
 });
