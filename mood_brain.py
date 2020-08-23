@@ -10,6 +10,8 @@ import requests
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--reset", "-reset", help="reset personality")
+parser.add_argument("--fast", "-f", help="speed up the iterator for this instance")
+parser.add_argument("--continuous", "-c", help="continuous running")
 args = parser.parse_args()
 
 name = socket.gethostname()
@@ -530,8 +532,17 @@ if config["personality"] == True:
     print(json.dumps(obj=brain,indent=4))
     print("\n--------------------------------neighbors--------------------------------\n")
     print(json.dumps(obj=neighbors,indent=4))
-    for i in range(3):
-        think()
-        time.sleep(15)
+    delay = 15
+    if args.fast == True:
+        delay = 1
+    if args.continuous == True:
+        while True:
+            think()
+            time.sleep(delay)
+    else:
+        for i in range(3):
+            think()
+            time.sleep(delay)
+
 else:
     print("personality disabled")
