@@ -491,7 +491,9 @@ def think():
     segment = segments[0]
     requests.get('http://'+config["ip"]+'/?r=255&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
     segment = segments[1]
-    requests.get('http://'+config["ip"]+'/?r='+str((brain["mood"]*25))+'&g=0&b='+str((10 - brain["mood"])*25))+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+    r = brain["mood"]*25
+    b = (10 - brain["mood"])*25
+    requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g=0&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
     if percentChance(personality["activity_level"]*8):
         brain["boredom"] = min(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
