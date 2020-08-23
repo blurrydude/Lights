@@ -296,6 +296,12 @@ $.get(window.location.origin + '/weather', function(response) {
 
 $.get(window.location.origin + '/brain', function(response) {
     console.log(response)
+    document.getElementById("moodspan").innerHTML = response.mood;
+    document.getElementById("energyspan").innerHTML = response.energy;
+    if(response.resting === true) document.getElementById("resting").show();
+    else document.getElementById("resting").hide();
+    if(response.conversation === true) document.getElementById("conversing").show();
+    else document.getElementById("conversing").hide();
 });
 
 $.get(window.location.origin + '/personality', function(response) {
