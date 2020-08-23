@@ -41,16 +41,16 @@ segments = [
 ]
 
 sections = [
-    [7,8,9],
-    [6, 10],
-    [5, 11],
-    [4, 12],
-    [3, 13],
-    [2,1,0],
-    [14],
-    [15],
-    [16],
-    [17]
+    [7,8,9], #head
+    [6, 10], #heart
+    [5, 11], #shelf 1
+    [4, 12], #shelf 2
+    [3, 13], #shelf 3
+    [2,1,0], #shelf 4
+    [14], #bottom
+    [15], #inside
+    [16], #top
+    [17]  #outside
 ]
 
 personality = {
@@ -404,8 +404,12 @@ def percentChance(percent):
 def think():
     global brain
     if brain["conversation"] == True:
+        segment = segments[0]
+        requests.get('http://'+config["ip"]+'/?r=0&g=200&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
         return converse()
     if brain["resting"] == True:
+        segment = segments[0]
+        requests.get('http://'+config["ip"]+'/?r=0&g=60&b=200&a='+str(segment["start"])+'&z='+str(segment["end"]))
         return rest()
     print('thinking...')
     feelLikeResting = brain["energy"] < 3
@@ -470,13 +474,24 @@ def think():
             r = min(255,random.randrange(4,rx+1)*16)
             g = min(255,random.randrange(4,gx+1)*16)
             b = min(255,random.randrange(4,bx+1)*16)
-            sec = random.randrange(len(sections))
+            sec = random.randrange(2,6) #bottom 4 shelves
+            for s in sections[sec]:
+                segment = segments[s]
+                requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+            r = min(255,random.randrange(8,round(rx/2)+1)*32)
+            g = min(255,random.randrange(8,round(gx/2)+1)*32)
+            b = min(255,random.randrange(8,round(bx/2)+1)*32)
+            sec = random.randrange(6,10) #plume
             for s in sections[sec]:
                 segment = segments[s]
                 requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
             brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
             return
     print('My mood is '+str(brain["mood"]))
+    segment = segments[0]
+    requests.get('http://'+config["ip"]+'/?r=255&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
+    segment = segments[1]
+    requests.get('http://'+config["ip"]+'/?r='+str((brain["mood"]*25))+'&g=0&b='+str((10 - brain["mood"])*25))+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
     if percentChance(personality["activity_level"]*8):
         brain["boredom"] = min(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
