@@ -482,9 +482,9 @@ def think():
             for s in sections[sec]:
                 segment = segments[s]
                 requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
-            r = min(255,random.randrange(2,round(rx/2)+1)*32)
-            g = min(255,random.randrange(2,round(gx/2)+1)*32)
-            b = min(255,random.randrange(2,round(bx/2)+1)*32)
+            r = min(255,random.randrange(2,8+1)*32)
+            g = min(255,random.randrange(2,8+1)*32)
+            b = min(255,random.randrange(2,8+1)*32)
             sec = random.randrange(6,10) #plume
             for s in sections[sec]:
                 segment = segments[s]
