@@ -405,13 +405,13 @@ def think():
     global brain
     if brain["conversation"] == True:
         section = sections[0]
-        for s in sections[section]:
+        for s in section:
             segment = s
             requests.get('http://'+config["ip"]+'/?r=0&g=200&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
         return converse()
     if brain["resting"] == True:
         section = sections[0]
-        for s in sections[section]:
+        for s in section:
             segment = s
             requests.get('http://'+config["ip"]+'/?r=0&g=60&b=200&a='+str(segment["start"])+'&z='+str(segment["end"]))
         return rest()
