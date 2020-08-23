@@ -342,9 +342,11 @@ def converse():
     hasdialogwaiting = path.exists('/home/pi/waiting_dialog.json')
     if len(neighbors) == 0:
         print('no neighbors')
+        brain["conversation_rounds"] = brain["conversation_rounds"] + 1
         return
     if hasdialogwaiting == False:
         print('no dialog waiting')
+        brain["conversation_rounds"] = brain["conversation_rounds"] + 1
         return
     replies = []
     with open('/home/pi/waiting_dialog.json', "r") as read_file:
