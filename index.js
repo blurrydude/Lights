@@ -60,6 +60,32 @@ var sections = [
     [17]
 ];
 
+var mood = [
+    "depressed",
+    "gloomy",
+    "sad",
+    "down",
+    "apethetic",
+    "chipper",
+    "happy",
+    "cheery",
+    "elated",
+    "ecstatic"
+]
+
+var energy = [
+    "dozing off",
+    "exhausted",
+    "tired",
+    "winded",
+    "average",
+    "okay",
+    "pepped",
+    "energetic",
+    "hyped",
+    "charged"
+]
+
 var config = {};
 var housecount = 0;
 var household = [];
@@ -296,8 +322,8 @@ $.get(window.location.origin + '/weather', function(response) {
 
 $.get(window.location.origin + '/brain', function(response) {
     console.log(response)
-    document.getElementById("moodspan").innerHTML = response.mood;
-    document.getElementById("energyspan").innerHTML = response.energy;
+    document.getElementById("moodspan").innerHTML = mood[response.mood];
+    document.getElementById("energyspan").innerHTML = energy[response.energy];
     if(response.resting === true) $("#resting").show();
     else $("#resting").hide();
     if(response.conversation === true) $("#conversing").show();
