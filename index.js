@@ -293,16 +293,6 @@ $.get(window.location.origin + '/version', function(response) {
     document.getElementById("versionEle").innerHTML = JSON.parse(response).version;
 });
 
-$.get(window.location.origin + '/mem', function(response) {
-    mem = response;
-    for(var s in segments) {
-        var segment = segments[s];
-        var m = mem[segment.r1];
-        segment.c = rgbToHex(m[0],m[1],m[2]);
-        drawCoffin();
-    }
-});
-
 $.get(window.location.origin + '/config', function(response) {
     console.log(response);
     config = response;
@@ -321,6 +311,15 @@ $.get(window.location.origin + '/weather', function(response) {
 });
 
 function check_brain() {
+    $.get(window.location.origin + '/mem', function(response) {
+        mem = response;
+        for(var s in segments) {
+            var segment = segments[s];
+            var m = mem[segment.r1];
+            segment.c = rgbToHex(m[0],m[1],m[2]);
+            drawCoffin();
+        }
+    });
     $.get(window.location.origin + '/brain', function(response) {
         console.log(response)
         document.getElementById("moodspan").innerHTML = mood[response.mood-1];
