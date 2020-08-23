@@ -434,8 +434,8 @@ def think():
             if len(brain["social_circle"]) > 0:
                 print('Maybe a friend...')
                 talkton = random.choice(neighbors)
-                if talkton.name in brain["social_circle"].keys():
-                    talkto = brain["social_circle"][talkton.name]
+                if talkton["name"] in brain["social_circle"].keys():
+                    talkto = brain["social_circle"][talkton["name"]
                     rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                     brain["conversation"] = True
                     brain["conversation_target"] = talkto["name"]
