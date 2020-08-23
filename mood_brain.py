@@ -493,13 +493,13 @@ def think():
             return
     print('My mood is '+str(brain["mood"]))
     section = sections[0]
-    for s in sections[section]:
+    for s in section:
         segment = s
         requests.get('http://'+config["ip"]+'/?r=255&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
     section = sections[1]
     r = brain["mood"]*25
     b = (10 - brain["mood"])*25
-    for s in sections[section]:
+    for s in section:
         segment = s
         requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g=0&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
     if percentChance(personality["activity_level"]*8):
