@@ -433,15 +433,18 @@ def think():
             print('Think I might reach out to someone, but who?')
             if len(brain["social_circle"]) > 0:
                 print('Maybe a friend...')
-                thekeys = brain["social_circle"].keys()
-                t = random.randrange(len(thekeys))
-                talkto = brain["social_circle"][thekeys[t]]
-                rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
-                brain["conversation"] = True
-                brain["conversation_target"] = talkto["name"]
-                print('I\'ll chat up '+brain["conversation_target"])
-                processDialog(talkto, rep.text)
-                return
+                talkton = random.choice(neighbors)
+                if talkton.name in brain["social_circle"].keys():
+                    talkto = brain["social_circle"][talkton.name]
+                    rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
+                    brain["conversation"] = True
+                    brain["conversation_target"] = talkto["name"]
+                    print('I\'ll chat up '+brain["conversation_target"])
+                    processDialog(talkto, rep.text)
+                    return
+                print('can\'t seem to find any of my friends\' numbers...')
+                if percentChance(10):
+                    brain["mood"] = max(0,brain["mood"] - 1)
             if len(neighbors) > 0:
                 print('Maybe a neighbor...')
                 talkto = random.choice(neighbors)
