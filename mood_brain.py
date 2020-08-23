@@ -380,10 +380,11 @@ def converse():
     brain["energy"] = max(brain["energy"] - 1, 0)
     save_brain()
     tsegments = sections[0]
-    c = mem[tsegments[0]["start"]]
+    c = mem[segments[tsegments[0]]["start"]]
     flip = False
     for i in range(4):
-        for segment in tsegments:
+        for s in tsegments:
+            segment = segments[s]
             if flip == True:
                 requests.get('http://'+config["ip"]+'/?r='+str(c[0])+'&g='+str(c[1])+'&b='+str(c[2])+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
             if flip == False:
