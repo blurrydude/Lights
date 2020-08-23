@@ -433,7 +433,8 @@ def think():
             print('Think I might reach out to someone, but who?')
             if len(brain["social_circle"]) > 0:
                 print('Maybe a friend...')
-                t = random.choice(brain["social_circle"].keys())
+                thekeys = brain["social_circle"].keys()
+                t = random.choice(thekeys)
                 talkto = brain["social_circle"][t]
                 rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
                 brain["conversation"] = True
