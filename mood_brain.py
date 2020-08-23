@@ -474,17 +474,23 @@ def think():
             bx = 8
 
             if personality["superlikes"]["color"] == 0:
-                rx = rx + random.randrange(1,9)
+                while gx == rx or gx == bx:
+                    rx = rx + random.randrange(1,9)
             if personality["superlikes"]["color"] == 1:
-                gx = gx + random.randrange(1,9)
+                while gx == rx or gx == bx:
+                    gx = gx + random.randrange(1,9)
             if personality["superlikes"]["color"] == 2:
-                bx = bx + random.randrange(1,9)
+                while bx == rx or gx == bx:
+                    bx = bx + random.randrange(1,9)
             if personality["likes"]["color"] == 0:
-                rx = rx + random.randrange(0,5)
+                while gx == rx or rx == bx:
+                    rx = rx + random.randrange(0,5)
             if personality["likes"]["color"] == 1:
-                gx = gx + random.randrange(0,5)
+                while gx == rx or gx == bx:
+                    gx = gx + random.randrange(0,5)
             if personality["likes"]["color"] == 2:
-                bx = bx + random.randrange(0,5)
+                while bx == rx or gx == bx:
+                    bx = bx + random.randrange(0,5)
             r = min(255,rx*16)
             g = min(255,gx*16)
             b = min(255,bx*16)
