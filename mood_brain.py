@@ -474,20 +474,20 @@ def think():
             bx = 8
 
             if personality["superlikes"]["color"] == 0:
-                rx = 16
+                rx = rx + random.randrange(1,9)
             if personality["superlikes"]["color"] == 1:
-                gx = 16
+                gx = gx + random.randrange(1,9)
             if personality["superlikes"]["color"] == 2:
-                bx = 16
+                bx = bx + random.randrange(1,9)
             if personality["likes"]["color"] == 0:
-                rx = 12
+                rx = rx + random.randrange(0,5)
             if personality["likes"]["color"] == 1:
-                gx = 12
+                gx = gx + random.randrange(0,5)
             if personality["likes"]["color"] == 2:
-                bx = 12
-            r = min(255,random.randrange(4,rx+1)*16)
-            g = min(255,random.randrange(4,gx+1)*16)
-            b = min(255,random.randrange(4,bx+1)*16)
+                bx = bx + random.randrange(0,5)
+            r = min(255,rx*16)
+            g = min(255,gx*16)
+            b = min(255,bx*16)
             sec = random.randrange(2,6) #bottom 4 shelves
             for s in sections[sec]:
                 segment = segments[s]
