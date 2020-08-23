@@ -534,8 +534,10 @@ if config["personality"] == True:
     print(json.dumps(obj=neighbors,indent=4))
     delay = 15
     if args.fast == True:
+        print('going fast')
         delay = 1
     if args.continuous == True:
+        print('Ctrl+C to stop')
         while True:
             think()
             time.sleep(delay)
