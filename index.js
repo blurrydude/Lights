@@ -298,10 +298,10 @@ $.get(window.location.origin + '/brain', function(response) {
     console.log(response)
     document.getElementById("moodspan").innerHTML = response.mood;
     document.getElementById("energyspan").innerHTML = response.energy;
-    if(response.resting === true) document.getElementById("resting").removeClass('hide');
-    else document.getElementById("resting").addClass('hide');
-    if(response.conversation === true) document.getElementById("conversing").removeClass('hide');
-    else document.getElementById("conversing").addClass('hide');
+    if(response.resting === true) $("#resting").show();
+    else $("#resting").hide();
+    if(response.conversation === true) $("#conversing").show();
+    else $("#conversing").hide();
 });
 
 $.get(window.location.origin + '/personality', function(response) {
