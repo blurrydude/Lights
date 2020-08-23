@@ -404,13 +404,13 @@ def percentChance(percent):
 def think():
     global brain
     if brain["conversation"] == True:
-        section = section[0]
+        section = sections[0]
         for s in sections[section]:
             segment = segments[s]
             requests.get('http://'+config["ip"]+'/?r=0&g=200&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
         return converse()
     if brain["resting"] == True:
-        section = section[0]
+        section = sections[0]
         for s in sections[section]:
             segment = segments[s]
             requests.get('http://'+config["ip"]+'/?r=0&g=60&b=200&a='+str(segment["start"])+'&z='+str(segment["end"]))
@@ -492,7 +492,7 @@ def think():
             brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
             return
     print('My mood is '+str(brain["mood"]))
-    section = section[0]
+    section = sections[0]
     for s in sections[section]:
         segment = segments[s]
         requests.get('http://'+config["ip"]+'/?r=255&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
