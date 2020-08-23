@@ -337,6 +337,7 @@ def processDialog(them, dialog):
 
 def converse():
     global brain
+    load_memory()
     print('conversing')
     hasdialogwaiting = path.exists('/home/pi/waiting_dialog.json')
     if len(neighbors) == 0:
@@ -379,7 +380,7 @@ def converse():
 
     brain["energy"] = max(brain["energy"] - 1, 0)
     save_brain()
-    tsegments = sections[0]
+    tsegments = sections[0] # [7,8,9]
     c = mem[segments[tsegments[0]]["start"]]
     flip = False
     for i in range(4):
