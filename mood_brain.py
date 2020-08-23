@@ -491,6 +491,10 @@ def think():
                 requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
             brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
             return
+    if bored:
+        brain["mood"] = max(brain["mood"] - 1, 0)
+    else:
+        brain["mood"] = min(brain["mood"] + 1, 10)
     print('My mood is '+str(brain["mood"]))
     section = sections[0]
     for s in section:
