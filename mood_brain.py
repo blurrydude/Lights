@@ -404,12 +404,16 @@ def percentChance(percent):
 def think():
     global brain
     if brain["conversation"] == True:
-        segment = segments[0]
-        requests.get('http://'+config["ip"]+'/?r=0&g=200&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
+        section = section[0]
+        for s in sections[section]:
+            segment = segments[s]
+            requests.get('http://'+config["ip"]+'/?r=0&g=200&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
         return converse()
     if brain["resting"] == True:
-        segment = segments[0]
-        requests.get('http://'+config["ip"]+'/?r=0&g=60&b=200&a='+str(segment["start"])+'&z='+str(segment["end"]))
+        section = section[0]
+        for s in sections[section]:
+            segment = segments[s]
+            requests.get('http://'+config["ip"]+'/?r=0&g=60&b=200&a='+str(segment["start"])+'&z='+str(segment["end"]))
         return rest()
     print('thinking...')
     feelLikeResting = brain["energy"] < 3
@@ -488,12 +492,16 @@ def think():
             brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
             return
     print('My mood is '+str(brain["mood"]))
-    segment = segments[0]
-    requests.get('http://'+config["ip"]+'/?r=255&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
-    segment = segments[1]
+    section = section[0]
+    for s in sections[section]:
+        segment = segments[s]
+        requests.get('http://'+config["ip"]+'/?r=255&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
+    section = sections[1]
     r = brain["mood"]*25
     b = (10 - brain["mood"])*25
-    requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g=0&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+    for s in sections[section]:
+        segment = segments[s]
+        requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g=0&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
     if percentChance(personality["activity_level"]*8):
         brain["boredom"] = min(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
