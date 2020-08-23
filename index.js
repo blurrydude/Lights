@@ -328,6 +328,7 @@ $.get(window.location.origin + '/brain', function(response) {
     else $("#resting").hide();
     if(response.conversation === true) $("#conversing").show();
     else $("#conversing").hide();
+    document.getElementById("rounds").innerHTML = response.conversation_rounds;
 });
 
 $.get(window.location.origin + '/personality', function(response) {
