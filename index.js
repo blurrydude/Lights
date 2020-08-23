@@ -320,16 +320,18 @@ $.get(window.location.origin + '/weather', function(response) {
     console.log(response)
 });
 
-$.get(window.location.origin + '/brain', function(response) {
-    console.log(response)
-    document.getElementById("moodspan").innerHTML = mood[response.mood-1];
-    document.getElementById("energyspan").innerHTML = energy[response.energy-1];
-    document.getElementById("rounds").innerHTML = response.conversation_rounds;
-    if(response.resting === true) $("#resting").show();
-    else $("#resting").hide();
-    if(response.conversation === true) $("#conversing").show();
-    else $("#conversing").hide();
-});
+setTimeout(function() {
+    $.get(window.location.origin + '/brain', function(response) {
+        console.log(response)
+        document.getElementById("moodspan").innerHTML = mood[response.mood-1];
+        document.getElementById("energyspan").innerHTML = energy[response.energy-1];
+        document.getElementById("rounds").innerHTML = response.conversation_rounds;
+        if(response.resting === true) $("#resting").show();
+        else $("#resting").hide();
+        if(response.conversation === true) $("#conversing").show();
+        else $("#conversing").hide();
+    });
+},15000)
 
 $.get(window.location.origin + '/personality', function(response) {
     console.log(response)
