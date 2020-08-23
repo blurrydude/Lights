@@ -322,8 +322,8 @@ $.get(window.location.origin + '/weather', function(response) {
 
 $.get(window.location.origin + '/brain', function(response) {
     console.log(response)
-    document.getElementById("moodspan").innerHTML = mood[response.mood];
-    document.getElementById("energyspan").innerHTML = energy[response.energy];
+    document.getElementById("moodspan").innerHTML = mood[response.mood-1];
+    document.getElementById("energyspan").innerHTML = energy[response.energy-1];
     if(response.resting === true) $("#resting").show();
     else $("#resting").hide();
     if(response.conversation === true) $("#conversing").show();
