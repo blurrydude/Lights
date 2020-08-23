@@ -355,7 +355,7 @@ def converse():
         replies.append(processDialog(them, dialog))
     feelLikeResting = brain["energy"] < 3
     bored = random.randrange(brain["boredom"]) > 3 + (10 - personality["activity_level"])
-    if feelLikeResting == True or bored == True:
+    if feelLikeResting == True or bored == True or brain["conversation_rounds"] > (10-personality["activity_level"] + personality["positivity"] + brain["mood"]):
         brain["conversation"] = False
         brain["conversation_target"] = ""
         replies.append("reaction:bye")
@@ -377,6 +377,7 @@ def converse():
     response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
     os.remove('/home/pi/waiting_dialog.json')
     processDialog(them, response.text)
+    brain["conversation_rounds"] = brain["conversation_rounds"] + 1
 
     brain["energy"] = max(brain["energy"] - 1, 0)
     save_brain()
