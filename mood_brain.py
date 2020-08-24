@@ -368,7 +368,7 @@ def converse():
         log('no dialog waiting')
         brain["conversation_rounds"] = brain["conversation_rounds"] + 1
         if brain["conversation_rounds"] > (10-personality["activity_level"] + personality["positivity"] + brain["mood"]):
-            log('This conversation has gone on too long')
+            log('I\'ve waited too long')
             brain["conversation"] = False
             brain["conversation_target"] = ""
             brain["conversation_rounds"] = 0
