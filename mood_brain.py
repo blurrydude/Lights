@@ -546,7 +546,7 @@ def redecorate():
 def doSomething():
     global brain
     log('I am quite bored')
-    if percentChance(personality["positivity"]*10):
+    if percentChance(personality["positivity"]*8):
         setHead(200,60,0)
         log('Think I might reach out to someone, but who?')
         if findSomeoneToTalkTo() == True:
@@ -555,7 +555,7 @@ def doSomething():
             if percentChance(20):
                 decreaseMood()
                 return False
-    elif percentChance(personality["changeability"]*10):
+    elif percentChance(personality["changeability"]*8):
         redecorate()
         return True
     return False
