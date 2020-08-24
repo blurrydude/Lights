@@ -349,7 +349,7 @@ function check_brain() {
     });
 }
 check_brain();
-setInterval(check_brain(),15000);
+setInterval(check_brain,15000);
 
 $.get(window.location.origin + '/personality', function(response) {
     console.log(response)
