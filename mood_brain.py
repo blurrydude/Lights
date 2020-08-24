@@ -404,13 +404,123 @@ def setHead(r,g,b):
         segment = segments[s]
         requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
 
-def updateMoodLights():
+def setHeart():
     section = sections[1]
     r = brain["mood"]*25
     b = (10 - brain["mood"])*25
     for s in section:
         segment = segments[s]
         requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g=0&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+
+def startResting():
+    print('I do feel a bit tired')
+    if percentChance(personality["activity_level"]*2):
+        brain["boredom"] - 1
+    brain["resting"] = True
+    save_brain()
+    setHead(0,60,200)
+    return rest()
+
+def findSomeoneToTalkTo():
+    global brain
+    if len(neighbors) > 0:
+        talkto = random.choice(neighbors)
+        brain["conversation"] = True
+        brain["conversation_target"] = talkto["name"]
+        print('I\'ll chat up '+brain["conversation_target"])
+        
+        if talkto["name"] not in brain["social_circle"].keys():
+            brain["social_circle"][talkto["name"]] = {
+                "positive_interaction": 0,
+                "negative_interaction": 0,
+                "met": time.time(),
+                "last_interaction": time.time(),
+                "ip": talkto["ip"]
+            }
+        
+        rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
+        processDialog(brain["social_circle"][talkto["name"]], rep.text)
+        save_brain()
+        return True
+
+def setSegment(s, r, g, b):
+    segment = segments[s]
+    requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+
+def setSection(sec, r, g, b):
+    for s in sections[sec]:
+        setSegment(s,r,g,b)
+
+def getRandomLikedColor():
+    rx = 8
+    gx = 8
+    bx = 8
+
+    if personality["superlikes"]["color"] == 0:
+        while gx == rx or gx == bx:
+            rx = rx + random.randrange(1,9)
+    if personality["superlikes"]["color"] == 1:
+        while gx == rx or gx == bx:
+            gx = gx + random.randrange(1,9)
+    if personality["superlikes"]["color"] == 2:
+        while bx == rx or gx == bx:
+            bx = bx + random.randrange(1,9)
+    if personality["likes"]["color"] == 0:
+        while gx == rx or rx == bx:
+            rx = rx + random.randrange(0,5)
+    if personality["likes"]["color"] == 1:
+        while gx == rx or gx == bx:
+            gx = gx + random.randrange(0,5)
+    if personality["likes"]["color"] == 2:
+        while bx == rx or gx == bx:
+            bx = bx + random.randrange(0,5)
+    r = min(255,rx*16)
+    g = min(255,gx*16)
+    b = min(255,bx*16)
+    return (r,g,b)
+
+def redecorate():
+    global brain
+    print('A new look, that\'s what\'s needed here.')
+    setHead(200,0,60)
+    iterations = random.randrange(personality["changeability"]*2)
+    for i in range(iterations):
+        c = getRandomLikedColor()
+        r = c[0]
+        g = c[1]
+        b = c[2]
+        sec = random.randrange(2,6) #bottom 4 shelves
+        setSection(sec,r,g,b)
+        rd = random.randrange(3)
+        time.sleep(rd)
+    r = min(255,random.randrange(2,8+1)*32)
+    g = min(255,random.randrange(2,8+1)*32)
+    b = min(255,random.randrange(2,8+1)*32)
+    for s in range(6, 10): #plume
+        setSection(s,r,g,b)
+    brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
+    save_brain()
+    setHead(255,0,0)
+    return
+
+def doSomething():
+    global brain
+    print('I am quite bored')
+    if percentChance(personality["positivity"]*10):
+        setHead(200,60,0)
+        print('Think I might reach out to someone, but who?')
+        if findSomeoneToTalkTo() == True:
+            return True
+        else:
+            if percentChance(20):
+                brain["mood"] = max(0,brain["mood"] - 1)
+                save_brain()
+                setHeart()
+                return False
+    elif percentChance(personality["changeability"]*10):
+        redecorate()
+        return True
+    return False
 
 def think():
     global brain
@@ -424,105 +534,19 @@ def think():
     feelLikeResting = brain["energy"] < 3
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     if feelLikeResting == True:
-        print('I do feel a bit tired')
-        if percentChance(personality["activity_level"]*2):
-            brain["boredom"] - 1
-        brain["resting"] = True
-        setHead(0,60,200)
-        return rest()
+        return startResting()
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     if bored:
-        print('I am quite bored')
-        if percentChance(personality["positivity"]*10):
-            setHead(200,60,0)
-            print('Think I might reach out to someone, but who?')
-            if len(brain["social_circle"]) > 0:
-                print('Maybe a friend...')
-                talkton = random.choice(neighbors)
-                if talkton["name"] in brain["social_circle"].keys():
-                    talkto = brain["social_circle"][talkton["name"]]
-                    rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
-                    brain["conversation"] = True
-                    brain["conversation_target"] = talkto["name"]
-                    print('I\'ll chat up '+brain["conversation_target"])
-                    processDialog(talkto, rep.text)
-                    return
-                print('can\'t seem to find any of my friends\' numbers...')
-                if percentChance(10):
-                    brain["mood"] = max(0,brain["mood"] - 1)
-                    updateMoodLights()
-            if len(neighbors) > 0:
-                print('Maybe a neighbor...')
-                talkto = random.choice(neighbors)
-                if "ip" not in talkto.keys():
-                    print('this is unexpected...')
-                    print(talkto)
-                rep = requests.get("http://"+talkto["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog=topic:likes:weather:"+personality["likes"]["weather"])
-                brain["conversation"] = True
-                brain["conversation_target"] = talkto["name"]
-                print('I\'ll chat up '+brain["conversation_target"])
-                brain["social_circle"][talkto["name"]] = {
-                    "positive_interaction": 0,
-                    "negative_interaction": 0,
-                    "met": time.time(),
-                    "last_interaction": time.time(),
-                    "ip": talkto["ip"]
-                }
-                processDialog(brain["social_circle"][talkto["name"]], rep.text)
-                return
-        elif percentChance(personality["changeability"]*10):
-            print('A new look, that\'s what\'s needed here.')
-            setHead(200,0,60)
-            rx = 8
-            gx = 8
-            bx = 8
-
-            if personality["superlikes"]["color"] == 0:
-                while gx == rx or gx == bx:
-                    rx = rx + random.randrange(1,9)
-            if personality["superlikes"]["color"] == 1:
-                while gx == rx or gx == bx:
-                    gx = gx + random.randrange(1,9)
-            if personality["superlikes"]["color"] == 2:
-                while bx == rx or gx == bx:
-                    bx = bx + random.randrange(1,9)
-            if personality["likes"]["color"] == 0:
-                while gx == rx or rx == bx:
-                    rx = rx + random.randrange(0,5)
-            if personality["likes"]["color"] == 1:
-                while gx == rx or gx == bx:
-                    gx = gx + random.randrange(0,5)
-            if personality["likes"]["color"] == 2:
-                while bx == rx or gx == bx:
-                    bx = bx + random.randrange(0,5)
-            r = min(255,rx*16)
-            g = min(255,gx*16)
-            b = min(255,bx*16)
-            sec = random.randrange(2,6) #bottom 4 shelves
-            for s in sections[sec]:
-                segment = segments[s]
-                requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
-                rd = random.randrange(3)
-                time.sleep(rd)
-            r = min(255,random.randrange(2,8+1)*32)
-            g = min(255,random.randrange(2,8+1)*32)
-            b = min(255,random.randrange(2,8+1)*32)
-            sec = random.randrange(6,10) #plume
-            for s in sections[sec]:
-                segment = segments[s]
-                requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
-                rd = random.randrange(3)
-                time.sleep(rd)
-            brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
-            setHead(255,0,0)
+        if doSomething() == True:
             return
-    if bored:
-        brain["mood"] = max(brain["mood"] - 1, 0)
-    else:
-        brain["mood"] = min(brain["mood"] + 1, 10)
+        else:
+            brain["mood"] = max(brain["mood"] - 1, 0)
+            save_brain()
+            return
+    brain["mood"] = min(brain["mood"] + 1, 10)
     print('My mood is '+str(brain["mood"]))
     setHead(255,0,0)
-    updateMoodLights()
+    setHeart()
     if percentChance(personality["activity_level"]*8):
         brain["boredom"] = min(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
