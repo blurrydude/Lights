@@ -665,7 +665,7 @@ if config["autosun"] == True:
         p = p + segments[sections[0][0]]["start"]
         log('night m:'+str(m)+'   p:'+str(p))
         requests.get('http://'+config["ip"]+'/?r=100&g=40&b=20&a='+str(p)+'&z='+str(p))
-    if timeToSunset > timeToSunrise: # day
+    elif timeToSunset < timeToSunrise: # day
         log("day")
         b = 255 - (timeToSunrise * 10)
         m = timeToSunset / daynightlength
