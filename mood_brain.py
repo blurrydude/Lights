@@ -374,6 +374,7 @@ def converse():
             brain["conversation_rounds"] = 0
             replies.append("reaction:bye")
             setHead(255,0,0)
+        return
     else:
         with open('/home/pi/waiting_dialog.json', "r") as read_file:
             data = json.load(read_file)
