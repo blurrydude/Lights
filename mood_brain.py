@@ -367,6 +367,13 @@ def converse():
     if hasdialogwaiting == False:
         log('no dialog waiting')
         brain["conversation_rounds"] = brain["conversation_rounds"] + 1
+        if brain["conversation_rounds"] > (10-personality["activity_level"] + personality["positivity"] + brain["mood"]):
+            log('This conversation has gone on too long')
+            brain["conversation"] = False
+            brain["conversation_target"] = ""
+            brain["conversation_rounds"] = 0
+            replies.append("reaction:bye")
+            setHead(255,0,0)
     else:
         with open('/home/pi/waiting_dialog.json', "r") as read_file:
             data = json.load(read_file)
