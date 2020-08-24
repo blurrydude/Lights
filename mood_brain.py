@@ -358,18 +358,33 @@ def converse():
     replies = []
     with open('/home/pi/waiting_dialog.json', "r") as read_file:
         data = json.load(read_file)
+    log(data["name"]+' said '+data["dialog"])
     them = brain["social_circle"][data["name"]]
     dialogs = data["dialog"].split(',')
     for dialog in dialogs:
         replies.append(processDialog(them, dialog))
     feelLikeResting = brain["energy"] < 3
     bored = random.randrange(brain["boredom"]) > 3 + (10 - personality["activity_level"])
-    if feelLikeResting == True or bored == True or brain["conversation_rounds"] > (10-personality["activity_level"] + personality["positivity"] + brain["mood"]):
+    if feelLikeResting == True:
+        log('I\'m too tired to talk right now')
+        brain["conversation"] = False
+        brain["conversation_target"] = ""
+        brain["conversation_rounds"] = 0
+        replies.append("reaction:bye")
+    elif bored == True:
+        log('This conversation is too boring')
+        brain["conversation"] = False
+        brain["conversation_target"] = ""
+        brain["conversation_rounds"] = 0
+        replies.append("reaction:bye")
+    elif brain["conversation_rounds"] > (10-personality["activity_level"] + personality["positivity"] + brain["mood"]):
+        log('This conversation has gone on too long')
         brain["conversation"] = False
         brain["conversation_target"] = ""
         brain["conversation_rounds"] = 0
         replies.append("reaction:bye")
     else:
+        log('Hmm, how should I respond?')
         feelingChoices = ["superlikes","likes","dislikes"]
         if personality["positivity"] < 4:
             feelingChoices = ["likes","dislikes"]
