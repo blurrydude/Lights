@@ -651,7 +651,7 @@ if config["autosun"] == True:
     timeToSunset = int((weather["sys"]["sunset"] - s) / 60 / 60)
     timeToSunrise = int((weather["sys"]["sunrise"] - s) / 60 / 60)
     daynightlength = int(abs(weather["sys"]["sunrise"] - weather["sys"]["sunset"]) / 60 / 60)
-
+    log('timeToSunset:'+str(timeToSunset)+'   timeToSunrise'+str(timeToSunrise)+ '   daynightlength'+str(daynightlength))
     if timeToSunrise < timeToSunset: # night
         r = timeToSunrise * 10
         m = timeToSunrise / daynightlength
