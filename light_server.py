@@ -115,7 +115,7 @@ def load_neighbors():
 def log(message):
     date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
-    with open('/home/pi/light_server_log_'+datetime.now().strftime("%Y-%m-%d-%H")+'.log', "a+") as write_file:
+    with open('/home/pi/logs/light_server_log_'+datetime.now().strftime("%Y-%m-%d-%H")+'.log', "a+") as write_file:
         write_file.write(message+"\n")
 
 def save_config():
@@ -204,7 +204,7 @@ def template_endpoint():
 @app.route("/log", methods=['GET'])
 def log_endpoint():
     page = request.args['p']
-    pageFile = open("/home/pi/"+page+"_log_"+datetime.now().strftime("%Y-%m-%d-%H")+".log","r")
+    pageFile = open("/home/pi/logs/"+page+"_log_"+datetime.now().strftime("%Y-%m-%d-%H")+".log","r")
     pageData = pageFile.read()
     pageFile.close()
     return pageData
@@ -314,6 +314,9 @@ def converse_endpoint():
 
 
 if __name__ == "__main__":
+    hasLogDir = path.exists('/home/pi/logs/')
+    if hasLogDir == False:
+        os.mkdir('/home/pi/logs/')
     log('Starting program in 90 seconds...')
     time.sleep(90)
     log('Starting.')

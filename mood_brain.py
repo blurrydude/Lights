@@ -98,7 +98,7 @@ subjects = ["weather","color","time"]
 def log(message):
     date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
-    with open('/home/pi/brain_log_'+datetime.now().strftime("%Y-%m-%d-%H")+'.log', "a+") as write_file:
+    with open('/home/pi/logs/brain_log_'+datetime.now().strftime("%Y-%m-%d-%H")+'.log', "a+") as write_file:
         write_file.write(message+"\n")
     print(message)
 

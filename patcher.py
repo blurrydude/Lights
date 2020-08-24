@@ -9,7 +9,7 @@ from datetime import datetime
 import socket
 
 def log(message):
-    logfile = "/home/pi/patcher_log_"+datetime.now().strftime("%Y-%m-%d-%H")+".log"
+    logfile = "/home/pi/logs/patcher_log_"+datetime.now().strftime("%Y-%m-%d-%H")+".log"
     date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
     print(message)
