@@ -650,16 +650,27 @@ if config["autosun"] == True:
     s = time.time()
     timeToSunset = int((weather["sys"]["sunset"] - s) / 60 / 60)
     timeToSunrise = int((weather["sys"]["sunrise"] - s) / 60 / 60)
+    daylength = abs(weather["sys"]["sunrise"] - weather["sys"]["sunset"])
+    nightlength = abs(weather["sys"]["sunset"] - weather["sys"]["sunrise"])
 
     if timeToSunrise < timeToSunset: # night
         r = timeToSunrise * 10
+        m = timeToSunrise / nightlength
+        p = int(28 * m)
         setSection(6,r,0,0)
         setSection(7,r,0,0)
         setSection(8,r,0,0)
         setSection(9,r,0,0)
+        setSection(0,0,0,200)
+        p = p + segments[sections[0][0]]["start"]
+        requests.get('http://'+config["ip"]+'/?r=100&g=40&b=20&a='+str(p)+'&z='+str(p))
     if timeToSunset > timeToSunrise: # day
         b = 255 - (timeToSunrise * 10)
+        m = timeToSunset / daylength
+        p = int(28 * m)
         setSection(6,0,0,b)
         setSection(7,0,0,b)
         setSection(8,0,0,b)
         setSection(9,0,0,b)
+        p = p + segments[sections[0][0]]["start"]
+        requests.get('http://'+config["ip"]+'/?r=100&g=40&b=20&a='+str(p)+'&z='+str(p))
