@@ -269,14 +269,17 @@ def processDialog(them, dialog):
             if feeling == "likes":
                 like = like + 1
                 reply = "reaction:happy"
+                increaseMood()
             if feeling == "superlikes":
                 like = like + 1
                 if personality["positivity"] >= 7:
                     like = like + 1
                 reply = "reaction:veryhappy"
+                increaseMood()
                 brain["boredom"] = max(brain["boredom"] - 1, 0)
             if feeling == "dislikes":
                 reply = "reaction:veryhappy"
+                increaseMood()
                 brain["boredom"] = max(brain["boredom"] - 1, 0)
                 like = like + 1
                 if personality["positivity"] < 7:
@@ -284,22 +287,26 @@ def processDialog(them, dialog):
         if feeling == "likes" and personality["superlikes"][subject] == thought:
             like = like + 1
             reply = "reaction:happy"
+            increaseMood()
         if feeling == "superlikes" and personality["likes"][subject] == thought:
             like = like + 1
             if personality["positivity"] >= 7:
                 like = like + 1
             reply = "reaction:happy"
+            increaseMood()
         if feeling == "dislikes" and personality["superlikes"][subject] == thought:
             dislike = dislike + 1
             if personality["positivity"] < 7:
                 dislike = dislike + 1
             reply = "reaction:verymad"
+            decreaseMood()
             brain["boredom"] = min(brain["boredom"] + 1, 10)
         if feeling == "dislikes" and personality["likes"][subject] == thought:
             dislike = dislike + 1
             if personality["positivity"] < 4:
                 dislike = dislike + 1
             reply = "reaction:mad"
+            decreaseMood()
             brain["boredom"] = min(brain["boredom"] + 1, 10)
         them["positive_interaction"] = them["positive_interaction"] + like
         them["negative_interaction"] = them["negative_interaction"] + dislike
