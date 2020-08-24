@@ -320,7 +320,7 @@ function check_brain() {
             drawCoffin();
         }
     });
-    
+
     $.get(window.location.origin + '/brain', function(response) {
         console.log(response)
         document.getElementById("moodspan").innerHTML = mood[response.mood-1];
@@ -333,22 +333,18 @@ function check_brain() {
     });
 
     $.get(window.location.origin + '/log?p=brain', function(response) {
-        console.log(response)
         document.getElementById("brain-log").innerHTML = response.replace(/\n/g,"<br/>");
     });
     
     $.get(window.location.origin + '/log?p=patcher', function(response) {
-        console.log(response)
         document.getElementById("patcher-log").innerHTML = response.replace(/\n/g,"<br/>");
     });
     
     $.get(window.location.origin + '/log?p=light_cron', function(response) {
-        console.log(response)
         document.getElementById("cron-log").innerHTML = response.replace(/\n/g,"<br/>");
     });
     
     $.get(window.location.origin + '/log?p=light_server', function(response) {
-        console.log(response)
         document.getElementById("server-log").innerHTML = response.replace(/\n/g,"<br/>");
     });
 }
