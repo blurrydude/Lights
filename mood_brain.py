@@ -383,17 +383,17 @@ def converse():
         brain["conversation_target"] = ""
         brain["conversation_rounds"] = 0
         replies.append("reaction:bye")
-    else:
-        log('Hmm, how should I respond?')
-        feelingChoices = ["superlikes","likes","dislikes"]
-        if personality["positivity"] < 4:
-            feelingChoices = ["likes","dislikes"]
-        if personality["positivity"] >= 7:
-            feelingChoices = ["superlikes","likes"]
-        feeling = random.choice(feelingChoices)
-        subject = random.choice(subjects)
-        thought = personality[feeling][subject]
-        replies.append("topic:"+feeling+":"+subject+":"+thought)
+    # else:
+    #     log('Hmm, how should I respond?')
+    #     feelingChoices = ["superlikes","likes","dislikes"]
+    #     if personality["positivity"] < 4:
+    #         feelingChoices = ["likes","dislikes"]
+    #     if personality["positivity"] >= 7:
+    #         feelingChoices = ["superlikes","likes"]
+    #     feeling = random.choice(feelingChoices)
+    #     subject = random.choice(subjects)
+    #     thought = personality[feeling][subject]
+    #     replies.append("topic:"+feeling+":"+subject+":"+thought)
 
     sep = ','
     send = sep.join(replies)
