@@ -201,6 +201,14 @@ def template_endpoint():
     pageFile.close()
     return pageData
 
+@app.route("/log", methods=['GET'])
+def log_endpoint():
+    page = request.args['p']
+    pageFile = open("/home/pi/"+page+"_log_"+datetime.now().strftime("%Y-%m-%d")+".log","r")
+    pageData = pageFile.read()
+    pageFile.close()
+    return pageData
+
 @app.route("/version", methods=['GET'])
 def version_endpoint():
     pageFile = open("/home/pi/lightdata.json","r")

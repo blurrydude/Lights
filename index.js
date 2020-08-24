@@ -342,3 +342,23 @@ $.get(window.location.origin + '/personalitysummary', function(response) {
     console.log(response)
     document.getElementById("personality-summary").innerHTML = response;
 });
+
+$.get(window.location.origin + '/log?p=brain', function(response) {
+    console.log(response)
+    document.getElementById("brain-log").innerHTML = response;
+});
+
+$.get(window.location.origin + '/log?p=patcher', function(response) {
+    console.log(response)
+    document.getElementById("patcher-log").innerHTML = response;
+});
+
+$.get(window.location.origin + '/log?p=light_cron', function(response) {
+    console.log(response)
+    document.getElementById("cron-log").innerHTML = response;
+});
+
+$.get(window.location.origin + '/log?p=light_server', function(response) {
+    console.log(response)
+    document.getElementById("server-log").innerHTML = response;
+});

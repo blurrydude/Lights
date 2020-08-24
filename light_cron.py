@@ -33,7 +33,7 @@ def getWeatherData():
         json.dump(r.json(), write_file, sort_keys=True, indent=4)
 
 def log(message):
-    logfile = "/home/pi/light_log_"+datetime.now().strftime("%Y-%m-%d")+".txt"
+    logfile = "/home/pi/light_cron_log_"+datetime.now().strftime("%Y-%m-%d")+".log"
     date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
     print(message)
