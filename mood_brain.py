@@ -662,7 +662,7 @@ if config["autosun"] == True:
         setSection(9,r,0,0)
         setSection(0,0,0,200)
         p = p + segments[sections[0][0]]["start"]
-        log('m:'+str(m)+'   p'+str(p))
+        log('night m:'+str(m)+'   p'+str(p))
         requests.get('http://'+config["ip"]+'/?r=100&g=40&b=20&a='+str(p)+'&z='+str(p))
     elif timeToSunset > timeToSunrise: # day
         b = 255 - (timeToSunrise * 10)
@@ -674,5 +674,5 @@ if config["autosun"] == True:
         setSection(9,0,0,b)
         setSection(0,0,150,250)
         p = p + segments[sections[0][0]]["start"]
-        log('m:'+str(m)+'   p'+str(p))
+        log('day m:'+str(m)+'   p'+str(p))
         requests.get('http://'+config["ip"]+'/?r=255&g=64&b=20&a='+str(p)+'&z='+str(p))
