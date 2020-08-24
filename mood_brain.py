@@ -383,17 +383,6 @@ def converse():
 
     brain["energy"] = max(brain["energy"] - 1, 0)
     save_brain()
-    tsegments = sections[0] # [7,8,9]
-    c = mem[segments[tsegments[0]]["start"]]
-    flip = False
-    for i in range(4):
-        for s in tsegments:
-            segment = segments[s]
-            if flip == True:
-                requests.get('http://'+config["ip"]+'/?r='+str(c[0])+'&g='+str(c[1])+'&b='+str(c[2])+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
-            if flip == False:
-                requests.get('http://'+config["ip"]+'/?r=0&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
-        flip = flip != True
 
 def rest():
     global brain
@@ -408,19 +397,19 @@ def rest():
 def percentChance(percent):
     return random.randrange(100) < percent
 
+def setHead(r,g,b):
+    section = sections[0]
+    for s in section:
+        segment = segments[s]
+        requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+
 def think():
     global brain
     if brain["conversation"] == True:
-        section = sections[0]
-        for s in section:
-            segment = segments[s]
-            requests.get('http://'+config["ip"]+'/?r=0&g=200&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
+        setHead(0,200,0) 
         return converse()
     if brain["resting"] == True:
-        section = sections[0]
-        for s in section:
-            segment = segments[s]
-            requests.get('http://'+config["ip"]+'/?r=0&g=60&b=200&a='+str(segment["start"])+'&z='+str(segment["end"]))
+        setHead(0,60,200)
         return rest()
     print('thinking...')
     feelLikeResting = brain["energy"] < 3
@@ -430,11 +419,13 @@ def think():
         if percentChance(personality["activity_level"]*2):
             brain["boredom"] - 1
         brain["resting"] = True
+        setHead(0,60,200)
         return rest()
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     if bored:
         print('I am quite bored')
         if percentChance(personality["positivity"]*10):
+            setHead(200,60,0)
             print('Think I might reach out to someone, but who?')
             if len(brain["social_circle"]) > 0:
                 print('Maybe a friend...')
@@ -471,6 +462,7 @@ def think():
                 return
         elif percentChance(personality["changeability"]*10):
             print('A new look, that\'s what\'s needed here.')
+            setHead(200,0,60)
             rx = 8
             gx = 8
             bx = 8
@@ -508,6 +500,7 @@ def think():
                 segment = segments[s]
                 requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
             brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
+            setHead(255,0,0)
             return
     if bored:
         brain["mood"] = max(brain["mood"] - 1, 0)
