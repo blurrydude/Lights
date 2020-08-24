@@ -345,20 +345,20 @@ $.get(window.location.origin + '/personalitysummary', function(response) {
 
 $.get(window.location.origin + '/log?p=brain', function(response) {
     console.log(response)
-    document.getElementById("brain-log").innerHTML = response;
+    document.getElementById("brain-log").innerHTML = response.replace("\n","<br/>");
 });
 
 $.get(window.location.origin + '/log?p=patcher', function(response) {
     console.log(response)
-    document.getElementById("patcher-log").innerHTML = response;
+    document.getElementById("patcher-log").innerHTML = response.replace("\n","<br/>");
 });
 
 $.get(window.location.origin + '/log?p=light_cron', function(response) {
     console.log(response)
-    document.getElementById("cron-log").innerHTML = response;
+    document.getElementById("cron-log").innerHTML = response.replace("\n","<br/>");
 });
 
 $.get(window.location.origin + '/log?p=light_server', function(response) {
     console.log(response)
-    document.getElementById("server-log").innerHTML = response;
+    document.getElementById("server-log").innerHTML = response.replace("\n","<br/>");
 });
