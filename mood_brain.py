@@ -433,7 +433,18 @@ def setHead(r,g,b):
         segment = segments[s]
         requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
 
+def increaseMood():
+    brain["mood"] = min(brain["mood"] + 1, 10)
+    setHeart()
+    save_brain()
+
+def decreaseMood():
+    brain["mood"] = max(brain["mood"] - 1, 0)
+    setHeart()
+    save_brain()
+
 def setHeart():
+    log('My mood is '+str(brain["mood"]))
     section = sections[1]
     r = brain["mood"]*25
     b = (10 - brain["mood"])*25
@@ -542,9 +553,7 @@ def doSomething():
             return True
         else:
             if percentChance(20):
-                brain["mood"] = max(0,brain["mood"] - 1)
-                save_brain()
-                setHeart()
+                decreaseMood()
                 return False
     elif percentChance(personality["changeability"]*10):
         redecorate()
@@ -569,13 +578,10 @@ def think():
         if doSomething() == True:
             return
         else:
-            brain["mood"] = max(brain["mood"] - 1, 0)
-            save_brain()
+            decreaseMood()
             return
-    brain["mood"] = min(brain["mood"] + 1, 10)
-    log('My mood is '+str(brain["mood"]))
+    increaseMood()
     setHead(255,0,0)
-    setHeart()
     if percentChance(personality["activity_level"]*8):
         brain["boredom"] = min(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
