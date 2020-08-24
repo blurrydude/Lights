@@ -360,15 +360,15 @@ def converse():
     if hasdialogwaiting == False:
         log('no dialog waiting')
         brain["conversation_rounds"] = brain["conversation_rounds"] + 1
-        return
-    with open('/home/pi/waiting_dialog.json', "r") as read_file:
-        data = json.load(read_file)
-    log(data["name"]+' said '+data["dialog"])
-    them = brain["social_circle"][data["name"]]
-    dialogs = data["dialog"].split(',')
-    for dialog in dialogs:
-        if dialog != '':
-            replies.append(processDialog(them, dialog))
+    else:
+        with open('/home/pi/waiting_dialog.json', "r") as read_file:
+            data = json.load(read_file)
+        log(data["name"]+' said '+data["dialog"])
+        them = brain["social_circle"][data["name"]]
+        dialogs = data["dialog"].split(',')
+        for dialog in dialogs:
+            if dialog != '':
+                replies.append(processDialog(them, dialog))
     if feelLikeResting == True:
         log('I\'m too tired to talk right now')
         brain["conversation"] = False
