@@ -458,13 +458,13 @@ def getRandomLikedColor():
 
     if personality["superlikes"]["color"] == 0:
         while gx == rx or gx == bx:
-            rx = rx + random.randrange(1,9)
+            rx = rx + random.randrange(4,9)
     if personality["superlikes"]["color"] == 1:
         while gx == rx or gx == bx:
-            gx = gx + random.randrange(1,9)
+            gx = gx + random.randrange(4,9)
     if personality["superlikes"]["color"] == 2:
         while bx == rx or gx == bx:
-            bx = bx + random.randrange(1,9)
+            bx = bx + random.randrange(4,9)
     if personality["likes"]["color"] == 0:
         while gx == rx or rx == bx:
             rx = rx + random.randrange(0,5)
