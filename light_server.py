@@ -160,6 +160,12 @@ def load_brain():
     with open('/home/pi/brain.json', "r") as read_file:
         brain = json.load(read_file)
 
+@app.route("/reboot", methods=['GET'])
+def reboot_endpoint():
+    secret = request.args['s']
+    if secret == "42":
+        os.system('reboot now')
+
 @app.route("/", methods=['GET'])
 def light_endpoint():
     global mem
