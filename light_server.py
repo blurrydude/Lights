@@ -86,12 +86,13 @@ def load_config():
             "ip": args.ip,
             "name": name
         }
+        log('Make new config.')
         save_config()
 
     with open('/home/pi/light_conf.json', "r") as read_file:
         config = json.load(read_file)
-    if "ip" not in config.keys():
-        config["ip"] = args.ip
+        log('Existing config loaded.')
+    config["ip"] = args.ip
 
 def load_neighbors():
     global neighbors
@@ -119,7 +120,7 @@ def log(message):
         write_file.write(message+"\n")
 
 def save_config():
-    config["ip"] = args.ip
+    log('save config')
     with open('/home/pi/light_conf.json', "w") as write_file:
         json.dump(config, write_file, indent=4)
 
@@ -146,6 +147,7 @@ def load_memory():
             json.dump(mem, write_file, indent=4)
 
 def save_brain():
+    log('save brain')
     with open('/home/pi/brain.json', "w") as write_file:
         json.dump(brain, write_file, indent=4)
 
@@ -252,12 +254,14 @@ def personalitysummary_endpoint():
 @app.route("/setautosun", methods=['GET'])
 def setautosun_endpoint():
     config['autosun'] = bool(request.args['v'])
+    log('set autosun '+str(config['autosun']))
     save_config()
     return config
 
 @app.route("/setpersonality", methods=['GET'])
 def setpersonality_endpoint():
     config['personality'] = bool(request.args['v'])
+    log('set personality '+str(config['personality']))
     save_config()
     return config
 
