@@ -276,16 +276,26 @@ function updateConfig() {
 }
 
 function autosun(on) {
-    config.autosun = on;
+    config.autosun = on === true;
     $.get(window.location.origin + '/setautosun?v='+config.autosun, function(response) {
-        updateConfig();
+        $.get(window.location.origin + '/config', function(response) {
+            console.log(response);
+            config = response;
+            document.getElementById("namespan").innerHTML = config.name;
+            updateConfig();
+        });
     });
 }
 
 function personality(on) {
-    config.personality = on;
+    config.personality = on === true;
     $.get(window.location.origin + '/setpersonality?v='+config.personality, function(response) {
-        updateConfig();
+        $.get(window.location.origin + '/config', function(response) {
+            console.log(response);
+            config = response;
+            document.getElementById("namespan").innerHTML = config.name;
+            updateConfig();
+        });
     });
 }
 
