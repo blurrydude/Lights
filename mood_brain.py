@@ -648,8 +648,8 @@ if config["autosun"] == True:
     setSection(2,r,255,0)
 
     s = time.time()
-    timeToSunset = int((weather["sys"]["sunset"] - s) / 60 / 60)
-    timeToSunrise = int((weather["sys"]["sunrise"] - s) / 60 / 60)
+    timeToSunset = int(abs(weather["sys"]["sunset"] - s) / 60 / 60)
+    timeToSunrise = int(abs(weather["sys"]["sunrise"] - s) / 60 / 60)
     daynightlength = int(abs(weather["sys"]["sunrise"] - weather["sys"]["sunset"]) / 60 / 60)
     log('timeToSunset:'+str(timeToSunset)+'   timeToSunrise'+str(timeToSunrise)+ '   daynightlength'+str(daynightlength))
     if timeToSunrise < timeToSunset: # night
