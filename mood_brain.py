@@ -95,6 +95,13 @@ weather = ["thunderstorms","drizzle","rain","snow","clear weather","cloudy weath
 colors = ['red','green','blu']
 subjects = ["weather","color","time"]
 
+def log(message):
+    date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    message = date_time + ": " + message
+    with open('/home/pi/brain_log_'+datetime.now().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
+        write_file.write(message+"\n")
+    print(message)
+
 def save_memory(memory):
     with open('/home/pi/light_mem.json', "w") as write_file:
         json.dump(memory, write_file, indent=4)
@@ -338,14 +345,14 @@ def processDialog(them, dialog):
 def converse():
     global brain
     load_memory()
-    print('conversing')
+    log('conversing')
     hasdialogwaiting = path.exists('/home/pi/waiting_dialog.json')
     if len(neighbors) == 0:
-        print('no neighbors')
+        log('no neighbors')
         brain["conversation_rounds"] = brain["conversation_rounds"] + 1
         return
     if hasdialogwaiting == False:
-        print('no dialog waiting')
+        log('no dialog waiting')
         brain["conversation_rounds"] = brain["conversation_rounds"] + 1
         return
     replies = []
@@ -373,9 +380,9 @@ def converse():
         thought = personality[feeling][subject]
         replies.append("topic:"+feeling+":"+subject+":"+thought)
 
-    print(replies)
     sep = ','
     send = sep.join(replies)
+    log('send: '+send)
 
     response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
     os.remove('/home/pi/waiting_dialog.json')
@@ -387,7 +394,7 @@ def converse():
 
 def rest():
     global brain
-    print('resting')
+    log('resting')
     brain["energy"] = min(brain["energy"] + 1, 10)
     if brain["energy"] == 10:
         brain["resting"] = False
@@ -413,7 +420,7 @@ def setHeart():
         requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g=0&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
 
 def startResting():
-    print('I do feel a bit tired')
+    log('I do feel a bit tired')
     if percentChance(personality["activity_level"]*2):
         brain["boredom"] - 1
     brain["resting"] = True
@@ -427,7 +434,7 @@ def findSomeoneToTalkTo():
         talkto = random.choice(neighbors)
         brain["conversation"] = True
         brain["conversation_target"] = talkto["name"]
-        print('I\'ll chat up '+brain["conversation_target"])
+        log('I\'ll chat up '+brain["conversation_target"])
         
         if talkto["name"] not in brain["social_circle"].keys():
             brain["social_circle"][talkto["name"]] = {
@@ -481,7 +488,7 @@ def getRandomLikedColor():
 
 def redecorate():
     global brain
-    print('A new look, that\'s what\'s needed here.')
+    log('A new look, that\'s what\'s needed here.')
     setHead(200,0,60)
     iterations = random.randrange(personality["changeability"]*2)
     for i in range(iterations):
@@ -505,10 +512,10 @@ def redecorate():
 
 def doSomething():
     global brain
-    print('I am quite bored')
+    log('I am quite bored')
     if percentChance(personality["positivity"]*10):
         setHead(200,60,0)
-        print('Think I might reach out to someone, but who?')
+        log('Think I might reach out to someone, but who?')
         if findSomeoneToTalkTo() == True:
             return True
         else:
@@ -530,7 +537,7 @@ def think():
     if brain["resting"] == True:
         setHead(0,60,200)
         return rest()
-    print('thinking...')
+    log('thinking...')
     feelLikeResting = brain["energy"] < 3
     bored = random.randrange(brain["boredom"]+1) > 3 + (10 - personality["activity_level"])
     if feelLikeResting == True:
@@ -544,7 +551,7 @@ def think():
             save_brain()
             return
     brain["mood"] = min(brain["mood"] + 1, 10)
-    print('My mood is '+str(brain["mood"]))
+    log('My mood is '+str(brain["mood"]))
     setHead(255,0,0)
     setHeart()
     if percentChance(personality["activity_level"]*8):
@@ -585,4 +592,4 @@ if config["personality"] == True:
             time.sleep(delay)
 
 else:
-    print("personality disabled")
+    log("personality disabled")
