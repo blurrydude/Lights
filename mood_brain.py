@@ -672,5 +672,6 @@ if config["autosun"] == True:
         setSection(7,0,0,b)
         setSection(8,0,0,b)
         setSection(9,0,0,b)
+        setSection(0,0,150,250)
         p = p + segments[sections[0][0]]["start"]
-        requests.get('http://'+config["ip"]+'/?r=100&g=40&b=20&a='+str(p)+'&z='+str(p))
+        requests.get('http://'+config["ip"]+'/?r=255&g=64&b=20&a='+str(p)+'&z='+str(p))
