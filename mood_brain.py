@@ -327,18 +327,21 @@ def processDialog(them, dialog):
         if reaction == "busy":
             brain["conversation"] = False
             brain["conversation_target"] = ""
+            setHead(255,0,0)
             save_brain()
             return ""
         if reaction == "bye":
             them["positive_interaction"] = them["positive_interaction"] + 1
             brain["conversation"] = False
             brain["conversation_target"] = ""
+            setHead(255,0,0)
             save_brain()
             return ""
         if reaction == "ignoring":
             them["negative_interaction"] = them["negative_interaction"] + 1
             brain["conversation"] = False
             brain["conversation_target"] = ""
+            setHead(255,0,0)
             save_brain()
             return ""
 
@@ -372,18 +375,21 @@ def converse():
         brain["conversation_target"] = ""
         brain["conversation_rounds"] = 0
         replies.append("reaction:bye")
+        setHead(255,0,0)
     elif bored == True:
         log('This conversation is too boring')
         brain["conversation"] = False
         brain["conversation_target"] = ""
         brain["conversation_rounds"] = 0
         replies.append("reaction:bye")
+        setHead(255,0,0)
     elif brain["conversation_rounds"] > (10-personality["activity_level"] + personality["positivity"] + brain["mood"]):
         log('This conversation has gone on too long')
         brain["conversation"] = False
         brain["conversation_target"] = ""
         brain["conversation_rounds"] = 0
         replies.append("reaction:bye")
+        setHead(255,0,0)
     # else:
     #     log('Hmm, how should I respond?')
     #     feelingChoices = ["superlikes","likes","dislikes"]
