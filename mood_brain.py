@@ -398,11 +398,11 @@ def converse():
 
     sep = ','
     send = sep.join(replies)
-    log('send: '+send)
-
-    response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
+    if send != '':
+        log('send: '+send)
+        response = requests.get("http://"+data["ip"]+"/converse?name="+name+"&ip="+config["ip"]+"&dialog="+send)
+        processDialog(them, response.text)
     os.remove('/home/pi/waiting_dialog.json')
-    processDialog(them, response.text)
     brain["conversation_rounds"] = brain["conversation_rounds"] + 1
 
     brain["energy"] = max(brain["energy"] - 1, 0)
