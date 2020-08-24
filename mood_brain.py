@@ -346,7 +346,10 @@ def converse():
     global brain
     load_memory()
     log('conversing')
+    feelLikeResting = brain["energy"] < 3
+    bored = random.randrange(brain["boredom"]) > 3 + (10 - personality["activity_level"])
     hasdialogwaiting = path.exists('/home/pi/waiting_dialog.json')
+    replies = []
     if len(neighbors) == 0:
         log('no neighbors')
         brain["conversation_rounds"] = brain["conversation_rounds"] + 1
@@ -355,16 +358,14 @@ def converse():
         log('no dialog waiting')
         brain["conversation_rounds"] = brain["conversation_rounds"] + 1
         return
-    replies = []
     with open('/home/pi/waiting_dialog.json', "r") as read_file:
         data = json.load(read_file)
     log(data["name"]+' said '+data["dialog"])
     them = brain["social_circle"][data["name"]]
     dialogs = data["dialog"].split(',')
     for dialog in dialogs:
-        replies.append(processDialog(them, dialog))
-    feelLikeResting = brain["energy"] < 3
-    bored = random.randrange(brain["boredom"]) > 3 + (10 - personality["activity_level"])
+        if dialog != '':
+            replies.append(processDialog(them, dialog))
     if feelLikeResting == True:
         log('I\'m too tired to talk right now')
         brain["conversation"] = False
