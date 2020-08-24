@@ -648,5 +648,11 @@ if config["autosun"] == True:
     setSection(2,r,255,0)
     if weather["sys"]["sunrise"] < weather["sys"]["sunset"]: # night
         setSection(6,200,0,0)
+        setSection(7,200,0,0)
+        setSection(8,200,0,0)
+        setSection(9,200,0,0)
     if weather["sys"]["sunrise"] > weather["sys"]["sunset"]: # day
         setSection(6,0,0,200)
+        setSection(7,0,0,200)
+        setSection(8,0,0,200)
+        setSection(9,0,0,200)
