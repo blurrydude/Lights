@@ -474,28 +474,28 @@ def setSection(sec, r, g, b):
         setSegment(s,r,g,b)
 
 def getRandomLikedColor():
-    rx = 8
-    gx = 8
-    bx = 8
+    rx = 4
+    gx = 4
+    bx = 4
 
     if personality["superlikes"]["color"] == 0:
         while gx == rx or gx == bx:
-            rx = rx + random.randrange(4,9)
+            rx = rx + random.randrange(8,13)
     if personality["superlikes"]["color"] == 1:
         while gx == rx or gx == bx:
-            gx = gx + random.randrange(4,9)
+            gx = gx + random.randrange(8,13)
     if personality["superlikes"]["color"] == 2:
         while bx == rx or gx == bx:
-            bx = bx + random.randrange(4,9)
+            bx = bx + random.randrange(8,13)
     if personality["likes"]["color"] == 0:
         while gx == rx or rx == bx:
-            rx = rx + random.randrange(0,5)
+            rx = rx + random.randrange(2,9)
     if personality["likes"]["color"] == 1:
         while gx == rx or gx == bx:
-            gx = gx + random.randrange(0,5)
+            gx = gx + random.randrange(2,9)
     if personality["likes"]["color"] == 2:
         while bx == rx or gx == bx:
-            bx = bx + random.randrange(0,5)
+            bx = bx + random.randrange(2,9)
     r = min(255,rx*16)
     g = min(255,gx*16)
     b = min(255,bx*16)
