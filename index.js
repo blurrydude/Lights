@@ -276,8 +276,7 @@ function updateConfig() {
 }
 
 function autosun(on) {
-    config.autosun = on === true;
-    $.get(window.location.origin + '/setautosun?v='+config.autosun, function(response) {
+    $.get(window.location.origin + '/setautosun?v='+(on===true?'True':'False'), function(response) {
         $.get(window.location.origin + '/config', function(response) {
             console.log(response);
             config = response;
@@ -288,8 +287,7 @@ function autosun(on) {
 }
 
 function personality(on) {
-    config.personality = on === true;
-    $.get(window.location.origin + '/setpersonality?v='+config.personality, function(response) {
+    $.get(window.location.origin + '/setpersonality?v='+(on===true?'True':'False'), function(response) {
         $.get(window.location.origin + '/config', function(response) {
             console.log(response);
             config = response;
