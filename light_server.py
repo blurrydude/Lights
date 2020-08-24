@@ -217,8 +217,8 @@ def light_query_endpoint():
 
 @app.route("/mem", methods=['GET'])
 def mem_endpoint():
-    config['lastattention'] = time.time()
-    save_config()
+    #config['lastattention'] = time.time()
+    #save_config()
     return mem
 
 @app.route("/config", methods=['GET'])

@@ -404,6 +404,14 @@ def setHead(r,g,b):
         segment = segments[s]
         requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
 
+def updateMoodLights():
+    section = sections[1]
+    r = brain["mood"]*25
+    b = (10 - brain["mood"])*25
+    for s in section:
+        segment = segments[s]
+        requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g=0&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+
 def think():
     global brain
     if brain["conversation"] == True:
@@ -442,6 +450,7 @@ def think():
                 print('can\'t seem to find any of my friends\' numbers...')
                 if percentChance(10):
                     brain["mood"] = max(0,brain["mood"] - 1)
+                    updateMoodLights()
             if len(neighbors) > 0:
                 print('Maybe a neighbor...')
                 talkto = random.choice(neighbors)
@@ -493,6 +502,8 @@ def think():
             for s in sections[sec]:
                 segment = segments[s]
                 requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+                rd = random.randrange(3)
+                time.sleep(rd)
             r = min(255,random.randrange(2,8+1)*32)
             g = min(255,random.randrange(2,8+1)*32)
             b = min(255,random.randrange(2,8+1)*32)
@@ -500,6 +511,8 @@ def think():
             for s in sections[sec]:
                 segment = segments[s]
                 requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+                rd = random.randrange(3)
+                time.sleep(rd)
             brain["boredom"] = max(0,brain["boredom"] - (11 - personality["activity_level"]))
             setHead(255,0,0)
             return
@@ -508,16 +521,8 @@ def think():
     else:
         brain["mood"] = min(brain["mood"] + 1, 10)
     print('My mood is '+str(brain["mood"]))
-    section = sections[0]
-    for s in section:
-        segment = segments[s]
-        requests.get('http://'+config["ip"]+'/?r=255&g=0&b=0&a='+str(segment["start"])+'&z='+str(segment["end"]))
-    section = sections[1]
-    r = brain["mood"]*25
-    b = (10 - brain["mood"])*25
-    for s in section:
-        segment = segments[s]
-        requests.get('http://'+config["ip"]+'/?r='+str(r)+'&g=0&b='+str(b)+'&a='+str(segment["start"])+'&z='+str(segment["end"]))
+    setHead(255,0,0)
+    updateMoodLights()
     if percentChance(personality["activity_level"]*8):
         brain["boredom"] = min(brain["boredom"] + 1, 10)
     if percentChance((10 - personality["activity_level"])*10):
