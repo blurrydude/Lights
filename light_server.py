@@ -115,7 +115,7 @@ def load_neighbors():
 def log(message):
     date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
-    with open('/home/pi/light_server_log_'+datetime.now().strftime("%Y-%m-%d")+'.log', "a+") as write_file:
+    with open('/home/pi/light_server_log_'+datetime.now().strftime("%Y-%m-%d-%H")+'.log', "a+") as write_file:
         write_file.write(message+"\n")
 
 def save_config():
@@ -204,7 +204,7 @@ def template_endpoint():
 @app.route("/log", methods=['GET'])
 def log_endpoint():
     page = request.args['p']
-    pageFile = open("/home/pi/"+page+"_log_"+datetime.now().strftime("%Y-%m-%d")+".log","r")
+    pageFile = open("/home/pi/"+page+"_log_"+datetime.now().strftime("%Y-%m-%d-%H")+".log","r")
     pageData = pageFile.read()
     pageFile.close()
     return pageData
