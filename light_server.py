@@ -254,14 +254,14 @@ def personalitysummary_endpoint():
 @app.route("/setautosun", methods=['GET'])
 def setautosun_endpoint():
     config['autosun'] = bool(request.args['v'])
-    log('set autosun '+str(config['autosun']))
+    log('set autosun '+str(config['autosun'])+' from '+request.args['v'])
     save_config()
     return config
 
 @app.route("/setpersonality", methods=['GET'])
 def setpersonality_endpoint():
     config['personality'] = bool(request.args['v'])
-    log('set personality '+str(config['personality']))
+    log('set personality '+str(config['personality'])+' from '+request.args['v'])
     save_config()
     return config
 
