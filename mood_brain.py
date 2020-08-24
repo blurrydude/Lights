@@ -360,6 +360,7 @@ def converse():
     if feelLikeResting == True or bored == True or brain["conversation_rounds"] > (10-personality["activity_level"] + personality["positivity"] + brain["mood"]):
         brain["conversation"] = False
         brain["conversation_target"] = ""
+        brain["conversation_rounds"] = 0
         replies.append("reaction:bye")
     else:
         feelingChoices = ["superlikes","likes","dislikes"]

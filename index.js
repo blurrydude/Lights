@@ -329,10 +329,10 @@ function check_brain() {
         else $("#resting").hide();
         if(response.conversation === true) $("#conversing").show();
         else $("#conversing").hide();
-        setTimeout(check_brain(),15000);
     });
 }
 check_brain();
+setInterval(check_brain(),15000);
 
 $.get(window.location.origin + '/personality', function(response) {
     console.log(response)
