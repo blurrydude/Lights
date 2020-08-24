@@ -633,6 +633,20 @@ if config["personality"] == True:
         for i in range(3):
             think()
             time.sleep(delay)
-
 else:
     log("personality disabled")
+
+if config["autosun"] == True:
+    with open('/home/pi/weather.json', "r") as read_file:
+        weather = json.load(read_file)
+    t = min(max(0,weather["main"]["temp"]),100)
+    r = int((t/100)*255)
+    b = int(((100-t)/100)*255)
+    setSection(1,r,0,b)
+    h = weather["main"]["humidity"]
+    r = int(((100-h)/100)*255)
+    setSection(2,r,255,0)
+    if weather["sys"]["sunrise"] < weather["sys"]["sunset"]: # night
+        setSection(6,200,0,0)
+    if weather["sys"]["sunrise"] < weather["sys"]["sunset"]: # day
+        setSection(6,0,0,200)
