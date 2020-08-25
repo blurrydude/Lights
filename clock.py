@@ -4,6 +4,9 @@ from datetime import datetime
 def setPixel(p,r,g,b):
     requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(p)+'&z='+str(p))
 
+def setRange(a,z,r,g,b):
+    requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(a)+'&z='+str(z))
+
 now = datetime.now()
 hour = now.hour
 postmeridian = hour > 11
@@ -16,6 +19,10 @@ hourhand = hour * 5
 if hourhand == 60:
     hourhand = 0
 minutehand = now.minute
+setRange(0,59,0,0,0)
+for i in range(12):
+    m = i * 5
+    setPixel(m,64,8,0)
 if minutehand == hourhand:
     if postmeridian == True:
         setPixel(hourhand,255,0,255)
@@ -27,11 +34,11 @@ else:
     else:
         setPixel(hourhand,0,255,0)
     setPixel(minutehand,0,0,255)
-if hourhand == 0:
-    setPixel(55,0,0,0)
-if minutehand == 0:
-    setPixel(59,0,0,0)
-if hourhand > 0:
-    setPixel(hourhand-5,0,0,0)
-if minutehand > 0:
-    setPixel(minutehand-1,0,0,0)
+# if hourhand == 0:
+#     setPixel(55,0,0,0)
+# if minutehand == 0:
+#     setPixel(59,0,0,0)
+# if hourhand > 0:
+#     setPixel(hourhand-5,0,0,0)
+# if minutehand > 0:
+#     setPixel(minutehand-1,0,0,0)
