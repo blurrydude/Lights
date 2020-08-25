@@ -1,11 +1,19 @@
 import requests
 from datetime import datetime
+import board
+import neopixel
+
+pixels = neopixel.NeoPixel(board.D18, led_count)
 
 def setPixel(p,r,g,b):
-    requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(p)+'&z='+str(p))
+    #requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(p)+'&z='+str(p))
+    pixels[p] = (r,g,b)
 
 def setRange(a,z,r,g,b):
-    requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(a)+'&z='+str(z))
+    #requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(a)+'&z='+str(z))
+    while a <= z:
+        setPixel(a,r,g,b)
+        a = a + 1
 
 # doSeconds = False
 
