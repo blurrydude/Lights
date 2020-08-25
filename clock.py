@@ -45,6 +45,7 @@ else:
 # if minutehand > 0:
 #     setPixel(minutehand-1,0,0,0)
 while tick < 56:
+    global second
     if minutehand != tick and hourhand != tick:
         if tick == 0:
             setPixel(0,0,4,32)
