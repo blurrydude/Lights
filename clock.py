@@ -48,28 +48,30 @@ while datetime.now().minute == minutehand:
     if minutehand != tick and hourhand != tick:
         if tick == 0:
             setPixel(0,0,4,32)
-        if tick == 5:
+        elif tick == 5:
             setPixel(5,0,4,32)
-        if tick == 10:
+        elif tick == 10:
             setPixel(10,0,4,32)
-        if tick == 15:
+        elif tick == 15:
             setPixel(15,0,4,32)
-        if tick == 20:
+        elif tick == 20:
             setPixel(20,0,4,32)
-        if tick == 25:
+        elif tick == 25:
             setPixel(25,0,4,32)
-        if tick == 30:
+        elif tick == 30:
             setPixel(30,0,4,32)
-        if tick == 35:
+        elif tick == 35:
             setPixel(35,0,4,32)
-        if tick == 40:
+        elif tick == 40:
             setPixel(40,0,4,32)
-        if tick == 45:
+        elif tick == 45:
             setPixel(45,0,4,32)
-        if tick == 50:
+        elif tick == 50:
             setPixel(50,0,4,32)
-        if tick == 55:
+        elif tick == 55:
             setPixel(55,0,4,32)
+        else:
+            setPixel(tick,8,0,16)
         if second != datetime.now().second:
             second = datetime.now().second
             tick = tick + 1
