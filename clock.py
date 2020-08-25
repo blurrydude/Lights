@@ -44,9 +44,9 @@ else:
 #     setPixel(hourhand-5,0,0,0)
 # if minutehand > 0:
 #     setPixel(minutehand-1,0,0,0)
-lasttick = -1
+nexttick = 0
 while ticks < 58:
-    if minutehand != tick and hourhand != tick and tick != lasttick:
+    if minutehand != tick and hourhand != tick and tick == nexttick:
         if tick == 0:
             setPixel(0,0,4,32)
         elif tick == 5:
@@ -71,9 +71,9 @@ while ticks < 58:
             setPixel(50,0,4,32)
         elif tick == 55:
             setPixel(55,0,4,32)
-        else:
-            setPixel(tick,8,0,16)
-        lasttick = tick
+        # else:
+        #     setPixel(tick,8,0,16)
+        nexttick = tick + 1
     if second != datetime.now().second:
         second = datetime.now().second
         tick = tick + 1
