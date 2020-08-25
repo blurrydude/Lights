@@ -70,6 +70,6 @@ while datetime.now().minute == minutehand:
             setPixel(50,0,4,32)
         if tick == 55:
             setPixel(55,0,4,32)
-        if second != now.second:
-            second = now.second
+        if second != datetime.now().second:
+            second = datetime.now().second
             tick = tick + 1
