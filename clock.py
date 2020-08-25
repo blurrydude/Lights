@@ -19,6 +19,8 @@ hourhand = hour * 5
 if hourhand == 60:
     hourhand = 0
 minutehand = now.minute
+second = now.second
+tick = 0
 setRange(0,59,0,0,0)
 for i in range(12):
     m = i * 5
@@ -42,3 +44,32 @@ else:
 #     setPixel(hourhand-5,0,0,0)
 # if minutehand > 0:
 #     setPixel(minutehand-1,0,0,0)
+while datetime.now().minute == minutehand:
+    if minutehand != tick and hourhand != tick:
+        if tick == 0:
+            setPixel(0,0,4,32)
+        if tick == 5:
+            setPixel(5,0,4,32)
+        if tick == 10:
+            setPixel(10,0,4,32)
+        if tick == 15:
+            setPixel(15,0,4,32)
+        if tick == 20:
+            setPixel(20,0,4,32)
+        if tick == 25:
+            setPixel(25,0,4,32)
+        if tick == 30:
+            setPixel(30,0,4,32)
+        if tick == 35:
+            setPixel(35,0,4,32)
+        if tick == 40:
+            setPixel(40,0,4,32)
+        if tick == 45:
+            setPixel(45,0,4,32)
+        if tick == 50:
+            setPixel(50,0,4,32)
+        if tick == 55:
+            setPixel(55,0,4,32)
+        if second != now.second:
+            second = now.second
+            tick = tick + 1
