@@ -3,7 +3,7 @@ from datetime import datetime
 import board
 import neopixel
 
-pixels = neopixel.NeoPixel(board.D18, led_count)
+pixels = neopixel.NeoPixel(board.D18, 60)
 
 def setPixel(p,r,g,b):
     #requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(p)+'&z='+str(p))
