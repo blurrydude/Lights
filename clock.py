@@ -23,10 +23,7 @@ if hourhand == 60:
 minutehand = now.minute
 second = now.second
 tick = 0
-setRange(0,59,0,0,0)
-for i in range(12):
-    m = i * 5
-    setPixel(m,32,4,0)
+#setRange(0,59,0,0,0)
 if minutehand == hourhand:
     if postmeridian == True:
         setPixel(hourhand,255,0,255)
@@ -40,44 +37,66 @@ else:
     setPixel(minutehand,0,0,255)
 # if hourhand == 0:
 #     setPixel(55,0,0,0)
-# if minutehand == 0:
-#     setPixel(59,0,0,0)
 # if hourhand > 0:
 #     setPixel(hourhand-5,0,0,0)
-# if minutehand > 0:
-#     setPixel(minutehand-1,0,0,0)
-nexttick = 0
-startsecond = second
-if doSeconds == True:
-    while datetime.now().minute == minutehand or datetime.now().second < startsecond -2:
-        if minutehand != tick and hourhand != tick and tick == nexttick:
-            if tick == 0:
-                setPixel(0,0,4,32)
-            elif tick == 5:
-                setPixel(5,0,4,32)
-            elif tick == 10:
-                setPixel(10,0,4,32)
-            elif tick == 15:
-                setPixel(15,0,4,32)
-            elif tick == 20:
-                setPixel(20,0,4,32)
-            elif tick == 25:
-                setPixel(25,0,4,32)
-            elif tick == 30:
-                setPixel(30,0,4,32)
-            elif tick == 35:
-                setPixel(35,0,4,32)
-            elif tick == 40:
-                setPixel(40,0,4,32)
-            elif tick == 45:
-                setPixel(45,0,4,32)
-            elif tick == 50:
-                setPixel(50,0,4,32)
-            elif tick == 55:
-                setPixel(55,0,4,32)
-            # else:
-            #     setPixel(tick,8,0,16)
-            nexttick = tick + 1
-        if second != datetime.now().second:
-            second = datetime.now().second
-            tick = tick + 1
+if minutehand == 0:
+    setPixel(59,0,0,0)
+if minutehand > 0:
+    setPixel(minutehand-1,0,0,0)
+for i in range(12):
+    m = i * 5
+    if m != hourhand and m != minutehand:
+        setPixel(m,32,4,0)
+
+if second > 0:
+    for x in range(second+2):
+        if x != minutehand and x != hourhand:
+            if x % 5 == 0:
+                setPixel(x,0,4,32)
+            else:
+                setPixel(x,8,0,16)
+lastsecond = 0
+while datetime.now().minute == minutehand:
+    if datetime.now().second != lastsecond:
+        lastsecond = datetime.now().second
+        if lastsecond != minutehand and lastsecond != hourhand:
+            if lastsecond % 5 == 0:
+                setPixel(lastsecond,0,4,32)
+            else:
+                setPixel(lastsecond,8,0,16)
+
+# nexttick = 0
+# if doSeconds == True:
+#     while datetime.now().minute == minutehand or datetime.now().second < startsecond -2:
+#         if tick == nexttick:
+#             if minutehand != tick and hourhand != tick:
+#                 if tick == 0:
+#                     setPixel(0,0,4,32)
+#                 elif tick == 5:
+#                     setPixel(5,0,4,32)
+#                 elif tick == 10:
+#                     setPixel(10,0,4,32)
+#                 elif tick == 15:
+#                     setPixel(15,0,4,32)
+#                 elif tick == 20:
+#                     setPixel(20,0,4,32)
+#                 elif tick == 25:
+#                     setPixel(25,0,4,32)
+#                 elif tick == 30:
+#                     setPixel(30,0,4,32)
+#                 elif tick == 35:
+#                     setPixel(35,0,4,32)
+#                 elif tick == 40:
+#                     setPixel(40,0,4,32)
+#                 elif tick == 45:
+#                     setPixel(45,0,4,32)
+#                 elif tick == 50:
+#                     setPixel(50,0,4,32)
+#                 elif tick == 55:
+#                     setPixel(55,0,4,32)
+#             # else:
+#             #     setPixel(tick,8,0,16)
+#             nexttick = tick + 1
+#         if second != datetime.now().second:
+#             second = datetime.now().second
+#             tick = tick + 1
