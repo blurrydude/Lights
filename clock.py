@@ -22,7 +22,7 @@ minutehand = now.minute
 setRange(0,59,0,0,0)
 for i in range(12):
     m = i * 5
-    setPixel(m,64,8,0)
+    setPixel(m,32,4,0)
 if minutehand == hourhand:
     if postmeridian == True:
         setPixel(hourhand,255,0,255)
