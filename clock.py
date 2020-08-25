@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 
 def setPixel(p,r,g,b):
-    requests.get('http://127.0.0.1/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(p)+'&z='+str(p))
+    requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(p)+'&z='+str(p))
 
 now = datetime.now()
 hour = now.hour
