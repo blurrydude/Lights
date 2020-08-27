@@ -42,9 +42,9 @@ def doCheck():
     if token['version'] != data['version']:
         with open(tokenfile, "w") as write_file:
             json.dump(data, write_file, sort_keys=True, indent=4)
-        log('Waiting two seconds then rebooting.')
+        log('Rebooting.')
         time.sleep(1)
-        os.system("shutdown /r /t 1")
+        os.system('sudo shutdown -r now')
         exit()
 
 for i in range(0,5):
