@@ -114,7 +114,12 @@ hour = -1
 background = []
 setRange(0,59,0,0,0)
 for i in range(60):
-    background.append((0,0,0))
+    if i != 0 and i % 15:
+        background.append((32,4,0))
+    elif i % 5 == 0:
+        background.append((16,4,0))
+    else:
+        background.append((0,0,0))
 for i in range(12):
     setPixel(i*5,32,4,0)
     background[i*5] = (32,4,0)
