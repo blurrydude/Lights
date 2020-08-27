@@ -120,15 +120,21 @@ for i in range(12):
     background[i*5] = (32,4,0)
 while True:
     now = datetime.now()
+    hour = now.hour
+        pm = hour > 11
+        dhour = hour
+        if pm == True:
+            dhour = dhour - 12
+        hand = dhour * 5
     if now.second != second:
         second = now.second
-        if second != now.minute and second != now.hour:
+        if second != now.minute and second != hand:
             setPixel(second,0,255,0)
-        if second == now.minute and second != now.hour:
+        if second == now.minute and second != hand:
             setPixel(second,0,255,255)
-        if second != now.minute and second == now.hour:
+        if second != now.minute and second == hand:
             setPixel(second,255,255,0)
-        if second == now.minute and second == now.hour:
+        if second == now.minute and second == hand:
             setPixel(second,255,255,255)
         if second == 0:
             l = background[59]
@@ -138,38 +144,32 @@ while True:
                 setPixel(59,l[0],l[1],l[2])
         else:
             l = background[second-1]
-            if now.minute == second-1 and now.hour == second-1:
+            if now.minute == second-1 and hand == second-1:
                 setPixel(second-1,255,0,255)
-            if now.minute != second-1 and now.hour == second-1:
+            if now.minute != second-1 and hand == second-1:
                 setPixel(second-1,255,0,0)
-            if now.minute == second-1 and now.hour != second-1:
+            if now.minute == second-1 and hand != second-1:
                 setPixel(second-1,0,0,255)
-            if now.minute != second-1 and now.hour != second-1:
+            if now.minute != second-1 and hand != second-1:
                 setPixel(second-1,l[0],l[1],l[2])
     if now.minute != minute:
         minute = now.minute
         if minute != second:
-            if minute != now.hour:
+            if minute != hand:
                 setPixel(minute,0,0,255)
-            if minute == now.hour:
+            if minute == hand:
                 setPixel(minute,255,0,255)
             if minute == 0:
                 if second != 59:
                     l = background[59]
                     setPixel(59,l[0],l[1],l[2])
             else:
-                if minute-1 != now.hour and minute-1 != second:
+                if minute-1 != hand and minute-1 != second:
                     l = background[minute-1]
                     setPixel(minute-1,l[0],l[1],l[2])
-                if minute-1 == now.hour and minute-1 != second:
+                if minute-1 == hand and minute-1 != second:
                     setPixel(minute,255,0,0)
     if now.hour != hour:
-        hour = now.hour
-        pm = hour > 11
-        dhour = hour
-        if pm == True:
-            dhour = dhour - 12
-        hand = dhour * 5
         if hand != minute and hand != second:
             if hand != minute and hand != second:
                 print('setting hour '+str(hand))
