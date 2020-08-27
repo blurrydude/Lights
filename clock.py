@@ -121,11 +121,11 @@ for i in range(12):
 while True:
     now = datetime.now()
     hour = now.hour
-        pm = hour > 11
-        dhour = hour
-        if pm == True:
-            dhour = dhour - 12
-        hand = dhour * 5
+    pm = hour > 11
+    dhour = hour
+    if pm == True:
+        dhour = dhour - 12
+    hand = dhour * 5
     if now.second != second:
         second = now.second
         if second != now.minute and second != hand:
