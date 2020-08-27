@@ -172,6 +172,7 @@ while True:
         hand = dhour * 5
         if hand != minute and hand != second:
             if hand != minute and hand != second:
+                print('setting hour '+str(hand))
                 setPixel(hand,255,0,0)
             if hand == 0:
                 if minute != 59 and second != 59:
