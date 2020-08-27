@@ -135,13 +135,13 @@ while True:
     if now.second != second:
         second = now.second
         if second != now.minute and second != hand:
-            setPixel(second,0,maxIntensity,0)
+            setPixel(second,0,maxIntensity/2,0)
         if second == now.minute and second != hand:
-            setPixel(second,0,maxIntensity,maxIntensity)
+            setPixel(second,0,maxIntensity/2,maxIntensity)
         if second != now.minute and second == hand:
-            setPixel(second,maxIntensity,maxIntensity,0)
+            setPixel(second,maxIntensity,maxIntensity/2,0)
         if second == now.minute and second == hand:
-            setPixel(second,maxIntensity,maxIntensity,maxIntensity)
+            setPixel(second,maxIntensity,maxIntensity/2,maxIntensity)
         if second == 0:
             l = background[59]
             if now.minute == 59:
