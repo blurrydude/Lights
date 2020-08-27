@@ -49,3 +49,4 @@ def doCheck():
 
 for i in range(0,5):
     doCheck()
+os.system('sudo python3 health_manager.py')
