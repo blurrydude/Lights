@@ -115,14 +115,14 @@ background = []
 setRange(0,59,0,0,0)
 for i in range(60):
     if i != 0 and i % 15 == 0:
-        background.append((32,4,0))
+        background.append((16,0,8))
     elif i % 5 == 0:
-        background.append((8,1,0))
+        background.append((16,4,0))
     else:
         background.append((0,0,0))
-for i in range(12):
-    setPixel(i*5,32,4,0)
-    background[i*5] = (32,4,0)
+# for i in range(12):
+#     setPixel(i*5,32,4,0)
+#     background[i*5] = (32,4,0)
 while True:
     now = datetime.now()
     hour = now.hour
