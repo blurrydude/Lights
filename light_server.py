@@ -200,6 +200,8 @@ def color_endpoint():
     r = int(color[0] * intensity)
     g = int(color[1] * intensity)
     b = int(color[2] * intensity)
+    a = 0
+    z = led_count-1
     while a <= z:
         pixels[a] = (r, g, b)
         mem[a] = (r, g, b)
