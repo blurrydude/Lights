@@ -205,6 +205,7 @@ def color_endpoint():
         mem[a] = (r, g, b)
         a = a + 1
     save_memory(mem)
+    return "OK"
 
 @app.route("/reboot", methods=['GET'])
 def reboot_endpoint():
