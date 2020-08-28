@@ -9,6 +9,9 @@ from datetime import datetime
 import socket
 
 def log(message):
+    hasLogDir = path.exists('/home/pi/logs/')
+    if hasLogDir == False:
+        os.mkdir('/home/pi/logs/')
     logfile = "/home/pi/logs/patcher_log_"+datetime.now().strftime("%Y-%m-%d-%H")+".log"
     date_time = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     message = date_time + ": " + message
@@ -39,10 +42,11 @@ def doCheck():
     if token['version'] != data['version']:
         with open(tokenfile, "w") as write_file:
             json.dump(data, write_file, sort_keys=True, indent=4)
-        log('Waiting ten seconds then rebooting.')
-        time.sleep(10)
-        os.system('reboot now')
+        log('Rebooting.')
+        time.sleep(1)
+        os.system('sudo shutdown -r now')
         exit()
 
 for i in range(0,5):
     doCheck()
+os.system('sudo python3 health_manager.py')
