@@ -29,6 +29,8 @@ config = {}
 neighbors = []
 brain = {}
 personality = {}
+intensity = 0
+color = (0,0,0)
 
 weather = ["thunderstorms","drizzle","rain","snow","clear weather","cloudy weather","mist","haze","fog"]
 colors = ['red','green','blu']
@@ -159,6 +161,50 @@ def load_brain():
         save_brain()
     with open('/home/pi/brain.json', "r") as read_file:
         brain = json.load(read_file)
+
+@app.route("/color", methods=["GET"])
+def color_endpoint():
+    global intensity
+    global color
+    c = request.args["c"]
+    if "dimmer" in c:
+        intensity = intensity - 16
+    if "brighter" in c:
+        intensity = intensity + 16
+    if "on" in c:
+        intensity = 200
+    if "off" in c:
+        intensity = 0
+    if "full" in c:
+        intensity = 255
+    if "red" in c:
+        color = (1,0,0)
+    if "green" in c:
+        color = (0,1,0)
+    if "blue" in c:
+        color = (0,0,1)
+    if "orange" in c:
+        color = (1,0.25,0)
+    if "yellow" in c:
+        color = (1,1,0)
+    if "magenta" in c:
+        color = (1,0,1)
+    if "purple" in c:
+        color = (1,0,0.25)
+    if "cyan" in c:
+        color = (0,1,1)
+    if "white" in c:
+        color = (1,1,1)
+    
+    intensity = min(max(0, intensity),255)
+    r = int(color[0] * intensity)
+    g = int(color[1] * intensity)
+    b = int(color[2] * intensity)
+    while a <= z:
+        pixels[a] = (r, g, b)
+        mem[a] = (r, g, b)
+        a = a + 1
+    save_memory(mem)
 
 @app.route("/reboot", methods=['GET'])
 def reboot_endpoint():
