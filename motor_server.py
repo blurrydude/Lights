@@ -29,6 +29,7 @@ settings = {
     "stepperSpeed": 0
 }
 sDaemon = None
+cDaemon = None
 
 def stepperDaemon():
     global settings
@@ -100,4 +101,6 @@ def default_route():
 if __name__ == "__main__":
     sDaemon = threading.Thread(target=stepperDaemon, daemon=True)
     sDaemon.start()
+    cDaemon = threading.Thread(target=checkCommandDaemon, daemon=True)
+    cDaemon.start()
     app.run(host=args.ip, port=80, debug=True)
