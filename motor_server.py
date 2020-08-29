@@ -129,6 +129,7 @@ def default_route():
     return "OK"
 
 if __name__ == "__main__":
+    time.sleep(90)
     retries = 10
     try:
         sDaemon = threading.Thread(target=stepperDaemon, daemon=True)
