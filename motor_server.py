@@ -129,40 +129,12 @@ def default_route():
     return "OK"
 
 if __name__ == "__main__":
-    time.sleep(90)
-    retries = 10
-    try:
-        sDaemon = threading.Thread(target=stepperDaemon, daemon=True)
-        sDaemon.start()
-    except:
-        while retries > 0:
-            try:
-                sDaemon = threading.Thread(target=stepperDaemon, daemon=True)
-                sDaemon.start()
-                retries = 0
-            except:
-                if retries == 0:
-                    exit()
-                    break
-                retries = retries - 1
-                time.sleep(10)
+    #time.sleep(90)
 
-    retries = 10
-    try:
-        cDaemon = threading.Thread(target=checkCommandDaemon, daemon=True)
-        cDaemon.start()
-    except:
-        while retries > 0:
-            try:
-                cDaemon = threading.Thread(target=checkCommandDaemon, daemon=True)
-                cDaemon.start()
-                retries = 0
-            except:
-                if retries == 0:
-                    exit()
-                    break
-                retries = retries - 1
-                time.sleep(10)
+    sDaemon = threading.Thread(target=stepperDaemon, daemon=True)
+    sDaemon.start()
+    cDaemon = threading.Thread(target=checkCommandDaemon, daemon=True)
+    cDaemon.start()
 
     retries = 10
     try:
