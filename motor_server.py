@@ -23,9 +23,9 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 stepperkit = MotorKit(address=0x61)
 dcmotorkit = MotorKit()
 settings = {
-    dcmotor1 = 0
-    dcmotor2 = 0
-    stepperSpeed = 0
+    "dcmotor1": 0,
+    "dcmotor2": 0,
+    "stepperSpeed": 0
 }
 sDaemon = None
 
