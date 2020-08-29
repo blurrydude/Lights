@@ -6,9 +6,9 @@ import os.path
 from os import path
 import random
 from datetime import datetime
-# from flask import request, url_for
-# from flask_api import FlaskAPI, status, exceptions
-# from flask_cors import CORS
+from flask import request, url_for
+from flask_api import FlaskAPI, status, exceptions
+from flask_cors import CORS
 import json
 from adafruit_motorkit import MotorKit
 from adafruit_motor import stepper
@@ -18,8 +18,8 @@ import requests
 parser = argparse.ArgumentParser()
 parser.add_argument("--ip", "-ip", help="ip address")
 args = parser.parse_args()
-# app = FlaskAPI(__name__)
-# cors = CORS(app, resources={r"*": {"origins": "*"}})
+app = FlaskAPI(__name__)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 stepperkit = MotorKit(address=0x61)
 dcmotorkit = MotorKit()
