@@ -1,5 +1,6 @@
 import requests 
 import socket
+import os
 
 URL = "https://blurrydude.com:5000/checkin"
 
@@ -24,7 +25,7 @@ command = requests.get('https://blurrydude.com:5000/topic?t=commands')
 if name.replace('pi','') in command:
     requests.get('https://blurrydude.com:5000/ack?t=commands')
     if "reboot" in command:
-        requests.get('http:'+ip+'/reboot?s=42')
+        os.system('reboot now')
     else:
         requests.get('http:'+ip+'/command?c='+command)
 #  MMFFFFFFFFFLLLSSDDVV
