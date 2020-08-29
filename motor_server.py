@@ -26,17 +26,17 @@ dcmotorkit = MotorKit()
 settings = {
     "dcmotor1": 0,
     "dcmotor2": 0,
-    "stepperSpeed": 0
+    "stepper": 0
 }
 sDaemon = None
 cDaemon = None
 
 def stepperDaemon():
     global settings
-    ss = abs(settings["stepperSpeed"])
+    ss = abs(settings["stepper"])
     while True:
-        if settings["stepperSpeed"] != 0:
-            if settings["stepperSpeed"] > 0:
+        if settings["stepper"] != 0:
+            if settings["stepper"] > 0:
                 stepperkit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
             else:
                 stepperkit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
