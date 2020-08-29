@@ -6,9 +6,9 @@ import os.path
 from os import path
 import random
 from datetime import datetime
-from flask import request, url_for
-from flask_api import FlaskAPI, status, exceptions
-from flask_cors import CORS
+# from flask import request, url_for
+# from flask_api import FlaskAPI, status, exceptions
+# from flask_cors import CORS
 import json
 from adafruit_motorkit import MotorKit
 from adafruit_motor import stepper
@@ -18,8 +18,8 @@ import requests
 parser = argparse.ArgumentParser()
 parser.add_argument("--ip", "-ip", help="ip address")
 args = parser.parse_args()
-app = FlaskAPI(__name__)
-cors = CORS(app, resources={r"*": {"origins": "*"}})
+# app = FlaskAPI(__name__)
+# cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 stepperkit = MotorKit(address=0x61)
 dcmotorkit = MotorKit()
@@ -96,19 +96,19 @@ def setMotorSpeed(motor, speed):
     if motor == 4:
         dcmotorkit.motor4.throttle = speed
 
-@app.route("/")
-def default_route():
-    global settings
-    motor = request.args["m"]
-    speed = float(request.args["s"])
-    if "dcmotor" in motor:
-        dcm = int(motor.replace("dcmotor",""))
-        setMotorSpeed(dcm, speed)
-    settings[motor] = speed
+# @app.route("/")
+# def default_route():
+#     global settings
+#     motor = request.args["m"]
+#     speed = float(request.args["s"])
+#     if "dcmotor" in motor:
+#         dcm = int(motor.replace("dcmotor",""))
+#         setMotorSpeed(dcm, speed)
+#     settings[motor] = speed
 
 if __name__ == "__main__":
     sDaemon = threading.Thread(target=stepperDaemon, daemon=True)
     sDaemon.start()
     cDaemon = threading.Thread(target=checkCommandDaemon, daemon=True)
     cDaemon.start()
-    app.run(host=args.ip, port=80, debug=True)
+    #app.run(host=args.ip, port=80, debug=True)
