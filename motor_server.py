@@ -54,20 +54,26 @@ def checkCommandDaemon():
                 requests.get('https://blurrydude.com:5000/ack?t=commands')
                 if "dc" in command_topic:
                     if "run" in command_topic:
-                        if "1" in command_topic or "one" in command_topic:
+                        if "1" in command_topic or "one" in command_topic or "all" in command_topic:
                             print('DC Motor 1 Run')
-                            settings["dcmotor1"] = 1
-                            setMotorSpeed(1,1)
-                        elif "2" in command_topic or "two" in command_topic:
+                            if "backward" in command_topic:
+                                settings["dcmotor1"] = 1
+                            else:
+                                settings["dcmotor1"] = -1
+                            setMotorSpeed(1,settings["dcmotor1"])
+                        elif "2" in command_topic or "two" in command_topic or "all" in command_topic:
                             print('DC Motor 2 Run')
-                            settings["dcmotor2"] = 1
-                            setMotorSpeed(2,1)
+                            if "backward" in command_topic:
+                                settings["dcmotor2"] = -1
+                            else:
+                                settings["dcmotor2"] = 1
+                            setMotorSpeed(2,settings["dcmotor2"])
                     elif "stop" in command_topic:
-                        if "1" in command_topic or "one" in command_topic:
+                        if "1" in command_topic or "one" in command_topic or "all" in command_topic:
                             print('DC Motor 1 Stop')
                             settings["dcmotor1"] = 1
                             setMotorSpeed(1,0)
-                        elif "2" in command_topic or "two" in command_topic:
+                        elif "2" in command_topic or "two" in command_topic or "all" in command_topic:
                             print('DC Motor 2 Stop')
                             settings["dcmotor2"] = 1
                             setMotorSpeed(2,0)
