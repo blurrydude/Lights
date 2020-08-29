@@ -75,10 +75,10 @@ def checkCommandDaemon():
                     if "run" in command_topic:
                         if "forward" in command_topic:
                             print('Stepper Motor Forward')
-                            settings["stepper"] = 200
+                            settings["stepper"] = 400
                         elif "backward" in command_topic:
                             print('Stepper Motor Backward')
-                            settings["stepper"] = -200
+                            settings["stepper"] = -400
                     elif "stop" in command_topic:
                         print('Stepper Motor Stop')
                         settings["stepper"] = 0
