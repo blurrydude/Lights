@@ -48,33 +48,41 @@ def checkCommandDaemon():
     global settings
     while True:
         command_topic = requests.get('https://blurrydude.com:5000/topic?t=commands').text
-        print('command topic: '+command_topic)
-        if "motor" in command_topic:
-            requests.get('https://blurrydude.com:5000/ack?t=commands')
-            if "dc" in command_topic:
-                if "run" in command_topic:
-                    if "1" in command_topic or "one" in command_topic:
-                        settings["dcmotor1"] = 1
-                        setMotorSpeed(1,1)
-                    elif "2" in command_topic or "two" in command_topic:
-                        settings["dcmotor2"] = 1
-                        setMotorSpeed(2,1)
-                elif "stop" in command_topic:
-                    if "1" in command_topic or "one" in command_topic:
-                        settings["dcmotor1"] = 1
-                        setMotorSpeed(1,0)
-                    elif "2" in command_topic or "two" in command_topic:
-                        settings["dcmotor2"] = 1
-                        setMotorSpeed(2,0)
-            elif "stepper" in command_topic:
-                if "run" in command_topic:
-                    if "forward" in command_topic:
-                        settings["stepper"] = 200
-                    elif "backward" in command_topic:
-                        settings["stepper"] = -200
-                elif "stop" in command_topic:
-                    settings["stepper"] = 0
-    time.sleep(1)
+        if len(command_topic) > 2:
+            print('command topic: '+command_topic)
+            if "motor" in command_topic:
+                requests.get('https://blurrydude.com:5000/ack?t=commands')
+                if "dc" in command_topic:
+                    if "run" in command_topic:
+                        if "1" in command_topic or "one" in command_topic:
+                            print('DC Motor 1 Run')
+                            settings["dcmotor1"] = 1
+                            setMotorSpeed(1,1)
+                        elif "2" in command_topic or "two" in command_topic:
+                            print('DC Motor 2 Run')
+                            settings["dcmotor2"] = 1
+                            setMotorSpeed(2,1)
+                    elif "stop" in command_topic:
+                        if "1" in command_topic or "one" in command_topic:
+                            print('DC Motor 1 Stop')
+                            settings["dcmotor1"] = 1
+                            setMotorSpeed(1,0)
+                        elif "2" in command_topic or "two" in command_topic:
+                            print('DC Motor 2 Stop')
+                            settings["dcmotor2"] = 1
+                            setMotorSpeed(2,0)
+                elif "stepper" in command_topic:
+                    if "run" in command_topic:
+                        if "forward" in command_topic:
+                            print('Stepper Motor Forward')
+                            settings["stepper"] = 200
+                        elif "backward" in command_topic:
+                            print('Stepper Motor Backward')
+                            settings["stepper"] = -200
+                    elif "stop" in command_topic:
+                        print('Stepper Motor Stop')
+                        settings["stepper"] = 0
+    time.sleep(2)
                 
 
 def setMotorSpeed(motor, speed):
