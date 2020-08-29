@@ -20,6 +20,13 @@ PARAMS = {'name':name, 'ip':ip, 'data':data}
 
 r = requests.get(url = URL, params = PARAMS)
 
+command = requests.get('https://blurrydude.com:5000/topic?t=commands')
+if name.replace('pi','') in command:
+    requests.get('https://blurrydude.com:5000/ack?t=commands')
+    if "reboot" in command:
+        requests.get('http:'+ip+'/reboot?s=42')
+    else:
+        requests.get('http:'+ip+'/command?c='+command)
 #  MMFFFFFFFFFLLLSSDDVV
 # M - model
 # F - device flags
