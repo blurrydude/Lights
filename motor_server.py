@@ -47,7 +47,7 @@ def stepperDaemon():
 def checkCommandDaemon():
     global settings
     while True:
-        command_topic = requests.get('https://blurrydude.com:5000/topic?t=commands').text
+        command_topic = requests.get('https://blurrydude.com:5000/topic?t=commands').text.lower()
         if len(command_topic) > 2:
             print('command topic: '+command_topic)
             if "motor" in command_topic:
