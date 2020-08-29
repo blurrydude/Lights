@@ -33,9 +33,9 @@ cDaemon = None
 
 def stepperDaemon():
     global settings
-    ss = abs(settings["stepper"])
     while True:
-        if settings["stepper"] != 0 and ss != 0:
+        if settings["stepper"] != 0:
+            ss = abs(settings["stepper"])
             if settings["stepper"] > 0:
                 stepperkit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
             else:
