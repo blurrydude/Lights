@@ -28,9 +28,9 @@ def openDoor():
 
 def closeDoor():
     p.digital_write(0,1)
-    time.sleep(0.2)
-    p.digital_write(0,0)
     time.sleep(10)
+    p.digital_write(0,0)
+    time.sleep(0.2)
     dooropen = False
 
 def closeDoorWithSensors(closeto=0):
