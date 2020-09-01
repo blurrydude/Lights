@@ -54,14 +54,14 @@ def setDoorHalf():
 @app.route("/", methods=["GET"])
 def set_endpoint():
     command = request.args["c"]
-    if command == "open":
+    if "open" in command:
         openDoor()
-    if command == "close":
+    if "close" in command:
         if sensors == True:
             closeDoorWithSensors()
         else:
             closeDoor()
-    if command == "half" and sensors == True:
+    if "half" in command and sensors == True:
         setDoorHalf()
     return "OK"
 
