@@ -13,6 +13,7 @@ app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 sensors = args.s == "1"
+dooropen = False
 
 def waitFor(i):
     while p.digital_read(i) == 0: # FLIP THIS WHEN REED SWITCH IS INSTALLED
@@ -22,11 +23,15 @@ def openDoor():
     p.digital_write(0,1)
     time.sleep(0.2)
     p.digital_write(0,0)
+    time.sleep(10)
+    dooropen = True
 
 def closeDoor():
     p.digital_write(0,1)
-    time.sleep(10)
+    time.sleep(0.2)
     p.digital_write(0,0)
+    time.sleep(10)
+    dooropen = False
 
 def closeDoorWithSensors(closeto=0):
     p.digital_write(0,1)
@@ -62,6 +67,6 @@ def set_endpoint():
 
 if __name__ == "__main__":
     #print('wait a minute')
-    #time.sleep(60)
+    time.sleep(60)
     p.init()
     app.run(host=args.ip, port=80, debug=True)
