@@ -20,6 +20,7 @@ def waitFor(i):
         time.sleep(0.1)
 
 def openDoor():
+    global dooropen
     if dooropen == True:
         return
     p.digital_write(0,1)
@@ -29,6 +30,7 @@ def openDoor():
     dooropen = True
 
 def closeDoor():
+    global dooropen
     if dooropen == False:
         return
     p.digital_write(0,1)
@@ -75,6 +77,7 @@ def alive_endpoint():
 
 if __name__ == "__main__":
     #print('wait a minute')
+    dooropen = False
     time.sleep(60)
     p.init()
     app.run(host=args.ip, port=80)
