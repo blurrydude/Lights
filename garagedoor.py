@@ -47,6 +47,7 @@ def closeDoorWithSensors(closeto=0):
         time.sleep(10)
     time.sleep(0.5)
     p.digital_write(0,0)
+    dooropen = False
 
 def setDoorHalf():
     if p.digital_read(0) == 1:
@@ -60,20 +61,37 @@ def setDoorHalf():
 @app.route("/", methods=["GET"])
 def set_endpoint():
     command = request.args["c"]
-    if "open" in command:
-        openDoor()
     if "close" in command:
         if sensors == True:
             closeDoorWithSensors()
         else:
             closeDoor()
-    if "half" in command and sensors == True:
+    elif ("half" in command or "crack" in command) and sensors == True:
         setDoorHalf()
+    elif "open" in command:
+        openDoor()
     return "OK"
 
 @app.route("/alive", methods=["GET"])
 def alive_endpoint():
     return "I'm alive"
+
+@app.route("/status", methods=["GET"])
+def status_endpoint():
+    if sensors == True:
+        if p.digital_read(0) == 0:
+            return "closed"
+        elif p.digital_read(1) == 0:
+            return "half"
+        elif p.digital_read(2) == 0:
+            return "open"
+        else:
+            return "unknown"
+    else:
+        if dooropen == True:
+            return "open"
+        else:
+            return "closed"
 
 if __name__ == "__main__":
     #print('wait a minute')
