@@ -16,7 +16,7 @@ sensors = args.s == "1"
 dooropen = False
 
 def waitFor(i):
-    while p.digital_read(i) == 0: # FLIP THIS WHEN REED SWITCH IS INSTALLED
+    while p.digital_read(i) == 1:
         time.sleep(0.1)
 
 def openDoor():
