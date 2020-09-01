@@ -16,7 +16,7 @@ sensors = args.s == "1"
 dooropen = False
 
 def waitFor(i):
-    while p.digital_read(i) == 1:
+    while p.digital_read(i) == 0:
         time.sleep(0.1)
 
 def openDoor():
@@ -51,9 +51,10 @@ def setDoorHalf():
     if p.digital_read(0) == 1:
         openDoor()
         waitFor(1)
-    elif p.digital_read(1) == 0:
+        openDoor()
+    elif p.digital_read(2) == 1:
         closeDoor()
-        time.sleep(0.1)
+        waitFor(1)
         openDoor()
 
 @app.route("/", methods=["GET"])
@@ -77,11 +78,11 @@ def alive_endpoint():
 @app.route("/status", methods=["GET"])
 def status_endpoint():
     if sensors == True:
-        if p.digital_read(0) == 0:
+        if p.digital_read(0) == 1:
             return "closed"
-        elif p.digital_read(1) == 0:
+        elif p.digital_read(1) == 1:
             return "half"
-        elif p.digital_read(2) == 0:
+        elif p.digital_read(2) == 1:
             return "open"
         else:
             return "unknown"
