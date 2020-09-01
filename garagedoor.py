@@ -53,6 +53,7 @@ def set_endpoint():
     return "OK"
 
 if __name__ == "__main__":
+    print('wait a minute')
     time.sleep(60)
     p.init()
     app.run(host=args.ip, port=80, debug=True)
