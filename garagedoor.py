@@ -34,7 +34,7 @@ def closeDoor():
     if dooropen == False:
         return
     p.digital_write(0,1)
-    time.sleep(10)
+    time.sleep(15)
     p.digital_write(0,0)
     time.sleep(0.2)
     dooropen = False
