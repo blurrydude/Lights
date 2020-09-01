@@ -17,7 +17,7 @@ dooropen = False
 
 def waitFor(i):
     ticks = 0
-    while p.digital_read(i) == 0 and ticks < 1000:
+    while p.digital_read(i) == 0 and ticks < 1500:
         time.sleep(0.01)
         ticks = ticks + 1
 
