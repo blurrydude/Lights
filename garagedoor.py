@@ -50,6 +50,8 @@ def closeDoorWithSensors(closeto=0):
     dooropen = False
 
 def setDoorHalf():
+    if p.digital_read(1) == 1:
+        return
     if p.digital_read(0) == 1:
         openDoor()
         waitFor(1)
