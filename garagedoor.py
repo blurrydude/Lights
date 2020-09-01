@@ -51,7 +51,7 @@ def set_endpoint():
     command = request.args["c"]
     if command == "open":
         openDoor()
-    if closeDoor == "close":
+    if command == "close":
         if sensors == True:
             closeDoorWithSensors()
         else:
