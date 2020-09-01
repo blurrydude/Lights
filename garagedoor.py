@@ -7,9 +7,12 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--ip", "-ip", help="ip address")
+parser.add_argument("--s", "-sensors", help="whether or not to use sensor input (0 or 1)")
 args = parser.parse_args()
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
+
+sensors = args.sensors == "1"
 
 def waitFor(i):
     while p.digital_read(i) == 0: # FLIP THIS WHEN REED SWITCH IS INSTALLED
@@ -22,7 +25,10 @@ def openDoor():
 
 def closeDoor(closeto=0):
     p.digital_write(0,1)
-    waitFor(closeto)
+    if sensors == True:
+        waitFor(closeto)
+    else:
+        time.sleep(10)
     time.sleep(0.5)
     p.digital_write(0,0)
 
@@ -41,8 +47,8 @@ def set_endpoint():
     if command == "open":
         openDoor()
     if closeDoor == "close":
-        openDoor()
-    if command == "half":
+        closeDoor()
+    if command == "half" and sensors == True:
         setDoorHalf()
 
 if __name__ == "__main__":
