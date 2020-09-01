@@ -1,5 +1,6 @@
 import pifacedigitalio as p
 import time
+from datetime import datetime
 from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
 from flask_cors import CORS
@@ -16,10 +17,9 @@ sensors = args.s == "1"
 dooropen = False
 
 def waitFor(i):
-    ticks = 0
-    while p.digital_read(i) == 0 and ticks < 15000:
-        time.sleep(0.001)
-        ticks = ticks + 1
+    now = datetime.now()
+    while p.digital_read(i) == 0 and (datetime.now() - now).total_seconds() < 10:
+        time.sleep(0.0001)
 
 def openDoor():
     global dooropen
