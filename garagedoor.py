@@ -52,5 +52,6 @@ def set_endpoint():
         setDoorHalf()
 
 if __name__ == "__main__":
+    time.sleep(60)
     p.init()
     app.run(host=args.ip, port=80, debug=True)
