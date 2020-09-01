@@ -7,12 +7,12 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--ip", "-ip", help="ip address")
-parser.add_argument("--s", "-sensors", help="whether or not to use sensor input (0 or 1)")
+parser.add_argument("--s", "-s", help="whether or not to use sensor input (0 or 1)")
 args = parser.parse_args()
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 
-sensors = args.sensors == "1"
+sensors = args.s == "1"
 
 def waitFor(i):
     while p.digital_read(i) == 0: # FLIP THIS WHEN REED SWITCH IS INSTALLED
