@@ -31,8 +31,6 @@ def openDoor():
 
 def closeDoor():
     global dooropen
-    if dooropen == False:
-        return
     p.digital_write(0,1)
     time.sleep(20)
     p.digital_write(0,0)
