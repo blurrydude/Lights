@@ -26,3 +26,4 @@ def setDoorHalf():
         time.sleep(0.1)
         openDoor()
 
+setDoorHalf()
