@@ -1,6 +1,15 @@
 import pifacedigitalio as p
 import time
-p.init()
+from flask import request, url_for
+from flask_api import FlaskAPI, status, exceptions
+from flask_cors import CORS
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--ip", "-ip", help="ip address")
+args = parser.parse_args()
+app = FlaskAPI(__name__)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 def waitFor(i):
     while p.digital_read(i) == 0: # FLIP THIS WHEN REED SWITCH IS INSTALLED
@@ -26,4 +35,16 @@ def setDoorHalf():
         time.sleep(0.1)
         openDoor()
 
-setDoorHalf()
+@app.route("/", methods=["GET"])
+def set_endpoint():
+    command = request.args["c"]
+    if command == "open":
+        openDoor()
+    if closeDoor == "close":
+        openDoor()
+    if command == "half":
+        setDoorHalf()
+
+if __name__ == "__main__":
+    p.init()
+    app.run(host=args.ip, port=80, debug=True)
