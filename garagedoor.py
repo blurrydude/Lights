@@ -50,6 +50,7 @@ def set_endpoint():
         closeDoor()
     if command == "half" and sensors == True:
         setDoorHalf()
+    return "OK"
 
 if __name__ == "__main__":
     time.sleep(60)
