@@ -8,14 +8,21 @@ def waitFor(i):
 
 def openDoor():
     p.digital_write(0,1)
+    time.sleep(0.2)
+    p.digital_write(0,0)
+
+def closeDoor(closeto=0):
+    p.digital_write(0,1)
+    waitFor(closeto)
     time.sleep(0.5)
     p.digital_write(0,0)
 
-def closeDoor():
-    p.digital_write(0,1)
-    waitFor(1)
-    p.digital_write(0,0)
+def setDoorHalf():
+    if p.digital_read(0) == 1:
+        openDoor()
+        waitFor(1)
+    elif p.digital_read(1) == 0:
+        closeDoor(1)
+        time.sleep(0.1)
+        openDoor()
 
-openDoor()
-time.sleep(2)
-closeDoor()
