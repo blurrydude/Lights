@@ -69,6 +69,10 @@ def set_endpoint():
         setDoorHalf()
     return "OK"
 
+@app.route("/alive", methods=["GET"])
+def alive_endpoint():
+    return "I'm alive"
+
 if __name__ == "__main__":
     #print('wait a minute')
     time.sleep(60)

@@ -128,6 +128,10 @@ def default_route():
     settings[motor] = speed
     return "OK"
 
+@app.route("/alive", methods=["GET"])
+def alive_endpoint():
+    return "I'm alive"
+
 if __name__ == "__main__":
     #time.sleep(90)
 

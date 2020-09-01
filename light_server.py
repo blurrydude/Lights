@@ -215,6 +215,10 @@ def reboot_endpoint():
     if secret == "42":
         os.system('reboot now')
 
+@app.route("/alive", methods=["GET"])
+def alive_endpoint():
+    return "I'm alive"
+
 @app.route("/", methods=['GET'])
 def light_endpoint():
     global mem
