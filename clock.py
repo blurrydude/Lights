@@ -7,6 +7,10 @@ pixels = neopixel.NeoPixel(board.D18, 60)
 
 def setPixel(p,r,g,b):
     #requests.get('http://192.168.1.236/?r='+str(r)+'&g='+str(g)+'&b='+str(b)+'&a='+str(p)+'&z='+str(p))
+    if p == 0:
+        p = 59
+    else:
+        p = p - 1
     pixels[p] = (r,g,b)
 
 def setRange(a,z,r,g,b):
