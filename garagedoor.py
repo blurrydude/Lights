@@ -16,8 +16,10 @@ sensors = args.s == "1"
 dooropen = False
 
 def waitFor(i):
-    while p.digital_read(i) == 0:
+    ticks = 0
+    while p.digital_read(i) == 0 and ticks < 1000:
         time.sleep(0.01)
+        ticks = ticks + 1
 
 def openDoor():
     global dooropen
