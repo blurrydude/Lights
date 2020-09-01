@@ -17,7 +17,7 @@ dooropen = False
 
 def waitFor(i):
     while p.digital_read(i) == 0:
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 def openDoor():
     global dooropen
