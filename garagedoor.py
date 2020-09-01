@@ -20,6 +20,8 @@ def waitFor(i):
         time.sleep(0.1)
 
 def openDoor():
+    if dooropen == True:
+        return
     p.digital_write(0,1)
     time.sleep(0.2)
     p.digital_write(0,0)
@@ -27,6 +29,8 @@ def openDoor():
     dooropen = True
 
 def closeDoor():
+    if dooropen == False:
+        return
     p.digital_write(0,1)
     time.sleep(10)
     p.digital_write(0,0)
@@ -47,7 +51,7 @@ def setDoorHalf():
         openDoor()
         waitFor(1)
     elif p.digital_read(1) == 0:
-        closeDoor(1)
+        closeDoor()
         time.sleep(0.1)
         openDoor()
 
