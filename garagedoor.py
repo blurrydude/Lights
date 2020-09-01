@@ -18,8 +18,9 @@ dooropen = False
 
 def waitFor(i):
     now = datetime.now()
-    while p.digital_read(i) == 0 and (datetime.now() - now).total_seconds() < 10:
-        time.sleep(0.0001)
+    later = datetime.now()
+    while p.digital_read(i) == 0 and (later - now).total_seconds() < 10:
+        later = datetime.now()
 
 def openDoor():
     global dooropen
