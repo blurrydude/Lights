@@ -27,7 +27,9 @@ for job in root_cron:
     rootjobs.append(str(job))
 with open('/etc/rc.local','r') as read_file:
     lines = read_file.readlines()
-    rclocal = lines[len(lines)-3]
+    for line in lines:
+        if "sudo" in line:
+            rclocal = line
 data = {
     "publicIp": pip,
     "privateIp": ip,
