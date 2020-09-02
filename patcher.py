@@ -40,11 +40,17 @@ def doCheck():
         token = json.load(read_file)
     log(token['version'])
     if token['version'] != data['version']:
+        if len(data["newPip"]) > 0:
+            pips = "pip3 install"
+            for package in data["newPip"]:
+                pips = pips + " " + package
+            os.system(pips)
+
         with open(tokenfile, "w") as write_file:
             json.dump(data, write_file, sort_keys=True, indent=4)
         log('Rebooting.')
         time.sleep(1)
-        os.system('sudo shutdown -r now')
+        os.system('reboot now')
         exit()
 
 for i in range(0,5):
