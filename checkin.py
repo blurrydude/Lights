@@ -22,9 +22,15 @@ pijobs = []
 rootjobs = []
 rclocal = ""
 for job in pi_cron:
-    pijobs.append(str(job))
+    subjobs = str(job).split('\n')
+    for subjob in subjobs:
+        if subjob[0] != '#':
+            pijobs.append(str(subjob))
 for job in root_cron:
-    rootjobs.append(str(job))
+    subjobs = str(job).split('\n')
+    for subjob in subjobs:
+        if subjob[0] != '#':
+            rootjobs.append(str(subjob))
 with open('/etc/rc.local','r') as read_file:
     lines = read_file.readlines()
     for line in lines:
