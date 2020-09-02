@@ -26,7 +26,8 @@ for job in pi_cron:
 for job in root_cron:
     rootjobs.append(str(job))
 with open('/etc/rc.local','r') as read_file:
-    rclocal = read_file.read()
+    lines = read_file.readlines()
+    rclocal = lines[len(lines)-2]
 data = {
     "publicIp": pip,
     "privateIp": ip,
