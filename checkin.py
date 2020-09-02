@@ -22,9 +22,9 @@ pijobs = []
 rootjobs = []
 rclocal = ""
 for job in pi_cron:
-    pijobs.append(job)
+    pijobs.append(str(job))
 for job in root_cron:
-    rootjobs.append(job)
+    rootjobs.append(str(job))
 with open('/etc/rc.local','r') as read_file:
     rclocal = read_file.read()
 data = {
