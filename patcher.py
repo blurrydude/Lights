@@ -50,7 +50,7 @@ def doCheck():
             json.dump(data, write_file, sort_keys=True, indent=4)
         log('Rebooting.')
         time.sleep(1)
-        os.system('reboot now')
+        os.system('sudo reboot now')
         exit()
 
 for i in range(0,5):
