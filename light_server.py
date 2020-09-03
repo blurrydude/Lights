@@ -392,6 +392,8 @@ if __name__ == "__main__":
     try:
         log('Loading memory...')
         load_memory()
+        for p in range(len(mem)):
+            pixels[p] = mem[p]
         log('Done.')
     except:
         log("Unexpected error loading memory")
