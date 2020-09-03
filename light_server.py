@@ -147,6 +147,8 @@ def load_memory():
         os.remove('/home/pi/light_mem.json')
         with open('/home/pi/light_mem.json', "w") as write_file:
             json.dump(mem, write_file, indent=4)
+    for p in range(len(mem)):
+        pixels[p] = mem[p]
 
 def save_brain():
     log('save brain')
