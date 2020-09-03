@@ -147,8 +147,6 @@ def load_memory():
         os.remove('/home/pi/light_mem.json')
         with open('/home/pi/light_mem.json', "w") as write_file:
             json.dump(mem, write_file, indent=4)
-    for p in range(len(mem)):
-        pixels[p] = mem[p]
 
 def save_brain():
     log('save brain')
@@ -394,8 +392,6 @@ if __name__ == "__main__":
     try:
         log('Loading memory...')
         load_memory()
-        for p in range(len(mem)):
-            pixels[p] = mem[p]
         log('Done.')
     except:
         log("Unexpected error loading memory")
@@ -414,6 +410,8 @@ if __name__ == "__main__":
     #     pass
     try:
         log('Running app...')
+        for p in range(len(mem)):
+            pixels[p] = mem[p]
         app.run(host=args.ip, port=80, debug=True)
     except:
         log("Unexpected error running api")
