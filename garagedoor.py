@@ -25,7 +25,7 @@ def waitFor(i):
 
 def openDoor():
     global dooropen
-    if dooropen == True:
+    if dooropen == True and sensors == False:
         return
     p.digital_write(0,1)
     time.sleep(0.2)
