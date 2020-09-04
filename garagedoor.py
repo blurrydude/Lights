@@ -100,6 +100,5 @@ def status_endpoint():
 if __name__ == "__main__":
     #print('wait a minute')
     dooropen = False
-    time.sleep(30)
     p.init()
     app.run(host=args.ip, port=80)

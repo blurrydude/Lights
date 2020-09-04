@@ -1,4 +1,4 @@
 {
-    "version": "2.8",
-    "newPip": ["python-crontab"]
+    "version": "2.9",
+    "newPip": []
 }
