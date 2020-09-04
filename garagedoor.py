@@ -5,6 +5,7 @@ from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
 from flask_cors import CORS
 import argparse
+import json
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--ip", "-ip", help="ip address")
@@ -99,6 +100,10 @@ def status_endpoint():
 
 if __name__ == "__main__":
     #print('wait a minute')
-    dooropen = False
-    p.init()
-    app.run(host=args.ip, port=80)
+    try:
+        dooropen = False
+        p.init()
+        app.run(host=args.ip, port=80)
+    except Exception as e:
+        with open("/home/pi/logs/CRITICAL_"+datetime.now().strftime("%Y-%m-%d-%H")+".log","a+") as write_file:
+            json.dump(e,write_file)
