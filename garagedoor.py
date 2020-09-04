@@ -20,7 +20,7 @@ dooropen = False
 def waitFor(i):
     now = datetime.now()
     later = datetime.now()
-    while p.digital_read(i) == 0 and (later - now).total_seconds() < 15:
+    while p.digital_read(i) == 0 and abs((later - now).total_seconds()) < 15:
         later = datetime.now()
 
 def openDoor():
@@ -30,16 +30,18 @@ def openDoor():
     p.digital_write(0,1)
     time.sleep(0.2)
     p.digital_write(0,0)
-    time.sleep(10)
-    dooropen = True
+    if sensors == False:
+        time.sleep(10)
+        dooropen = True
 
 def closeDoor():
     global dooropen
     p.digital_write(0,1)
     time.sleep(20)
     p.digital_write(0,0)
-    time.sleep(0.2)
-    dooropen = False
+    if sensors == False:
+        time.sleep(0.2)
+        dooropen = False
 
 def closeDoorWithSensors(closeto=0):
     p.digital_write(0,1)
@@ -49,7 +51,8 @@ def closeDoorWithSensors(closeto=0):
         time.sleep(10)
     time.sleep(0.5)
     p.digital_write(0,0)
-    dooropen = False
+    if sensors == True:
+        dooropen = False
 
 def setDoorHalf():
     if p.digital_read(1) == 1:
