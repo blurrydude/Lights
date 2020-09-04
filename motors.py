@@ -34,12 +34,12 @@ spm = 200 * rpm
 sps = spm / 60
 delay = 1 / sps
 
-#while True:
-#    kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
-#    time.sleep(delay)
+while True:
+   kit.stepper1.onestep(direction=stepper.FORWARD, style=stepper.DOUBLE)
+   time.sleep(delay)
 
-setMotorSpeed(1,1)
-time.sleep(10)
-setMotorSpeed(2,1)
-time.sleep(10)
-allStop()
+# setMotorSpeed(1,1)
+# time.sleep(10)
+# setMotorSpeed(2,1)
+# time.sleep(10)
+# allStop()
