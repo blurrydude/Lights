@@ -43,6 +43,7 @@ config = {
 }
 for i in range(led_count):
     config["pixels"].append({"r":0,"g":0,"b":0})
+    mem.append({"r":0,"g":0,"b":0})
 
 def getRef(path):
     path = path.split('/')
