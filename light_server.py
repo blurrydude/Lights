@@ -21,9 +21,9 @@ led_count = int(args.ledcount)
 fsacheck = path.exists('/home/pi/fsa.json')
 if fsacheck == False:
     response = requests.get('https://blurrydude.com:5000/fsa')
-    fsajson = response.json()
+    fsajson = response.text
     with open('/home/pi/fsa.json', 'w') as write_file:
-        json.dump(fsajson,write_file)
+        write_file.write(fsajson)
 
 cred = credentials.Certificate('/home/pi/fsa.json')
 firebase_admin.initialize_app(cred)
