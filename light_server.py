@@ -41,6 +41,7 @@ config = {
     "process_interrupt": 0,
     "private_ip": args.ip,
     "pixels": [],
+    "awaiting_command": ""
 }
 for i in range(led_count):
     config["pixels"].append({"r":0,"g":0,"b":0})
@@ -65,7 +66,14 @@ def load_config():
     if configdata is None:
         configref.set(config)
     else:
+        update_config = False
+        for key in config.keys():
+            if key not in configdata.keys():
+                configdata[key] = config[key]
+                update_config = True
         config = configdata
+        if update_config == True:
+            save_config()
 
 def save_config():
     global config
