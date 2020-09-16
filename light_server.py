@@ -115,7 +115,7 @@ def send_log(message):
 
 load_config()
 set_pixels()
-
+send_log("Starting Service")
 while config["process_interrupt"] == 0:
     now = datetime.now()
     try:

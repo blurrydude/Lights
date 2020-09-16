@@ -18,6 +18,7 @@ config_ref = getRef('LightConfig/canvaspi')
 config = config_ref.get().to_dict()
 
 for i in range(len(config["pixels"])):
-    config["pixels"][i]["g"] = 200
+    config["pixels"][i]["g"] = 8
+    config["pixels"][i]["r"] = 64
 
 config_ref.set(config)
