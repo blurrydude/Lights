@@ -42,7 +42,7 @@ config = {
     "pixels": [],
 }
 for i in range(led_count):
-    config["pixels"].append([0,0,0])
+    config["pixels"].append({"r":0,"g":0,"b":0})
 
 def getRef(path):
     path = path.split('/')
@@ -74,7 +74,7 @@ def set_pixels():
     global mem
     for i in range(len(config["pixels"])):
         p = config["pixels"][i]
-        pixels[i] = (p[0],p[1],p[2])
+        pixels[i] = (p["r"],p["g"],p["b"])
         mem[i] = p
 
 def has_pixel_update():
