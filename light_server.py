@@ -93,6 +93,7 @@ def has_pixel_update():
         p = config["pixels"][i]
         if p != mem[i]:
             update_pixels = True
+    return update_pixels
     
 
 def send_log(message):
