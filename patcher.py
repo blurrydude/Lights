@@ -41,7 +41,7 @@ def doCheck():
     log(token['version'])
     if token['version'] != data['version']:
         if len(data["newPip"]) > 0:
-            pips = "pip3 install"
+            pips = "sudo pip3 install"
             for package in data["newPip"]:
                 pips = pips + " " + package
             os.system(pips)
