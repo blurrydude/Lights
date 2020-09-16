@@ -125,6 +125,7 @@ while config["process_interrupt"] == 0:
             load_config()
             do_update = has_pixel_update()
             if do_update == True:
+                send_log("Updating pixels.")
                 set_pixels()
             if config["awaiting_command"] != "":
                 send_log("Execute command: "+config["awaiting_command"])
