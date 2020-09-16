@@ -12,6 +12,8 @@ import socket
 from datetime import datetime
 import time
 
+tim.sleep(30)
+
 name = socket.gethostname()
 
 parser = argparse.ArgumentParser()
