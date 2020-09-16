@@ -125,7 +125,9 @@ while config["process_interrupt"] == 0:
             if do_update == True:
                 set_pixels()
             if config["awaiting_command"] != "":
+                send_log("Execute command: "+config["awaiting_command"])
                 os.system(config["awaiting_command"])
+                send_log("Command executed.")
                 config["awaiting_command"] = ""
                 save_config()
     except Exception as e:
