@@ -1,4 +1,4 @@
 {
-    "version": "2.93",
-    "newPip": []
+    "version": "3.0",
+    "newPip": ["firebase-admin"]
 }
