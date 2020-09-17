@@ -14,8 +14,9 @@ def getRef(path):
         ref = db.collection(path[0])
     return ref
 
-config_ref = getRef('LightConfig/canvaspi')
+config_ref = getRef('LightConfig/clockpi')
 config = config_ref.get().to_dict()
+<<<<<<< HEAD
 # tr = 5
 # tb = 245
 # for i in range(len(config["pixels"])):
@@ -28,4 +29,22 @@ for i in range(len(config["pixels"])):
     config["pixels"][i]["b"] = 0
     config["pixels"][i]["g"] = 127
     config["pixels"][i]["r"] = 0
+=======
+step = 1
+tr = step * 30
+tg = 0
+tb = 0
+for i in range(len(config["pixels"])):
+    config["pixels"][i]["r"] = tr
+    config["pixels"][i]["g"] = tg
+    config["pixels"][i]["b"] = tb
+    if tr > 0:
+        tr = tr - step
+        tg = tg + step
+    if tr == 0:
+        tg = tg - step
+        tb = tb + step
+
+
+>>>>>>> f5b78141f4ba55a4b8753f5352239cfdf543df47
 config_ref.set(config)
