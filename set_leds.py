@@ -16,9 +16,16 @@ def getRef(path):
 
 config_ref = getRef('LightConfig/canvaspi')
 config = config_ref.get().to_dict()
-
+# tr = 5
+# tb = 245
+# for i in range(len(config["pixels"])):
+#     config["pixels"][i]["b"] = tb
+#     config["pixels"][i]["g"] = 0
+#     config["pixels"][i]["r"] = tr
+#     tb = tb - 5
+#     tr = tr + 5
 for i in range(len(config["pixels"])):
-    config["pixels"][i]["g"] = 64
+    config["pixels"][i]["b"] = 0
+    config["pixels"][i]["g"] = 127
     config["pixels"][i]["r"] = 0
-
 config_ref.set(config)

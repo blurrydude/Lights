@@ -41,7 +41,16 @@ config = {
     "process_interrupt": 0,
     "private_ip": args.ip,
     "pixels": [],
-    "awaiting_command": ""
+    "awaiting_command": "",
+    "is_hydro_status_indicator": 0,
+    "indicator_temperature": 0,
+    "indicator_humidity": 0,
+    "indicator_air": 0,
+    "indicator_pumps": 0,
+    "indicator_exhaust": 0,
+    "indicator_lights": 0,
+    "indicator_system_1": 0,
+    "indicator_system_2": 0
 }
 for i in range(led_count):
     config["pixels"].append({"r":0,"g":0,"b":0})
