@@ -1,12 +1,50 @@
 import requests 
 import socket
 import os
+from os import path
 import json
 from crontab import CronTab
+import urllib
+import subprocess
+
+out = subprocess.Popen(['pip3','list'],
+    stdout=subprocess.PIPE,
+    stderr=subprocess.STDOUT)
+
+stdout,stderr = out.communicate()
+text = str(stdout)
+text = text[2:len(text)-3]
+while "  " in text:
+    text = text.replace('  ',' ')
+lines = text.split('\\n')
+packages = {}
+for line in lines:
+    if "Package" in line or "---" in line:
+        continue
+    data = line.split(' ')
+    packages[data[0]] = data[1]
 
 URL = "https://blurrydude.com:5000/checkin"
 
 name = socket.gethostname()
+attempts = 0
+if path.exists('/home/pi/checkindata.txt') == False:
+    with open('/home/pi/checkindata.txt','w') as write_file:
+        write_file.write(str(attempts))
+with open('/home/pi/checkindata.txt','r') as read_file:
+    attempts = int(read_file.read())
+check_online = urllib.request.urlopen("https://www.google.com").getcode()
+if check_online != 200:
+    if attempts >= 5:
+        with open('/home/pi/checkindata.txt','w') as write_file:
+            write_file.write("0")
+        os.system('sudo reboot now')
+        exit()
+    else:
+        attempts = attempts + 1
+        with open('/home/pi/checkindata.txt','w') as write_file:
+            write_file.write(str(attempts))
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
@@ -42,7 +80,8 @@ data = {
     "name":name,
     "pijobs":pijobs,
     "rootjobs":rootjobs,
-    "rclocal":rclocal
+    "rclocal":rclocal,
+    "packages":packages
 }
 
 PARAMS = {'name':name, 'ip':ip, 'data':json.dumps(data)} 
@@ -56,74 +95,3 @@ if name.replace('pi','') in command:
         os.system('reboot now')
     else:
         requests.get('http:'+ip+'/command?c='+command)
-#  MMFFFFFFFFFLLLSSDDVV
-# M - model
-# F - device flags
-# L - led count
-# S - stepper motor count
-# D - dc motor count
-# V - servo moto count
-
-# var PiModel = {
-#     M1A: 0,
-#     M1AP: 1,
-#     M1B: 2,
-#     M1BP: 3,
-#     M2B: 4,
-#     M2BV12: 5,
-#     M3AP: 6,
-#     M3B: 7,
-#     M3BP: 8,
-#     M4B: 9,
-#     CM1: 10,
-#     CM3: 11,
-#     CM3L: 12,
-#     CM3P: 13,
-#     CM3LP: 14,
-#     ZV12: 15,
-#     ZV13: 16,
-#     ZW: 17
-# }
-
-# var DeviceFlags = {
-#     HEADLESS: 1,
-#     LED_CONTROLLER: 2,
-#     FILE_SERVER: 4,
-#     WEB_SERVER: 8,
-#     RETROPIE: 16,
-#     SPOTIFY: 32,
-#     WAP: 64,
-#     WRT: 128,
-#     CNC: 256,
-#     OBD: 512,
-#     GPS: 1024,
-#     SENSOR_TEMP: 2048,
-#     SENSOR_HUM: 4096,
-#     SENSOR_COLOR: 8192,
-#     SENSOR_LIGHT: 16384,
-#     CONTROLLER_STEPPER: 32768,
-#     CONTROLLER_DCMOTOR: 65536,
-#     CONTROLLER_SERVO: 131072,
-#     CAMERA: 262144
-# }
-
-# var PiModel = {
-#     M1A: 0,
-#     M1AP: 1,
-#     M1B: 2,
-#     M1BP: 3,
-#     M2B: 4,
-#     M2BV12: 5,
-#     M3AP: 6,
-#     M3B: 7,
-#     M3BP: 8,
-#     M4B: 9,
-#     CM1: 10,
-#     CM3: 11,
-#     CM3L: 12,
-#     CM3P: 13,
-#     CM3LP: 14,
-#     ZV12: 15,
-#     ZV13: 16,
-#     ZW: 17
-# }

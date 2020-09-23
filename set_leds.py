@@ -1,3 +1,4 @@
+import copy
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -16,6 +17,27 @@ def getRef(path):
 
 config_ref = getRef('LightConfig/windowpi')
 config = config_ref.get().to_dict()
+
+def get_palette():
+    r = 16
+    g = 0
+    b = 0
+    p = []
+    for i in range(48):
+        if g < 16 and b == 0:
+            r = r - 1
+            g = g + 1
+        elif b < 16 and r == 0:
+            g = g - 1
+            b = b + 1
+        else:
+            b = b - 1
+            r = r + 1
+        p.append({"r":r,"g":g,"b":b})
+    last = copy.copy(p[len(p)-1])
+    del p[len(p)-1]
+    p.insert(0,last)
+    return p
 
 def pattern_1():
     global config
@@ -36,22 +58,13 @@ def pattern_1():
 
 def pattern_2():
     global config
-    r = 16
-    g = 0
-    b = 0
-    for i in range(48):
-        if g < 16 and b == 0:
-            r = r - 1
-            g = g + 1
-        elif b < 16 and r == 0:
-            g = g - 1
-            b = b + 1
-        else:
-            b = b - 1
-            r = r + 1
-        config["pixels"][i+9]["r"] = r
-        config["pixels"][i+9]["g"] = g
-        config["pixels"][i+9]["b"] = b
+    config["pixels"][8] = {"r":0,"g":0,"b":0}
+    config["pixels"][9] = {"r":0,"g":0,"b":0}
+    config["pixels"][10] = {"r":0,"g":0,"b":0}
+    config["pixels"][11] = {"r":0,"g":0,"b":0}
+    palette = get_palette()
+    for i in range(len(palette)):
+        config["pixels"][i+12] = palette[i]
 
 def pattern_3():
     global config
