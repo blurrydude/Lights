@@ -5,6 +5,10 @@ from os import path
 import json
 from crontab import CronTab
 import urllib
+import pip
+installed_packages = pip.get_installed_distributions()
+installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
+     for i in installed_packages])
 
 URL = "https://blurrydude.com:5000/checkin"
 
@@ -62,7 +66,8 @@ data = {
     "name":name,
     "pijobs":pijobs,
     "rootjobs":rootjobs,
-    "rclocal":rclocal
+    "rclocal":rclocal,
+    "pipModules":installed_packages_list
 }
 
 PARAMS = {'name':name, 'ip':ip, 'data':json.dumps(data)} 
