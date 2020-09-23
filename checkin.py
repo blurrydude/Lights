@@ -14,19 +14,18 @@ if path.exists('/home/pi/checkindata.txt') == False:
     with open('/home/pi/checkindata.txt','w') as write_file:
         write_file.write(str(attempts))
 with open('/home/pi/checkindata.txt','r') as read_file:
-        attempts = int(read_file.read())
-if name == 'pi4in1':
-    check_online = urllib.request.urlopen("https://www.google.com").getcode()
-    if check_online != 200:
-        if attempts >= 5:
-            with open('/home/pi/checkindata.txt','w') as write_file:
-                write_file.write("0")
-            os.system('sudo reboot now')
-            exit()
-        else:
-            attempts = attempts + 1
-            with open('/home/pi/checkindata.txt','w') as write_file:
-                write_file.write(str(attempts))
+    attempts = int(read_file.read())
+check_online = urllib.request.urlopen("https://www.google.com").getcode()
+if check_online != 200:
+    if attempts >= 5:
+        with open('/home/pi/checkindata.txt','w') as write_file:
+            write_file.write("0")
+        os.system('sudo reboot now')
+        exit()
+    else:
+        attempts = attempts + 1
+        with open('/home/pi/checkindata.txt','w') as write_file:
+            write_file.write(str(attempts))
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
