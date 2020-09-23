@@ -1,6 +1,7 @@
 import requests 
 import socket
 import os
+from os import path
 import json
 from crontab import CronTab
 import urllib
@@ -8,11 +9,25 @@ import urllib
 URL = "https://blurrydude.com:5000/checkin"
 
 name = socket.gethostname()
+attempts = 0
+if path.exists('/home/pi/checkindata.txt') == False:
+    with open('/home/pi/checkindata.txt','w') as write_file:
+        write_file.write(str(attempts))
+with open('/home/pi/checkindata.txt','r') as read_file:
+        attempts = int(read_file.read())
 if name == 'pi4in1':
     check_online = urllib.request.urlopen("https://www.google.com").getcode()
     if check_online != 200:
-        os.system('sudo reboot now')
-        exit()
+        if attempts >= 5:
+            with open('/home/pi/checkindata.txt','w') as write_file:
+                write_file.write("0")
+            os.system('sudo reboot now')
+            exit()
+        else:
+            attempts = attempts + 1
+            with open('/home/pi/checkindata.txt','w') as write_file:
+                write_file.write(str(attempts))
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("8.8.8.8", 80))
