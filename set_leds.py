@@ -14,7 +14,7 @@ def getRef(path):
         ref = db.collection(path[0])
     return ref
 
-config_ref = getRef('LightConfig/clockpi')
+config_ref = getRef('LightConfig/windowpi')
 config = config_ref.get().to_dict()
 
 def pattern_1():
@@ -53,5 +53,46 @@ def pattern_2():
         config["pixels"][i+9]["g"] = g
         config["pixels"][i+9]["b"] = b
 
-pattern_2()
+def pattern_3():
+    global config
+    r = 8
+    g = 0
+    b = 0
+    for i in range(8,60):
+        config["pixels"][i]["r"] = 0
+        config["pixels"][i]["g"] = 0
+        config["pixels"][i]["b"] = 0
+    for i in range(24):
+        if g < 8 and b == 0:
+            r = r - 1
+            g = g + 1
+        elif b < 8 and r == 0:
+            g = g - 1
+            b = b + 1
+        else:
+            b = b - 1
+            r = r + 1
+        config["pixels"][i+33]["r"] = r
+        config["pixels"][i+33]["g"] = g
+        config["pixels"][i+33]["b"] = b
+
+def pattern_4(): # 16 leds
+    config["pixels"][0] = { "r":245, "g":245, "b": 66}
+    config["pixels"][1] = { "r":245, "g":245, "b": 66}
+    config["pixels"][2] = { "r":245, "g":245, "b": 66}
+    config["pixels"][3] = { "r": 76, "g":245, "b": 64}
+    config["pixels"][4] = { "r": 76, "g":245, "b": 64}
+    config["pixels"][5] = { "r": 76, "g":245, "b": 64}
+    config["pixels"][6] = { "r": 64, "g":247, "b":220}
+    config["pixels"][7] = { "r": 64, "g":247, "b":220}
+    config["pixels"][8] = { "r": 64, "g":247, "b":220}
+    config["pixels"][9] = { "r": 64, "g":247, "b":220}
+    config["pixels"][10] = {"r": 76, "g":245, "b": 64}
+    config["pixels"][11] = {"r": 76, "g":245, "b": 64}
+    config["pixels"][12] = {"r": 76, "g":245, "b": 64}
+    config["pixels"][13] = {"r":245, "g":245, "b": 66}
+    config["pixels"][14] = {"r":245, "g":245, "b": 66}
+    config["pixels"][15] = {"r":245, "g":245, "b": 66}
+
+pattern_4()
 config_ref.set(config)
