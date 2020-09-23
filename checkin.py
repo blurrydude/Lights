@@ -5,6 +5,24 @@ from os import path
 import json
 from crontab import CronTab
 import urllib
+import subprocess
+
+out = subprocess.Popen(['pip3','list'],
+    stdout=subprocess.PIPE,
+    stderr=subprocess.STDOUT)
+
+stdout,stderr = out.communicate()
+text = str(stdout)
+text = text[2:len(text)-3]
+while "  " in text:
+    text = text.replace('  ',' ')
+lines = text.split('\\n')
+packages = {}
+for line in lines:
+    if "Package" in line or "---" in line:
+        continue
+    data = line.split(' ')
+    packages[data[0]] = data[1]
 
 URL = "https://blurrydude.com:5000/checkin"
 
@@ -63,7 +81,7 @@ data = {
     "pijobs":pijobs,
     "rootjobs":rootjobs,
     "rclocal":rclocal,
-    "pipModules":installed_packages_list
+    "packages":packages
 }
 
 PARAMS = {'name':name, 'ip':ip, 'data':json.dumps(data)} 
