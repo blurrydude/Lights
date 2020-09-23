@@ -5,8 +5,8 @@ from os import path
 import json
 from crontab import CronTab
 import urllib
-import pip
-installed_packages = pip.get_installed_distributions()
+import pip3
+installed_packages = pip3.get_installed_distributions()
 installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
      for i in installed_packages])
 
