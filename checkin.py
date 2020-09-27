@@ -37,6 +37,7 @@ with open('/home/pi/checkindata.txt','r') as read_file:
 check_online = urllib.request.urlopen("https://www.google.com").getcode()
 if check_online != 200:
     if attempts == 1:
+        attempts = attempts + 1
         os.system('sudo rfkill block all')
         time.sleep(3)
         os.system('sudo rfkill unblock all')
