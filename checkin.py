@@ -27,6 +27,7 @@ import subprocess
 URL = "https://blurrydude.com:5000/checkin"
 
 name = socket.gethostname()
+
 attempts = 0
 if path.exists('/home/pi/checkindata.txt') == False:
     with open('/home/pi/checkindata.txt','w') as write_file:
@@ -35,7 +36,12 @@ with open('/home/pi/checkindata.txt','r') as read_file:
     attempts = int(read_file.read())
 check_online = urllib.request.urlopen("https://www.google.com").getcode()
 if check_online != 200:
-    if attempts >= 5:
+    if attempts == 1:
+        os.system('sudo rfkill block all')
+        time.sleep(3)
+        os.system('sudo rfkill unblock all')
+        time.sleep(3)
+    elif attempts >= 5:
         with open('/home/pi/checkindata.txt','w') as write_file:
             write_file.write("0")
         os.system('sudo reboot now')
