@@ -23,7 +23,7 @@ def log(message):
 def doCheck():
     os.system('cd /home/pi/Lights && git pull --all')
     log('Waiting for ten seconds...')
-    time.sleep(10)
+    time.sleep(9)
     log('Check token')
     datafile = '/home/pi/Lights/lightdata.json'
     tokenfile = '/home/pi/lightdata.json'
